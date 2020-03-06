@@ -1,0 +1,102 @@
+<mat-toolbar>Angular JSON Schema Form Demo Playgroud</mat-toolbar>
+<table class="mat-typography">
+    <tr>
+        <td>Value (Changes are applied to the form onBlur)</td>
+        <td>Schema (Changes are applied to the form onBlur)</td>
+        <td>Examples (Press to select sample data and schema)</td>
+    </tr>
+    <tr>
+        <td>
+            <textarea style="width: 300px" [value]="stringify(value)" (change)="changeV($event)"></textarea>
+        </td>
+        <td>
+            <textarea style="width: 600px" [value]="stringify(schema)" (change)="changeS($event)"></textarea>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        Types:
+                    </td>
+                    <td>
+                        <button (click)="select('string')">string</button>
+                        <button (click)="select('boolean')">boolean</button>
+                        <button (click)="select('integer')">integer</button>
+                        <button (click)="select('number')">number</button>
+                        <button (click)="select('array')">array</button>
+                        <button (click)="select('object')">object</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Widgets:
+                    </td>
+                    <td>
+                        <button (click)="select('select')">select</button>
+                        <button (click)="select('upload')">upload</button>
+                        <button (click)="select('date')">date</button>
+                        <button (click)="select('textarea')">textarea</button>
+                        <button (click)="select('largetextarea')">largetextarea</button>
+                        <button (click)="select('password')">password</button>
+                        <button (click)="select('color')">color</button>
+                        <button (click)="select('datetime-local')">datetime-local</button>
+                        <button (click)="select('email')">email</button>
+                        <button (click)="select('month')">month</button>
+                        <button (click)="select('tel')">tel</button>
+                        <button (click)="select('time')">time</button>
+                        <button (click)="select('url')">url</button>
+                        <button (click)="select('week')">week</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        JSON schema constructs:
+                    </td>
+                    <td>
+                        <button (click)="select('enum')">enum</button>
+                        <button (click)="select('required')">required</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Autocomplete:
+                    </td>
+                    <td>
+                        <button (click)="select('simpleGet')">simpleGet</button> <a
+                            href="assets/autocomplete-simple.json">data</a>
+                        <button (click)="select('jsonPath')">jsonPath</button>
+                        <a href="assets/autocomplete-complex.json">data</a> transformed using
+                        <a target="jsonpath" href="http://jsonpath.com/">jsonpath</a>
+                        <button (click)="select('select')">select</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Layout:
+                    </td>
+                    <td>
+                        <button (click)="select('tab')">tab</button>
+                        <button (click)="select('table')">table</button>
+                        <button (click)="select('vertical')">vertical</button>
+                        <button (click)="select('horizontal')">horizontal</button>
+                        <button (click)="select('nested')">nested</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Complex:
+                    </td>
+                    <td>
+                        <button (click)="select('complex')">complex</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>{{errorV}}</td>
+        <td>{{errorS}}</td>
+</table>
+<br>
+<label class="mat-typography">Form (Changes are applied to the JSON textarea onBlur)</label>
+<lib-json-schema-form [(value)]="value" [schema]="schema"></lib-json-schema-form>

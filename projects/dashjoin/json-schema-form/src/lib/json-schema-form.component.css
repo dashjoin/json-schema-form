@@ -1,0 +1,21 @@
+.example-handle {
+    position: absolute;
+    z-index: 9;
+    top: 0px;
+    right: 0px;
+}
+
+.error {
+    font-size: small; 
+    color:red;
+    position: relative;
+    top: -18px
+}
+
+.input-full-width { 
+    min-width: 825px; 
+}
+
+.input-large-width { 
+    min-width: 1225px; 
+}
