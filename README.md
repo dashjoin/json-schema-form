@@ -52,5 +52,5 @@ Please also see the definition of the [Schema](https://github.com/dashjoin/json-
 
 The repository contains:
 
-* The library: https://github.com/dashjoin/json-schema-form/tree/master/projects/dashjoin/json-schema-form/src/lib
-* Sources of the online demo playground: https://github.com/dashjoin/json-schema-form/tree/master/src/app
+* [The actual library code](https://github.com/dashjoin/json-schema-form/tree/master/projects/dashjoin/json-schema-form/src/lib)
+* [Sources of the online demo playground](https://github.com/dashjoin/json-schema-form/tree/master/src/app)
