@@ -4,7 +4,6 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as jsonPath from 'jsonpath/jsonpath';
 import { KeyValue } from '@angular/common';
 import { Schema } from './schema'
 
@@ -263,16 +262,14 @@ export class JsonSchemaFormComponent implements OnInit {
 
     this.getChoices(this.schema.choicesUrl, this.schema.choicesUrlArgs, this.schema.choicesVerb).subscribe(res => {
       if (this.schema.jsonPath != null) {
-        try {
-          res = jsonPath.query(res, this.schema.jsonPath);
-        }
-        catch (ex) {
-          // have some trouble bundling the jsonpath lib right now
-          const parts = this.schema.jsonPath.split('.')
-          res = this.jp(res, parts)
-          if (!Array.isArray(res))
-            res = [res]
-        }
+        // have some trouble bundling the jsonpath lib right now
+        // res = jsonPath.query(res, this.schema.jsonPath);
+
+        // use alternative mini impl
+        const parts = this.schema.jsonPath.split('.')
+        res = this.jp(res, parts)
+        if (!Array.isArray(res))
+          res = [res]
       }
       this.choices = res
       this.filteredChoices = res
