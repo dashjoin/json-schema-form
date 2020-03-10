@@ -85,11 +85,11 @@ Finally, add the material style and icons to styles.css:
 
 ## JSON Schema Extensions
 
-We define a couple of extensions to JSON Schema in order to define the user interface and layout of the form:
+We define a couple of extensions to JSON Schema in order to define the user interface and layout of the form. Please also see the [demo playground](https://dashjoin.github.io/) where examples of all configuration options are available.
 
 ### widget
 
-This options specifies a specific input widget to be used. The following options are available:
+This options specifies a specific input widget to be used. The default is a simple text field. The following options are available:
 
 * select: shows a select input field with options (No free text entry is possible. Options can be loaded via rest (see below))
 * upload: the JSON property is set to the contents of an uploaded file
@@ -99,6 +99,22 @@ This options specifies a specific input widget to be used. The following options
 * password: input is shown as *****
 * color: shows a color picker widge
 * datetime-local, email, month, tel, time, url, week: uses the browser native [input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
+
+### autocomplete choices
+
+The following fields control how select and autocomplete options are obtained from a REST backend:
+
+* choicesUrl: defines the REST service URL
+* choicesVerb: defines the HTTP verb to use for the REST service URL, default is POST
+* choicesUrlArgs: defines the REST service parameter. The convention is to have a single parameter. Multiple fields need to be wrapped into a single object
+* jsonPath: used to transform the REST result into a string array if it is not already in that form (please see [this website](https://jsonpath.com/) for more information)
+
+### layout options
+
+* horizontal (default): input controls are arranged horizontally and flex-wrap if there is insufficient space
+* vertical: input controls are arranged vertically
+* tab: controls are shown in tabs (only applies to arrays)
+* table: controls are shown in a table with the property names being the column names (only applies to an array of objects)
 
 Please also see the definition of the [Schema](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/schema.ts) object.
 
