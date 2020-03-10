@@ -53,7 +53,7 @@ import { Schema } from '@dashjoin/json-schema-form/lib/schema';
   `
 })
 export class AppComponent {
-  title = 'ang-test';
+
   schema: Schema = {
     type: 'array',
     items: {
@@ -64,6 +64,7 @@ export class AppComponent {
       }
     }
   };
+  
   value: any = [{
     name: 'Joe',
     bday: '2018-09-09T22:00:00.000Z'
@@ -82,6 +83,22 @@ Finally, add the material style and icons to styles.css:
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 ```
 
+## JSON Schema Extensions
+
+We define a couple of extensions to JSON Schema in order to define the user interface and layout of the form:
+
+### widget
+
+This options specifies a specific input widget to be used. The following options are available:
+
+* select: shows a select input field with options (No free text entry is possible. Options can be loaded via rest (see below))
+* upload: the JSON property is set to the contents of an uploaded file
+* date: uses the material date picker component
+* textarea: displays a multi line textarea
+* largetextarea: like textarea but shows a larger textarea
+* password: input is shown as *****
+* color: shows a color picker widge
+* datetime-local, email, month, tel, time, url, week: uses the browser native [input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
 
 Please also see the definition of the [Schema](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/schema.ts) object.
 
