@@ -16,7 +16,10 @@
 To use the library in your project, follow these steps:
 
 ```shell
-npm install @dashjoin/json-schema-form
+npm i @angular/material
+npm i @angular/flex-layout
+npm i @angular/cdk
+npm i @dashjoin/json-schema-form
 ```
 
 In your app module add:
