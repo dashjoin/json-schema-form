@@ -87,9 +87,16 @@ Finally, add the material style and icons to styles.css:
 
 We define a couple of extensions to JSON Schema in order to define the user interface and layout of the form. Please also see the [demo playground](https://dashjoin.github.io/) where examples of all configuration options are available.
 
-### widget
+### Widget
 
 This options specifies a specific input widget to be used. The default is a simple text field. The following options are available:
+
+```
+{
+  "type": "string",
+  "widget": "date"
+}
+```
 
 * select: shows a select input field with options (No free text entry is possible. Options can be loaded via rest (see below))
 * upload: the JSON property is set to the contents of an uploaded file
@@ -100,16 +107,44 @@ This options specifies a specific input widget to be used. The default is a simp
 * color: shows a color picker widge
 * datetime-local, email, month, tel, time, url, week: uses the browser native [input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
 
-### autocomplete choices
+### Autocomplete choices
 
 The following fields control how select and autocomplete options are obtained from a REST backend:
+
+```
+{
+  "type": "string",
+  "choicesUrl": "/assets/autocomplete-simple.json",
+  "choicesVerb": "GET"
+}
+```
 
 * choicesUrl: defines the REST service URL
 * choicesVerb: defines the HTTP verb to use for the REST service URL, default is POST
 * choicesUrlArgs: defines the REST service parameter. The convention is to have a single parameter. Multiple fields need to be wrapped into a single object
 * jsonPath: used to transform the REST result into a string array if it is not already in that form (please see [this website](https://jsonpath.com/) for more information)
 
-### layout options
+### Layout options
+
+Layout options determine how the input elements of arrays and objects are arranged. These options can be applied for each nesting layer (e.g. if you're entering an array of objects):
+
+```
+{
+  "type": "array",
+  "layout": "horizontal",
+  "items": {
+    "type": "object",
+    "layout": "vertical",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "version": {
+        "type": "number"
+      }
+    }
+  }
+}```
 
 * horizontal (default): input controls are arranged horizontally and flex-wrap if there is insufficient space
 * vertical: input controls are arranged vertically
