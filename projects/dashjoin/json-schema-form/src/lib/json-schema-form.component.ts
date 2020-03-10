@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -16,7 +16,7 @@ import { Schema } from './schema'
   templateUrl: './json-schema-form.component.html',
   styleUrls: ['./json-schema-form.component.css']
 })
-export class JsonSchemaFormComponent implements OnInit {
+export class JsonSchemaFormComponent implements OnInit, OnChanges {
 
   /**
    * if an array is displayed, indicates which array index is being hovered over in order to
@@ -79,6 +79,18 @@ export class JsonSchemaFormComponent implements OnInit {
 
     if (this.value)
       this.choices = [this.value]
+  }
+
+  /**
+   * if the schema or values are changed from the outside,
+   * reset the component state wrt. errors and the choices cache
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loading = false
+    this.choices = null
+    this.filteredChoices = null
+    this.errorMessage = null
+    this.ngOnInit()
   }
 
   /**
