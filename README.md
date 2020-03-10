@@ -144,7 +144,8 @@ Layout options determine how the input elements of arrays and objects are arrang
       }
     }
   }
-}```
+}
+```
 
 * horizontal (default): input controls are arranged horizontally and flex-wrap if there is insufficient space
 * vertical: input controls are arranged vertically
