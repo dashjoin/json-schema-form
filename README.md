@@ -1,15 +1,16 @@
-# A Lightweight Angular JSON Schema Form
+# A Lightweight Angular JSON Schema Form Component
 
-* Generates an input form based on any JSON schema
-* Supports 2-way databinding
-* Packaged as an Angular library
+![](https://raw.github.com/jdorn/json-editor/master/jsoneditor.png)
+
 * Live demo: https://dashjoin.github.io/
 
 ## Features
 
+* Supports 2-way databinding
 * Autocomplete based on REST services (complex responses can be processed via JSONPath)
 * Flexible layout options (tab, table, vertical, horizontal)
 * Several input widgets (file upload, date / color picker, autocomplete, ...)
+* Lightweight: < 1000 lines of code
 
 ## Installation
 
