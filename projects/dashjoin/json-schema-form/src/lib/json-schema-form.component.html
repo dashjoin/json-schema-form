@@ -119,7 +119,7 @@
 <div *ngIf="getLayout() === 'single'">
     <mat-form-field>
         <mat-label>{{label}}</mat-label>
-        <input matInput [type]="schema.widget" [value]="value" (change)="change($event)">
+        <input matInput [type]="getInputType(schema)" [value]="value" (change)="change($event)">
     </mat-form-field>
     <p class="error">{{error()}}</p>
 </div>

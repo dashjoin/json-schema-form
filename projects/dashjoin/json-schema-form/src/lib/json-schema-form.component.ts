@@ -134,6 +134,18 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   }
 
   /**
+   * called from template in the "simple" type. If "type" is "number" or "integer",
+   * the HTML input type is "number" which avoids normal string input
+   */
+  getInputType(schema: Schema): string {
+    if (schema.type === "number")
+      return "number"
+    if (schema.type === "integer")
+      return "number"
+    return schema.widget
+  }
+
+  /**
    * append the label for nested objects (e.g. person.firstname for firstname field in object person)
    */
   appendLabel(key: string): string {
@@ -196,6 +208,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   change(event: any) {
 
     console.log(event)
+    let eventTarget: any
 
     if (event instanceof MatSelectChange)
       event = event.value
@@ -203,8 +216,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       event = event.value
     else if (event instanceof MatCheckboxChange)
       event = event.checked
-    else
+    else {
+      // save the event target in case the parsing changes the value (e.g. integer input 5.3 becomes 5, this is reflected on the UI via this handle)
+      eventTarget = event.target
       event = event.target.value
+    }
 
     if (event === "")
       event = null
@@ -227,6 +243,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       if (!isNaN(parseInt(event, 10))) {
         this.value = parseInt(event, 10)
         this.errorMessage = ""
+        if (eventTarget)
+          if ("" + this.value !== event)
+            eventTarget.value = this.value
       }
       else
         if (event != null)
