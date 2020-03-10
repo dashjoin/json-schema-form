@@ -248,7 +248,7 @@ export class JsonSchemaFormComponent implements OnInit {
    */
   filter(event: any) {
     if (this.choices != null)
-      this.filteredChoices = this.choices.filter(el => el.match(event.target.value));
+      this.filteredChoices = this.choices.filter(el => el?.toLowerCase().match(event.target.value?.toLowerCase()));
   }
 
   /**
