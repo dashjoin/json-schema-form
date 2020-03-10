@@ -358,6 +358,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * allows for the result of a file upload to be written into a text form element
    */
   handleFileInput(event: any) {
+    if (1024 * 1024 <= event.target.files.item(0).size) {
+      this.errorMessage = "The file size is limited to 1MB"
+      return
+    }
     const reader = new FileReader()
     reader.onload = () => {
       this.value = reader.result
