@@ -146,16 +146,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   }
 
   /**
-   * append the label for nested objects (e.g. person.firstname for firstname field in object person)
-   */
-  appendLabel(key: string): string {
-    if (this.label)
-      return this.label + "." + key
-    else
-      return key
-  }
-
-  /**
    * event handler for object display. Catches the child component event and
    * handle it by setting the value[key].
    * Also init null objects with {}
@@ -202,13 +192,14 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   }
 
   /**
-   * use the element title if present, defaults to the label input
+   * use the element title if present, defaults to the label input or "" is both are null
    */
   getLabel(): string {
     if (this.schema.title)
       return this.schema.title
-    else
+    if (this.label)
       return this.label
+    return ""
   }
 
   /**

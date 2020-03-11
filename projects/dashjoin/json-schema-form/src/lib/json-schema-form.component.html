@@ -4,7 +4,7 @@
     <mat-card *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
         <div *ngFor="let x of schema.properties | keyvalue:originalOrder" style="display: flex; margin: 2px">
             <div *ngIf="x.value.type">
-                <lib-json-schema-form [label]="appendLabel(x.key)" [value]="value ? value[x.key] : undefined"
+                <lib-json-schema-form [label]="x.value.title ? x.value.title : x.key" [value]="value ? value[x.key] : undefined"
                     (valueChange)="onValueChange(x.key, $event)" [schema]="x.value"></lib-json-schema-form>
             </div>
         </div>
@@ -14,28 +14,30 @@
     <mat-card *ngIf="getLayout() === 'array'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
         <div *ngFor="let x of value; let i=index" style="display: flex; margin: 2px; position: relative"
             (mouseenter)="hover=i" (mouseleave)="hover=null">
-            <lib-json-schema-form [label]="label" [(value)]="value[i]" [schema]="schema.items"></lib-json-schema-form>
+            <lib-json-schema-form [label]="getLabel()" [(value)]="value[i]" [schema]="schema.items">
+            </lib-json-schema-form>
             <button mat-icon-button (click)="remove(i)" class="example-handle"
-                [style.visibility]="i===hover ? 'visible' : 'hidden'">
+                [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </div>
-        <button mat-icon-button (click)="add()" matTooltip="{{label}}">
+        <button mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
     </mat-card>
 
     <!-- array tab layout -->
     <mat-tab-group *ngIf="getLayout() === 'tab'">
-        <mat-tab *ngFor="let x of value; let i=index" style="margin: 2px; position: relative" [label]="''+i">
-            <lib-json-schema-form [label]="label" [(value)]="value[i]" [schema]="schema.items"></lib-json-schema-form>
-            <button mat-icon-button (click)="remove(i)" class="example-handle">
+        <mat-tab *ngFor="let x of value; let i=index" style="margin: 2px; position: relative"
+            [label]="getLabel()+' '+i">
+            <lib-json-schema-form [(value)]="value[i]" [schema]="schema.items"></lib-json-schema-form>
+            <button mat-icon-button (click)="remove(i)" class="example-handle" matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>
-                <button mat-icon-button (click)="add()" matTooltip="{{label}}">
+                <button mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
                     <mat-icon>add_circle_outline</mat-icon>
                 </button>
             </ng-template>
@@ -46,7 +48,8 @@
     <mat-card *ngIf="getLayout() === 'table'">
         <table>
             <tr>
-                <th *ngFor="let x of schema.items.properties | keyvalue:originalOrder">{{x.key}}</th>
+                <th *ngFor="let x of schema.items.properties | keyvalue:originalOrder">
+                    {{x.value.title ? x.value.title : x.key}}</th>
                 <th></th>
             </tr>
             <tr *ngFor="let row of value; let i=index">
@@ -55,13 +58,13 @@
                     </lib-json-schema-form>
                 </td>
                 <td>
-                    <button mat-icon-button (click)="remove(i)">
+                    <button mat-icon-button (click)="remove(i)" matTooltip="{{getLabel()}}">
                         <mat-icon>remove_circle_outline</mat-icon>
                     </button>
                 </td>
             </tr>
         </table>
-        <button mat-icon-button (click)="add()" matTooltip="{{label}}">
+        <button mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
     </mat-card>
