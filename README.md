@@ -6,6 +6,7 @@
 
 ## Features
 
+* Renders compact forms
 * Supports 2-way databinding
 * Autocomplete based on REST services (complex responses can be processed via JSONPath)
 * Flexible layout options (tab, table, vertical, horizontal)
