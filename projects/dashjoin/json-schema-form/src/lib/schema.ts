@@ -25,6 +25,18 @@ export interface Schema {
     required?: boolean
 
     /**
+     * field title
+     * https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.1
+     */
+    title?: string
+
+    /**
+     * field description
+     * https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.1
+     */
+    description?: string
+
+    /**
      * defines the array element structure if type = array
      */
     items?: Schema

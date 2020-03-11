@@ -155,6 +155,14 @@ export class AppComponent {
         value: null,
         schema: { type: "string", required: true }
       },
+      title: {
+        value: null,
+        schema: { type: "string", title: "My title" }
+      },
+      description: {
+        value: null,
+        schema: { type: "string", description: "You find me in the tooltip" }
+      },
       simpleGet: {
         value: null,
         schema: {

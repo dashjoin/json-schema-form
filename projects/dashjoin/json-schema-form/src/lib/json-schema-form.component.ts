@@ -202,6 +202,16 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   }
 
   /**
+   * use the element title if present, defaults to the label input
+   */
+  getLabel(): string {
+    if (this.schema.title)
+      return this.schema.title
+    else
+      return this.label
+  }
+
+  /**
    * input element change handler.
    * normalize the different kind of events, handle the datatypes, set the value and emit the change
    */
