@@ -4,8 +4,9 @@
     <mat-card *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
         <div *ngFor="let x of schema.properties | keyvalue:originalOrder" style="display: flex; margin: 2px">
             <div *ngIf="x.value.type">
-                <lib-json-schema-form [label]="x.value.title ? x.value.title : x.key" [value]="value ? value[x.key] : undefined"
-                    (valueChange)="onValueChange(x.key, $event)" [schema]="x.value"></lib-json-schema-form>
+                <lib-json-schema-form [label]="x.value.title ? x.value.title : x.key"
+                    [value]="value ? value[x.key] : undefined" (valueChange)="onValueChange(x.key, $event)"
+                    [schema]="x.value"></lib-json-schema-form>
             </div>
         </div>
     </mat-card>
@@ -84,7 +85,7 @@
     <div *ngIf="getLayout() === 'date'">
         <mat-form-field>
             <mat-label>{{label}}</mat-label>
-            <input matInput [value]="value" (dateChange)="change($event)" [matDatepicker]="picker">
+            <input autocomplete="off" matInput [value]="value" (dateChange)="change($event)" [matDatepicker]="picker">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -101,8 +102,8 @@
     <div *ngIf="getLayout() === 'autocomplete'">
         <mat-form-field *ngIf="schema.widget !== 'select'">
             <mat-label>{{label}}</mat-label>
-            <input matInput [value]="value" (keyup)="filter($event)" (focus)="load()" (blur)="change($event)"
-                [matAutocomplete]="auto">
+            <input autocomplete="off" matInput [value]="value" (keyup)="filter($event)" (focus)="load()"
+                (blur)="change($event)" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let option of filteredChoices" [value]="option">
                     {{option}}
@@ -124,7 +125,7 @@
     <div *ngIf="getLayout() === 'single'">
         <mat-form-field>
             <mat-label>{{label}}</mat-label>
-            <input matInput [type]="getInputType(schema)" [value]="value" (change)="change($event)">
+            <input autocomplete="off" matInput [type]="getInputType(schema)" [value]="value" (change)="change($event)">
         </mat-form-field>
         <p class="error">{{error()}}</p>
     </div>
