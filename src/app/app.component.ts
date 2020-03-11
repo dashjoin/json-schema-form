@@ -231,12 +231,14 @@ export class AppComponent {
         ],
         schema: {
           type: "array",
+          title: "Person",
           items: {
             type: "object",
             layout: "vertical",
             properties: {
               name: { type: "string" },
               country: {
+                description: "Options loaded via REST",
                 type: "string",
                 widget: "select",
                 choicesUrl: "/assets/autocomplete-simple.json",
