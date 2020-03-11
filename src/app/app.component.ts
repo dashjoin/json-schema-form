@@ -216,42 +216,52 @@ export class AppComponent {
         }
       },
       complex: {
-        value: null,
+        value: [
+          {
+            name: "joe",
+            country: "United States",
+            email: ["joe@example.org", "alt@example.org"],
+            password: "123456",
+            birthday: "2000-03-22T23:00:00.000Z",
+            consent: "yes"
+          },
+          {
+            name: "mike"
+          }
+        ],
         schema: {
           type: "array",
           items: {
             type: "object",
             layout: "vertical",
             properties: {
-              name: {
-                type: "array",
-                items: {
-                  required: true,
-                  widget: "select",
-                  type: "string",
-                  choicesUrl: "/assets/autocomplete-simple.json",
-                  choicesVerb: "GET"
-                }
+              name: { type: "string" },
+              country: {
+                type: "string",
+                widget: "select",
+                choicesUrl: "/assets/autocomplete-simple.json",
+                choicesVerb: "GET"
               },
-              age: {
-                required: true,
-                type: "number",
-                enum: [null, "1", "2", "3"]
-              },
-              proceed: {
-                required: true,
-                type: "boolean"
-              },
-              txt: {
-                required: true,
+              password: {
                 type: "string",
                 widget: "password"
               },
-              date: {
-                required: true,
+              birthday: {
                 type: "string",
                 widget: "date"
-              }
+              },
+              email: {
+                type: "array",
+                layout: "vertical",
+                items: { type: "string" }
+              },
+              consent: {
+                title: "I consent",
+                description: "This is a required field",
+                required: true,
+                type: "string",
+                enum: [null, "yes", "no"]
+              },
             }
           }
         }
