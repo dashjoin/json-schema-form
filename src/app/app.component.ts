@@ -171,12 +171,12 @@ export class AppComponent {
           choicesVerb: "GET"
         }
       },
-      jsonPath: {
+      jsonPointer: {
         value: null,
         schema: {
           type: "string",
           choicesUrl: "/assets/autocomplete-complex.json",
-          jsonPath: "$.result[*].name",
+          jsonPointer: "/result/*/name",
           choicesVerb: "GET"
         }
       },

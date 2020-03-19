@@ -15,7 +15,7 @@
     "angular2",
     "form-builder",
     "autocomplete",
-    "jsonpath"
+    "json pointer"
   ],
   "peerDependencies": {
     "@angular/common": "^9.0.5",

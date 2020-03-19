@@ -293,13 +293,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     this.loading = true
 
     this.getChoices(this.schema.choicesUrl, this.schema.choicesUrlArgs, this.schema.choicesVerb).subscribe(res => {
-      if (this.schema.jsonPath != null) {
-        // have some trouble bundling the jsonpath lib right now
-        // res = jsonPath.query(res, this.schema.jsonPath);
-
-        // use alternative mini impl
-        const parts = this.schema.jsonPath.split('.')
-        res = this.jp(res, parts)
+      if (this.schema.jsonPointer != null) {
+        res = this.jsonPointer(res, this.schema.jsonPointer)
         if (!Array.isArray(res))
           res = [res]
       }
@@ -309,14 +304,14 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     })
   }
 
-  /**
-   * TODO: remove
-   * mini jsonpath implementation, since the "npm i jsonpath" dependency does not work in the angular lib
-   * (it does work in the root demo app...)
-   */
-  jp(o: any, paths: string[]): any {
+  jsonPointer(o: any, pointer: string): any {
+    return this.jsonPointer2(o, this.split(pointer))
+  }
 
-    console.log(o, paths)
+  jsonPointer2(o: any, paths: string[]): any {
+
+    if (o === undefined)
+      return undefined
 
     if (paths.length === 0)
       return o
@@ -325,20 +320,29 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     const np = Object.assign([], paths)
     np.splice(0, 1)
 
-    if (path === "$")
-      return this.jp(o, np)
-
-    if (path.indexOf('[') === -1)
-      return this.jp(o[path], np)
-    else {
-      if (!path.startsWith('['))
-        o = o[path.split('[')[0]]
+    if (paths[0] === '*') {
       const res = []
-      for (const f of o) {
-        res.push(this.jp(f, np))
-      }
+      for (const f of (typeof (o) === 'object' ? Object.values(o) : o))
+        res.push(this.jsonPointer2(f, np))
       return res
     }
+    else {
+      return this.jsonPointer2(o[path], np)
+    }
+  }
+
+  split(s: string): string[] {
+    if (s === "")
+      return []
+    if (s.startsWith('/')) {
+      s = s.substring(1)
+      const arr = s.split('/')
+      for (const a of arr)
+        if (a === "")
+          throw new Error('JSON Pointer must not contain an empty reference token')
+      return arr
+    }
+    throw new Error('JSON Pointer must start with /')
   }
 
   /**

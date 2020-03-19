@@ -8,7 +8,7 @@
 
 * Renders compact forms
 * Supports 2-way databinding
-* Autocomplete based on REST services (complex responses can be processed via JSONPath)
+* Autocomplete based on REST services (complex responses can be processed via extended JSON Pointer)
 * Flexible layout options (tab, table, vertical, horizontal)
 * Several input widgets (file upload, date / color picker, autocomplete, ...)
 * Lightweight: < 1000 lines of code
@@ -123,7 +123,14 @@ The following fields control how select and autocomplete options are obtained fr
 * choicesUrl: defines the REST service URL
 * choicesVerb: defines the HTTP verb to use for the REST service URL, default is POST
 * choicesUrlArgs: defines the REST service parameter. The convention is to have a single parameter. Multiple fields need to be wrapped into a single object
-* jsonPath: used to transform the REST result into a string array if it is not already in that form (please see [this website](https://jsonpath.com/) for more information)
+* jsonPointer: used to transform the REST result into a string array if it is not already in that form.
+  Note that we use a slightly extended version of [JSON Pointer](https://tools.ietf.org/html/rfc6901) that allows processing arrays of objects. Consider the following examples:
+
+| Response  | JSON Pointer  | Result (string[]) |
+|---|---|---|
+| {"result": ["A", "B"]}  |  /result |  ["A", "B"] |
+| [{"name":"A"}, {"name":"B"}] | /*/name  |  ["A", "B"] |
+
 
 ### Layout options
 
