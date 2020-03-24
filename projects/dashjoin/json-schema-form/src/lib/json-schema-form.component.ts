@@ -5,7 +5,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { KeyValue } from '@angular/common';
-import { Schema } from './schema'
+import { Schema } from './schema';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -22,47 +22,47 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * if an array is displayed, indicates which array index is being hovered over in order to
    * display the "-" remove button
    */
-  hover: number
+  hover: number;
 
   /**
    * contains the REST autocomplete response (unfiltered)
    */
-  choices: string[]
+  choices: string[];
 
   /**
    * flag to make sure we only send one request
    */
-  loading: boolean
+  loading: boolean;
 
   /**
    * choices filtered by the current user input (only display the choices that match the input)
    */
-  filteredChoices: string[]
+  filteredChoices: string[];
 
   /**
    * validation error message to be displayed in red
    */
-  errorMessage: string
+  errorMessage: string;
 
   /**
    * the name of the input field
    */
-  @Input() label: string
+  @Input() label: string;
 
   /**
    * the input value
    */
-  @Input() value: any
+  @Input() value: any;
 
   /**
    * emit changes done by the user in the component
    */
-  @Output() valueChange: EventEmitter<any> = new EventEmitter()
+  @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
   /**
    * JSON schema to use
    */
-  @Input() schema: Schema
+  @Input() schema: Schema;
 
   /**
    * http used for autocomplete REST calls
@@ -74,11 +74,13 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * replace undefined with null and init autocomplete choices
    */
   ngOnInit(): void {
-    if (typeof this.value === "undefined")
-      this.value = null
+    if (typeof this.value === 'undefined') {
+      this.value = null;
+    }
 
-    if (this.value)
-      this.choices = [this.value]
+    if (this.value) {
+      this.choices = [this.value];
+    }
   }
 
   /**
@@ -86,11 +88,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * reset the component state wrt. errors and the choices cache
    */
   ngOnChanges(changes: SimpleChanges): void {
-    this.loading = false
-    this.choices = null
-    this.filteredChoices = null
-    this.errorMessage = null
-    this.ngOnInit()
+    this.loading = false;
+    this.choices = null;
+    this.filteredChoices = null;
+    this.errorMessage = null;
+    this.ngOnInit();
   }
 
   /**
@@ -106,31 +108,39 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   getLayout(): string {
     if (this.schema.type === 'object') {
-      return "object"
+      return 'object';
     }
     if (this.schema.type === 'array') {
-      if (this.schema.layout === 'tab')
-        return "tab"
-      if (this.schema.layout === 'table')
-        return "table"
-      return "array"
+      if (this.schema.layout === 'tab') {
+        return 'tab';
+      }
+      if (this.schema.layout === 'table') {
+        return 'table';
+      }
+      return 'array';
     }
-    if (this.schema.enum)
-      return "enum"
-    if (this.schema.widget === "date")
-      return "date"
-    if (this.schema.widget === "upload")
-      return "upload"
-    if (this.schema.widget === "textarea")
-      return "textarea"
-    if (this.schema.widget === "largetextarea")
-      return "largetextarea"
-    if (this.schema.type === 'boolean')
-      return "checkbox"
+    if (this.schema.enum) {
+      return 'enum';
+    }
+    if (this.schema.widget === 'date') {
+      return 'date';
+    }
+    if (this.schema.widget === 'upload') {
+      return 'upload';
+    }
+    if (this.schema.widget === 'textarea') {
+      return 'textarea';
+    }
+    if (this.schema.widget === 'largetextarea') {
+      return 'largetextarea';
+    }
+    if (this.schema.type === 'boolean') {
+      return 'checkbox';
+    }
     if (this.schema.choicesUrl) {
-      return "autocomplete"
+      return 'autocomplete';
     }
-    return 'single'
+    return 'single';
   }
 
   /**
@@ -138,11 +148,13 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * the HTML input type is "number" which avoids normal string input
    */
   getInputType(schema: Schema): string {
-    if (schema.type === "number")
-      return "number"
-    if (schema.type === "integer")
-      return "number"
-    return schema.widget
+    if (schema.type === 'number') {
+      return 'number';
+    }
+    if (schema.type === 'integer') {
+      return 'number';
+    }
+    return schema.widget;
   }
 
   /**
@@ -151,10 +163,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * Also init null objects with {}
    */
   onValueChange(key: string, value: any) {
-    if (!this.value)
-      this.value = {}
-    this.value[key] = value
-    this.valueChange.emit(this.value)
+    if (!this.value) {
+      this.value = {};
+    }
+    this.value[key] = value;
+    this.valueChange.emit(this.value);
   }
 
   /**
@@ -162,44 +175,50 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * null arrays are initialized with []
    */
   add() {
-    if (!(this.value instanceof Array))
-      this.value = []
-    if (this.schema.items.type === "array")
-      this.value.push([])
-    else if (this.schema.items.type === "object")
-      this.value.push({})
-    else
-      this.value.push(null)
-    this.valueChange.emit(this.value)
+    if (!(this.value instanceof Array)) {
+      this.value = [];
+    }
+    if (this.schema.items.type === 'array') {
+      this.value.push([]);
+    } else if (this.schema.items.type === 'object') {
+      this.value.push({});
+    } else {
+      this.value.push(null);
+    }
+    this.valueChange.emit(this.value);
   }
 
   /**
    * remove an element from an array
    */
   remove(i: number) {
-    this.value.splice(i, 1)
-    this.valueChange.emit(this.value)
+    this.value.splice(i, 1);
+    this.valueChange.emit(this.value);
   }
 
   /**
    * return error string
    */
   error(): string {
-    if (this.schema.required)
-      if (this.value == null)
-        return "required"
-    return this.errorMessage
+    if (this.schema.required) {
+      if (this.value == null) {
+        return 'required';
+      }
+    }
+    return this.errorMessage;
   }
 
   /**
    * use the element title if present, defaults to the label input or "" is both are null
    */
   getLabel(): string {
-    if (this.schema.title)
-      return this.schema.title
-    if (this.label)
-      return this.label
-    return ""
+    if (this.schema.title) {
+      return this.schema.title;
+    }
+    if (this.label) {
+      return this.label;
+    }
+    return '';
   }
 
   /**
@@ -208,155 +227,166 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   change(event: any) {
 
-    console.log(event)
-    let eventTarget: any
+    console.log(event);
+    let eventTarget: any;
 
-    if (event instanceof MatSelectChange)
-      event = event.value
-    else if (event instanceof MatDatepickerInputEvent)
-      event = event.value
-    else if (event instanceof MatCheckboxChange)
-      event = event.checked
-    else {
-      // save the event target in case the parsing changes the value (e.g. integer input 5.3 becomes 5, this is reflected on the UI via this handle)
-      eventTarget = event.target
-      event = event.target.value
+    if (event instanceof MatSelectChange) {
+      event = event.value;
+    } else if (event instanceof MatDatepickerInputEvent) {
+      event = event.value;
+    } else if (event instanceof MatCheckboxChange) {
+      event = event.checked;
+    } else {
+      // save the event target in case the parsing changes the value
+      // (e.g. integer input 5.3 becomes 5, this is reflected on the UI via this handle)
+      eventTarget = event.target;
+      event = event.target.value;
     }
 
-    if (event === "")
-      event = null
+    if (event === '') {
+      event = null;
+    }
 
-    if (event == null)
-      this.value = null
+    if (event == null) {
+      this.value = null;
+    }
 
-    if (this.schema.type === "number") {
+    if (this.schema.type === 'number') {
       if (!isNaN(parseFloat(event))) {
-        this.value = parseFloat(event)
-        this.errorMessage = ""
-      }
-      else
-        if (event != null)
-          this.errorMessage = event + " is not a number"
-        else
-          this.errorMessage = ""
-    }
-    else if (this.schema.type === "integer") {
+        this.value = parseFloat(event);
+        this.errorMessage = '';
+      } else
+        if (event != null) {
+          this.errorMessage = event + ' is not a number';
+        } else {
+          this.errorMessage = '';
+        }
+    } else if (this.schema.type === 'integer') {
       if (!isNaN(parseInt(event, 10))) {
-        this.value = parseInt(event, 10)
-        this.errorMessage = ""
-        if (eventTarget)
-          if ("" + this.value !== event)
-            eventTarget.value = this.value
+        this.value = parseInt(event, 10);
+        this.errorMessage = '';
+        if (eventTarget) {
+          if ('' + this.value !== event) {
+            eventTarget.value = this.value;
+          }
+        }
+      } else if (event != null) {
+        this.errorMessage = event + ' is not an integer number';
+      } else {
+        this.errorMessage = '';
       }
-      else
-        if (event != null)
-          this.errorMessage = event + " is not an integer number"
-        else
-          this.errorMessage = ""
-    }
-    else if (this.schema.type === "boolean") {
-      if (typeof event === "string") {
-        if (event === "true")
-          this.value = true
-        else if (event === "false")
-          this.value = false
-        else
-          this.value = null
+    } else if (this.schema.type === 'boolean') {
+      if (typeof event === 'string') {
+        if (event === 'true') {
+          this.value = true;
+        } else if (event === 'false') {
+          this.value = false;
+        } else {
+          this.value = null;
+        }
+      } else {
+        this.value = event;
       }
-      else
-        this.value = event
+    } else if (this.schema.type === 'string') {
+      this.value = event;
+    } else {
+      throw new Error('unknown type: ' + this.schema.type);
     }
-    else if (this.schema.type === "string") {
-      this.value = event
-    }
-    else
-      throw new Error("unknown type: " + this.schema.type)
 
-    this.valueChange.emit(this.value)
+    this.valueChange.emit(this.value);
   }
 
   /**
    * autocomplete filter
    */
   filter(event: any) {
-    if (this.choices != null)
+    if (this.choices != null) {
       this.filteredChoices = this.choices.filter(el => el?.toLowerCase().match(event.target.value?.toLowerCase()));
+    }
   }
 
   /**
    * autocomplete REST loader
    */
   load() {
-    if (this.loading)
-      return
+    if (this.loading) {
+      return;
+    }
 
-    this.loading = true
+    this.loading = true;
 
     this.getChoices(this.schema.choicesUrl, this.schema.choicesUrlArgs, this.schema.choicesVerb).subscribe(res => {
       if (this.schema.jsonPointer != null) {
-        res = this.jsonPointer(res, this.schema.jsonPointer)
-        if (!Array.isArray(res))
-          res = [res]
+        res = this.jsonPointer(res, this.schema.jsonPointer);
+        if (!Array.isArray(res)) {
+          res = [res];
+        }
       }
-      this.choices = res
-      this.filteredChoices = res
-      console.log(this.choices)
-    })
+      this.choices = res;
+      this.filteredChoices = res;
+      console.log(this.choices);
+    });
   }
 
   jsonPointer(o: any, pointer: string): any {
-    return this.jsonPointer2(o, this.split(pointer))
+    return this.jsonPointer2(o, this.split(pointer));
   }
 
   jsonPointer2(o: any, paths: string[]): any {
 
-    if (o === undefined)
-      return undefined
+    if (o === undefined) {
+      return undefined;
+    }
 
-    if (paths.length === 0)
-      return o
+    if (paths.length === 0) {
+      return o;
+    }
 
-    const path = paths[0]
-    const np = Object.assign([], paths)
-    np.splice(0, 1)
+    const path = paths[0];
+    const np = Object.assign([], paths);
+    np.splice(0, 1);
 
     if (paths[0] === '*') {
-      const res = []
-      for (const f of (typeof (o) === 'object' ? Object.values(o) : o))
-        res.push(this.jsonPointer2(f, np))
-      return res
-    }
-    else {
-      return this.jsonPointer2(o[path], np)
+      const res = [];
+      for (const f of (typeof (o) === 'object' ? Object.values(o) : o)) {
+        res.push(this.jsonPointer2(f, np));
+      }
+      return res;
+    } else {
+      return this.jsonPointer2(o[path], np);
     }
   }
 
   split(s: string): string[] {
-    if (s === "")
-      return []
-    if (s.startsWith('/')) {
-      s = s.substring(1)
-      const arr = s.split('/')
-      for (const a of arr)
-        if (a === "")
-          throw new Error('JSON Pointer must not contain an empty reference token')
-      return arr
+    if (s === '') {
+      return [];
     }
-    throw new Error('JSON Pointer must start with /')
+    if (s.startsWith('/')) {
+      s = s.substring(1);
+      const arr = s.split('/');
+      for (const a of arr) {
+        if (a === '') {
+          throw new Error('JSON Pointer must not contain an empty reference token');
+        }
+      }
+      return arr;
+    }
+    throw new Error('JSON Pointer must start with /');
   }
 
   /**
    * handle GET / POST
    */
   getChoices(url: string, args: any, verb: string): Observable<any> {
-    if (verb === "GET")
-      return this.http.get<any[]>(url, args)
-    else
+    if (verb === 'GET') {
+      return this.http.get<any[]>(url, args);
+    } else {
       return this.http.post<any[]>(url, args, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
         })
-      })
+      });
+    }
   }
 
   /**
@@ -364,14 +394,14 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   handleFileInput(event: any) {
     if (1024 * 1024 <= event.target.files.item(0).size) {
-      this.errorMessage = "The file size is limited to 1MB"
-      return
+      this.errorMessage = 'The file size is limited to 1MB';
+      return;
     }
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onload = () => {
-      this.value = reader.result
-      this.valueChange.emit(this.value)
-    }
+      this.value = reader.result;
+      this.valueChange.emit(this.value);
+    };
     reader.readAsText(event.target.files.item(0));
   }
 }
