@@ -439,7 +439,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   keyDown(event: any) {
     if (event.key === 'Backspace') {
       this.selectfilter = this.selectfilter.substring(0, this.selectfilter.length - 1);
-    } else if (event.key.length === 1) {
+    } else if (event.key.length === 1 && event.key !== ' ') {
       this.selectfilter = this.selectfilter + event.key;
     } else {
       return;
