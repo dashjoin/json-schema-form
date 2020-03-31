@@ -81,6 +81,17 @@
         <p class="error">{{error()}}</p>
     </div>
 
+    <!-- array-select -->
+    <div *ngIf="getLayout() === 'array-select'">
+        <mat-form-field>
+            <mat-label>{{label}}</mat-label>
+            <mat-select [value]="value" (focus)="load()" (selectionChange)="change($event)" multiple>
+                <mat-option *ngFor="let x of choices" [value]="x">{{x}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <p class="error">{{error()}}</p>
+    </div>
+
     <!-- date element -->
     <div *ngIf="getLayout() === 'date'">
         <mat-form-field>

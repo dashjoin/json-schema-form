@@ -79,20 +79,29 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
 
     if (this.value) {
-      this.choices = [this.value];
+      if (Array.isArray(this.value)) {
+        // multi-select is a special case since the value is already an array
+        this.choices = this.value;
+      } else {
+        this.choices = [this.value];
+      }
     }
   }
 
   /**
-   * if the schema or values are changed from the outside,
+   * if the schema changes from the outside,
    * reset the component state wrt. errors and the choices cache
    */
   ngOnChanges(changes: SimpleChanges): void {
-    this.loading = false;
-    this.choices = null;
-    this.filteredChoices = null;
-    this.errorMessage = null;
-    this.ngOnInit();
+    if (changes.schema) {
+      if (changes.schema.previousValue) {
+        this.loading = false;
+        this.choices = null;
+        this.filteredChoices = null;
+        this.errorMessage = null;
+        this.ngOnInit();
+      }
+    }
   }
 
   /**
@@ -116,6 +125,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
       if (this.schema.layout === 'table') {
         return 'table';
+      }
+      if (this.schema.layout === 'select') {
+        return 'array-select';
       }
       return 'array';
     }
@@ -287,6 +299,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.value = event;
       }
     } else if (this.schema.type === 'string') {
+      this.value = event;
+    } else if (this.schema.type === 'array') {
       this.value = event;
     } else {
       throw new Error('unknown type: ' + this.schema.type);

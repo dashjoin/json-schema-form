@@ -215,6 +215,15 @@ export class AppComponent {
           items: { type: 'object', layout: 'vertical', properties: { name: { type: 'string' }, version: { type: 'number' } } }
         }
       },
+      'array-select': {
+        value: ['India', 'China'],
+        schema: {
+          type: 'array', layout: 'select',
+          choicesUrl: '/assets/autocomplete-simple.json',
+          choicesVerb: 'GET',
+          items: { type: 'string' }
+        }
+      },
       complex: {
         value: [
           {

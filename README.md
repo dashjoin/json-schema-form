@@ -159,6 +159,7 @@ Layout options determine how the input elements of arrays and objects are arrang
 * vertical: input controls are arranged vertically
 * tab: controls are shown in tabs (only applies to arrays)
 * table: controls are shown in a table with the property names being the column names (only applies to an array of objects)
+* select: array is shown as a multi-select (only applies to arrays of string)
 
 Please also see the definition of the [Schema](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/schema.ts) object.
 

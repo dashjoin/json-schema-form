@@ -97,6 +97,7 @@ export interface Schema {
      * vertical: input controls are arranged vertically
      * tab: controls are shown in tabs (only applies to arrays)
      * table: controls are shown in a table with the property names being the column names (only applies to an array of objects)
+     * select: array is shown as a multi-select (only applies to arrays of string)
      */
-    layout?: 'tab' | 'table' | 'vertical' | 'horizontal';
+    layout?: 'tab' | 'table' | 'vertical' | 'horizontal' | 'select';
 }
