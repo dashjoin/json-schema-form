@@ -40,6 +40,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   filteredChoices: string[];
 
   /**
+   * filter entered for array-select
+   */
+  selectfilter = '';
+
+  /**
    * validation error message to be displayed in red
    */
   errorMessage: string;
@@ -82,8 +87,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       if (Array.isArray(this.value)) {
         // multi-select is a special case since the value is already an array
         this.choices = this.value;
+        this.filteredChoices = this.value;
       } else {
         this.choices = [this.value];
+        this.filteredChoices = [this.value];
       }
     }
   }
@@ -415,5 +422,30 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.valueChange.emit(this.value);
     };
     reader.readAsText(event.target.files.item(0));
+  }
+
+  /**
+   * key pressed on array select - apply filter
+   */
+  keyDown(event: any) {
+    if (event.key === 'Backspace') {
+      this.selectfilter = this.selectfilter.substring(0, this.selectfilter.length - 1);
+    } else if (event.key.length === 1) {
+      this.selectfilter = this.selectfilter + event.key;
+    } else {
+      return;
+    }
+    this.filteredChoices = this.choices.filter(
+      item => item.toLowerCase().includes(this.selectfilter.toLowerCase()) || this.value.indexOf(item) >= 0);
+  }
+
+  /**
+   * array select options opened / closed. reset filter when closed
+   */
+  openedChange(event: boolean) {
+    if (!event) {
+      this.selectfilter = '';
+      this.filteredChoices = this.choices;
+    }
   }
 }

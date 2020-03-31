@@ -83,10 +83,12 @@
 
     <!-- array-select -->
     <div *ngIf="getLayout() === 'array-select'">
-        <mat-form-field>
+        <mat-form-field [matTooltip]="schema.description ? '' : 'Type to filter'">
             <mat-label>{{label}}</mat-label>
-            <mat-select [value]="value" (focus)="load()" (selectionChange)="change($event)" multiple>
-                <mat-option *ngFor="let x of choices" [value]="x">{{x}}</mat-option>
+            <mat-select [value]="value" (focus)="load()" (selectionChange)="change($event)" multiple
+                (keydown)="keyDown($event)" (openedChange)="openedChange($event)">
+                <mat-option *ngFor="let x of filteredChoices" [value]="x" matTooltip="{{selectfilter}}">{{x}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
         <p class="error">{{error()}}</p>
