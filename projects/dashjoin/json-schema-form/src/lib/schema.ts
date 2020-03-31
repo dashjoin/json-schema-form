@@ -9,42 +9,42 @@ export interface Schema {
     /**
      * schema property type
      */
-    type: "boolean" | "string" | "array" | "number" | "integer" | "object"
+    type: 'boolean' | 'string' | 'array' | 'number' | 'integer' | 'object';
 
     /**
      * fixed property value range.
      * if set, the editor uses a select element
      */
-    enum?: string[]
+    enum?: string[];
 
     /**
      * indicates that the property is required (i.e. must be non null)
      * note that the latest spec defines required as an array of prop names:
      * https://json-schema.org/understanding-json-schema/reference/object.html#required
      */
-    required?: boolean
+    required?: boolean;
 
     /**
      * field title
      * https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.1
      */
-    title?: string
+    title?: string;
 
     /**
      * field description
      * https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.1
      */
-    description?: string
+    description?: string;
 
     /**
      * defines the array element structure if type = array
      */
-    items?: Schema
+    items?: Schema;
 
     /**
      * defines properties if type = object
      */
-    properties?: { [key: string]: Schema }
+    properties?: { [key: string]: Schema };
 
 
     // Extension keywords, meaning those defined outside of this document and its companions, are free to define other behaviors as well
@@ -54,7 +54,7 @@ export interface Schema {
      * defines this property to be a URI. On the UI it will be displayed as a string.
      * For instance, the implementation might decide to use the labelService to display nice names on the UI
      */
-    uri?: boolean
+    uri?: boolean;
 
     /**
      * defines which input widget is used for data display and entry.
@@ -62,32 +62,33 @@ export interface Schema {
      * (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
      * and native angular widgets such as https://material.angular.io/components/datepicker/overview
      */
-    widget?: "select" | "upload" | "date" | "textarea" | "largetextarea" | "password" | "color" | "datetime-local" | "email" | "month" | "tel" | "time" | "url" | "week"
+    widget?: 'select' | 'upload' | 'date' | 'textarea' | 'largetextarea' | 'password' | 'color' |
+    'datetime-local' | 'email' | 'month' | 'tel' | 'time' | 'url' | 'week';
 
     /**
      * used in case the select / autocomplete options are gathered from a REST service URL.
      * defines the REST service URL.
      */
-    choicesUrl?: string
+    choicesUrl?: string;
 
     /**
      * used in case the select / autocomplete options are gathered from a REST service URL.
      * defines the HTTP verb to use for the REST service URL. The default is POST.
      */
-    choicesVerb?: string
+    choicesVerb?: string;
 
     /**
      * used in case the select / autocomplete options are gathered from a REST service URL.
      * defines the REST service parameter. The convention is to have a single parameter.
      * Multiple fields need to be wrapped into a single object
      */
-    choicesUrlArgs?: any
+    choicesUrlArgs?: any;
 
     /**
      * used in case the select / autocomplete options are gathered from a REST service URL.
      * used to transform the REST result into a string array
      */
-    jsonPointer?: string
+    jsonPointer?: string;
 
     /**
      * input control layout:
@@ -97,5 +98,5 @@ export interface Schema {
      * tab: controls are shown in tabs (only applies to arrays)
      * table: controls are shown in a table with the property names being the column names (only applies to an array of objects)
      */
-    layout?: "tab" | "table" | "vertical" | "horizontal"
+    layout?: 'tab' | 'table' | 'vertical' | 'horizontal';
 }
