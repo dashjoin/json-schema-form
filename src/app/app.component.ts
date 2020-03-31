@@ -180,6 +180,13 @@ export class AppComponent {
           choicesVerb: 'GET'
         }
       },
+      'static-choices': {
+        value: null,
+        schema: {
+          type: 'string',
+          choices: ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+        }
+      },
       tab: {
         value: [{ name: 'Angular', version: 9 }, { name: 'Vue' }],
         schema: {

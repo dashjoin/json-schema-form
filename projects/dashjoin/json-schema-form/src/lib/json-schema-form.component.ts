@@ -159,6 +159,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.choicesUrl) {
       return 'autocomplete';
     }
+    if (this.schema.choices) {
+      return 'autocomplete';
+    }
     return 'single';
   }
 
@@ -334,6 +337,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
 
     this.loading = true;
+
+    if (this.schema.choices) {
+      this.choices = this.schema.choices;
+      this.filteredChoices = this.schema.choices;
+      return;
+    }
 
     this.getChoices(this.schema.choicesUrl, this.schema.choicesUrlArgs, this.schema.choicesVerb).subscribe(res => {
       if (this.schema.jsonPointer != null) {

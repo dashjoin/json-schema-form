@@ -85,6 +85,11 @@ export interface Schema {
     choicesUrlArgs?: any;
 
     /**
+     * used in case the select / autocomplete options are defined statically
+     */
+    choices?: string[];
+
+    /**
      * used in case the select / autocomplete options are gathered from a REST service URL.
      * used to transform the REST result into a string array
      */

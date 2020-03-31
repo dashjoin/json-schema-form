@@ -120,6 +120,7 @@ The following fields control how select and autocomplete options are obtained fr
 }
 ```
 
+* choices: string array that allows defining the choices statically
 * choicesUrl: defines the REST service URL
 * choicesVerb: defines the HTTP verb to use for the REST service URL, default is POST
 * choicesUrlArgs: defines the REST service parameter. The convention is to have a single parameter. Multiple fields need to be wrapped into a single object
