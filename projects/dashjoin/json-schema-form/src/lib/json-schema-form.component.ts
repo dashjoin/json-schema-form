@@ -227,7 +227,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   change(event: any) {
 
-    console.log(event);
     let eventTarget: any;
 
     if (event instanceof MatSelectChange) {
@@ -324,7 +323,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
       this.choices = res;
       this.filteredChoices = res;
-      console.log(this.choices);
     });
   }
 
