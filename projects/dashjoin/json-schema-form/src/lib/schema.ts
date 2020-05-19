@@ -9,7 +9,12 @@ export interface Schema {
     /**
      * schema property type
      */
-    type: 'boolean' | 'string' | 'array' | 'number' | 'integer' | 'object';
+    type?: 'boolean' | 'string' | 'array' | 'number' | 'integer' | 'object';
+
+    /**
+     * schema property reference
+     */
+    '$ref'?: string;
 
     /**
      * fixed property value range.
@@ -40,6 +45,11 @@ export interface Schema {
      * https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.1
      */
     description?: string;
+
+    /**
+     * defines types that can be ref'ed
+     */
+    definitions?: { [key: string]: Schema };
 
     /**
      * defines the array element structure if type = array

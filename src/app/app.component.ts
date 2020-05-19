@@ -177,6 +177,25 @@ export class AppComponent {
           }
         }
       },
+      ref: {
+        value: null,
+        schema: {
+          definitions: {
+            address: {
+              type: 'object',
+              properties: {
+                city: { type: 'string' },
+                zip: { type: 'number' },
+              }
+            }
+          },
+          type: 'object',
+          properties: {
+            home: { $ref: '#/definitions/address' },
+            work: { $ref: '#/definitions/address' }
+          }
+        }
+      },
       simpleGet: {
         value: null,
         schema: {

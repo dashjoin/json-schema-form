@@ -70,6 +70,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   @Input() schema: Schema;
 
   /**
+   * root JSON schema to use when looking up $ref (simply passed along the tree)
+   */
+  @Input() rootSchema: Schema;
+
+  /**
    * http used for autocomplete REST calls
    */
   constructor(private http: HttpClient) { }
@@ -81,6 +86,18 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     if (typeof this.value === 'undefined') {
       this.value = null;
+    }
+
+    if (!this.rootSchema) {
+      this.rootSchema = this.schema;
+    }
+
+    if (!this.schema.type) {
+      let p = this.schema.$ref;
+      if (p.startsWith('#')) {
+        p = p.substring(1);
+      }
+      this.schema = this.jsonPointer(this.rootSchema, p);
     }
 
     if (this.value) {
@@ -102,6 +119,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.schema) {
       if (changes.schema.previousValue) {
+        this.rootSchema = null;
         this.loading = false;
         this.choices = null;
         this.filteredChoices = null;

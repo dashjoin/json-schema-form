@@ -3,10 +3,10 @@
     <!-- object row wrap layout -->
     <mat-card *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
         <div *ngFor="let x of schema.properties | keyvalue:originalOrder" style="display: flex; margin: 2px">
-            <div *ngIf="x.value.type">
+            <div *ngIf="x.value.type || x.value.$ref">
                 <lib-json-schema-form [label]="x.value.title ? x.value.title : x.key"
                     [value]="value ? value[x.key] : undefined" (valueChange)="onValueChange(x.key, $event)"
-                    [schema]="x.value"></lib-json-schema-form>
+                    [rootSchema]="rootSchema" [schema]="x.value"></lib-json-schema-form>
             </div>
         </div>
     </mat-card>
@@ -22,7 +22,7 @@
                     (change)="fieldNameChange(x.key, $event.target.value)">
             </mat-form-field>
             &nbsp;
-            <lib-json-schema-form [label]="getLabel() + ' value'" [(value)]="value[x.key]"
+            <lib-json-schema-form [label]="getLabel() + ' value'" [(value)]="value[x.key]" [rootSchema]="rootSchema"
                 [schema]="schema.additionalProperties">
             </lib-json-schema-form>
             <button mat-icon-button (click)="removeField(x.key)" class="example-handle"
@@ -39,7 +39,8 @@
     <mat-card *ngIf="getLayout() === 'array'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
         <div *ngFor="let x of value; let i=index" style="display: flex; margin: 2px; position: relative"
             (mouseenter)="hover=i" (mouseleave)="hover=null">
-            <lib-json-schema-form [label]="getLabel()" [(value)]="value[i]" [schema]="schema.items">
+            <lib-json-schema-form [label]="getLabel()" [(value)]="value[i]" [rootSchema]="rootSchema"
+                [schema]="schema.items">
             </lib-json-schema-form>
             <button mat-icon-button (click)="remove(i)" class="example-handle"
                 [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
@@ -55,7 +56,8 @@
     <mat-tab-group *ngIf="getLayout() === 'tab'">
         <mat-tab *ngFor="let x of value; let i=index" style="margin: 2px; position: relative"
             [label]="getLabel()+' '+i">
-            <lib-json-schema-form [(value)]="value[i]" [schema]="schema.items"></lib-json-schema-form>
+            <lib-json-schema-form [(value)]="value[i]" [rootSchema]="rootSchema" [schema]="schema.items">
+            </lib-json-schema-form>
             <button mat-icon-button (click)="remove(i)" class="example-handle" matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
@@ -79,7 +81,8 @@
             </tr>
             <tr *ngFor="let row of value; let i=index">
                 <td *ngFor="let x of schema.items.properties | keyvalue:originalOrder">
-                    <lib-json-schema-form [(value)]="row[x.key]" [schema]="schema.items.properties[x.key]">
+                    <lib-json-schema-form [(value)]="row[x.key]" [rootSchema]="rootSchema"
+                        [schema]="schema.items.properties[x.key]">
                     </lib-json-schema-form>
                 </td>
                 <td>
