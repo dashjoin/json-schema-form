@@ -25,6 +25,11 @@ export interface Schema {
     required?: boolean;
 
     /**
+     * additional properties (with unknown name) have the following schema
+     */
+    additionalProperties?: Schema;
+
+    /**
      * field title
      * https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.1
      */

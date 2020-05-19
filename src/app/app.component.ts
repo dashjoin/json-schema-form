@@ -163,6 +163,20 @@ export class AppComponent {
         value: null,
         schema: { type: 'string', description: 'You find me in the tooltip' }
       },
+      additionalProperties: {
+        value: { url: 'http://example.org', args: { limit: 10 } },
+        schema: {
+          type: 'object',
+          properties: {
+            url: { type: 'string' },
+            args: {
+              type: 'object',
+              layout: 'vertical',
+              additionalProperties: { type: 'string' }
+            }
+          }
+        }
+      },
       simpleGet: {
         value: null,
         schema: {

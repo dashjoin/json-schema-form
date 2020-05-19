@@ -11,6 +11,30 @@
         </div>
     </mat-card>
 
+    <!-- additional properties -->
+    <mat-card *ngIf="getLayout() === 'additionalProperties'"
+        [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
+        <div *ngFor="let x of value | keyvalue:originalOrder; let i=index"
+            style="display: flex; margin: 2px; position: relative" (mouseenter)="hover=i" (mouseleave)="hover=null">
+            <mat-form-field>
+                <mat-label>{{getLabel()}} key</mat-label>
+                <input autocomplete="off" matInput [value]="x.key"
+                    (change)="fieldNameChange(x.key, $event.target.value)">
+            </mat-form-field>
+            &nbsp;
+            <lib-json-schema-form [label]="getLabel() + ' value'" [(value)]="value[x.key]"
+                [schema]="schema.additionalProperties">
+            </lib-json-schema-form>
+            <button mat-icon-button (click)="removeField(x.key)" class="example-handle"
+                [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
+                <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+        </div>
+        <button mat-icon-button (click)=" addField()" matTooltip="{{getLabel()}}">
+            <mat-icon>add_circle_outline</mat-icon>
+        </button>
+    </mat-card>
+
     <!-- array row wrap layout -->
     <mat-card *ngIf="getLayout() === 'array'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
         <div *ngFor="let x of value; let i=index" style="display: flex; margin: 2px; position: relative"

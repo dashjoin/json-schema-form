@@ -124,6 +124,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   getLayout(): string {
     if (this.schema.type === 'object') {
+      if (this.schema.additionalProperties) {
+        return 'additionalProperties';
+      }
       return 'object';
     }
     if (this.schema.type === 'array') {
@@ -210,11 +213,36 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     this.valueChange.emit(this.value);
   }
 
+  addField() {
+    if (!this.value) {
+      this.value = {};
+    }
+    if (this.value['']) {
+      return;
+    }
+    this.value[''] = null;
+    this.valueChange.emit(this.value);
+  }
+
   /**
    * remove an element from an array
    */
   remove(i: number) {
     this.value.splice(i, 1);
+    this.valueChange.emit(this.value);
+  }
+
+  /**
+   * remove a field
+   */
+  removeField(key: string) {
+    delete this.value[key];
+    this.valueChange.emit(this.value);
+  }
+
+  fieldNameChange(key: string, newvalue: any) {
+    this.value[newvalue] = this.value[key];
+    delete this.value[key];
     this.valueChange.emit(this.value);
   }
 
