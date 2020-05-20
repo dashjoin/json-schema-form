@@ -316,6 +316,28 @@ export class AppComponent {
             }
           }
         }
+      },
+      metaschema: {
+        value: null,
+        schema: {
+          $ref: '#/definitions/prop',
+          definitions: {
+            prop: {
+              type: 'object',
+              properties: {
+                type: {
+                  type: 'string',
+                  enum: ['string', 'number', 'array', 'object']
+                },
+                properties: {
+                  type: 'object',
+                  layout: 'vertical',
+                  additionalProperties: { $ref: '#/definitions/prop' }
+                }
+              }
+            }
+          }
+        }
       }
     };
 
