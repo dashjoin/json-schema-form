@@ -173,7 +173,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * key method to instruct the display which HTML block to activate.
    */
   getLayout(): string {
-    if (this.switch && this.schema.case && this.schema.case !== this.switch) {
+    if (this.schema.case && this.schema.case !== this.switch) {
       return 'none';
     }
     if (this.schema.type === 'object') {
@@ -556,10 +556,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * load the dynamic custom widget
    */
   loadComponent() {
-    console.log(this.schema.widgetType);
-    console.log(this.service.registry[this.schema.widgetType]);
-    console.log(this.service.registry);
-
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.service.registry[this.schema.widgetType]);
     const viewContainerRef = this.widgetHost.viewContainerRef;
     viewContainerRef.clear();

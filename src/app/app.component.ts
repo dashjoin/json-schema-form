@@ -363,6 +363,12 @@ export class AppComponent implements OnInit {
             },
             age: {
               type: 'number'
+            },
+            emails: {
+              type: 'array',
+              items: {
+                type: 'string'
+              }
             }
           }
         },
@@ -377,6 +383,9 @@ export class AppComponent implements OnInit {
                   type: 'string',
                   enum: ['string', 'number', 'array', 'object']
                 },
+                items: {
+                  $ref: '#/definitions/propNoRec'
+                },
                 properties: {
                   case: 'object',
                   type: 'object',
@@ -384,7 +393,24 @@ export class AppComponent implements OnInit {
                   additionalProperties: { $ref: '#/definitions/prop' }
                 }
               }
-            }
+            },
+            propNoRec: {
+              case: 'array',
+              type: 'object',
+              switch: 'type',
+              properties: {
+                type: {
+                  type: 'string',
+                  enum: ['string', 'number', 'array', 'object']
+                },
+                properties: {
+                  case: 'object',
+                  type: 'object',
+                  layout: 'vertical',
+                  additionalProperties: { $ref: '#/definitions/prop' }
+                }
+              }
+            },
           }
         }
       }
