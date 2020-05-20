@@ -163,6 +163,18 @@ export class AppComponent {
         value: null,
         schema: { type: 'string', description: 'You find me in the tooltip' }
       },
+      default: {
+        value: undefined,
+        schema: { type: 'string', default: 'default value' }
+      },
+      examples: {
+        value: null,
+        schema: { type: 'string', examples: ['A possible entry'] }
+      },
+      readOnly: {
+        value: 'readOnly value',
+        schema: { type: 'string', readOnly: true }
+      },
       additionalProperties: {
         value: { url: 'http://example.org', args: { limit: 10 } },
         schema: {
@@ -318,7 +330,17 @@ export class AppComponent {
         }
       },
       metaschema: {
-        value: null,
+        value: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string'
+            },
+            age: {
+              type: 'number'
+            }
+          }
+        },
         schema: {
           $ref: '#/definitions/prop',
           definitions: {

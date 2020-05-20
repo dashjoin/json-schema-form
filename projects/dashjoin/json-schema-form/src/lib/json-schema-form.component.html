@@ -165,7 +165,8 @@
     <div *ngIf="getLayout() === 'single'">
         <mat-form-field>
             <mat-label>{{label}}</mat-label>
-            <input autocomplete="off" matInput [type]="getInputType(schema)" [value]="value" (change)="change($event)">
+            <input [disabled]="schema.readOnly" [placeholder]="example()" autocomplete="off" matInput
+                [type]="getInputType(schema)" [value]="value" (change)="change($event)">
         </mat-form-field>
         <p class="error">{{error()}}</p>
     </div>
@@ -174,7 +175,8 @@
     <div *ngIf="getLayout() === 'textarea'">
         <mat-form-field class="input-full-width">
             <mat-label>{{label}}</mat-label>
-            <textarea matInput [value]="value" (change)="change($event)" rows="12"></textarea>
+            <textarea [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
+                (change)="change($event)" rows="12"></textarea>
         </mat-form-field>
         <p class="error">{{error()}}</p>
     </div>
@@ -183,11 +185,11 @@
     <div *ngIf="getLayout() === 'largetextarea'">
         <mat-form-field class="input-large-width">
             <mat-label>{{label}}</mat-label>
-            <textarea matInput [value]="value" (change)="change($event)" rows="24"></textarea>
+            <textarea [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
+                (change)="change($event)" rows="24"></textarea>
         </mat-form-field>
         <p class="error">{{error()}}</p>
     </div>
-
 
     <!-- upload -->
     <div *ngIf="getLayout() === 'upload'">

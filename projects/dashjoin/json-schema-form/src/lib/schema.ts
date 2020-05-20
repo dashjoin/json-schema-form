@@ -47,6 +47,21 @@ export interface Schema {
     description?: string;
 
     /**
+     * https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.5
+     */
+    examples?: string[];
+
+    /**
+     * https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.2
+     */
+    default?: any;
+
+    /**
+     * https://json-schema.org/draft/2019-09/json-schema-validation.html#rfc.section.9.4
+     */
+    readOnly?: boolean;
+
+    /**
      * defines types that can be ref'ed
      */
     definitions?: { [key: string]: Schema };

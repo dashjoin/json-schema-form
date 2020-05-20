@@ -84,10 +84,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * replace undefined with null and init autocomplete choices
    */
   ngOnInit(): void {
-    if (typeof this.value === 'undefined') {
-      this.value = null;
-    }
-
     if (!this.rootSchema) {
       this.rootSchema = this.schema;
     }
@@ -98,6 +94,15 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         p = p.substring(1);
       }
       this.schema = this.jsonPointer(this.rootSchema, p);
+    }
+
+    if (typeof this.value === 'undefined') {
+      if (this.schema.default) {
+        this.value = this.schema.default;
+        setTimeout(() => this.valueChange.emit(this.value), 500);
+      } else {
+        this.value = null;
+      }
     }
 
     if (this.value) {
@@ -502,5 +507,15 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.selectfilter = '';
       this.filteredChoices = this.choices;
     }
+  }
+
+  example(): string {
+    if (this.schema.examples && this.schema.examples[0]) {
+      return this.schema.examples[0];
+    }
+    if (this.schema.default) {
+      return this.schema.default;
+    }
+    return null;
   }
 }
