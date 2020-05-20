@@ -19,9 +19,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { WidgetDirective } from './widget.directive';
 
 @NgModule({
-  declarations: [JsonSchemaFormComponent],
+  declarations: [JsonSchemaFormComponent, WidgetDirective],
   imports: [
     MatCardModule,
     FlexLayoutModule,

@@ -105,8 +105,17 @@ This options specifies a specific input widget to be used. The default is a simp
 * textarea: displays a multi line textarea
 * largetextarea: like textarea but shows a larger textarea
 * password: input is shown as *****
-* color: shows a color picker widge
+* color: shows a color picker widget
 * datetime-local, email, month, tel, time, url, week: uses the browser native [input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
+
+### Custom Widgets
+
+It is possible to create custom widgets using the following steps:
+
+* create a component that implements [WidgetComponent](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/widget.component.ts). All relevant data such as the applicable subschema and the current value are passed to the component. Make sure to emit value changes. An example can be found [here](https://github.com/dashjoin/json-schema-form/tree/master/src/app/custom.component.ts)
+* In the parent component, add this service to your constructor: private service: JsonSchemaFormService
+* Register your widget in ngOnInit() using this service: this.service.registerComponent('times2', CustomComponent); }
+* Include the widget in your schema: { "widget": "custom", "widgetType": "times2" }
 
 ### Autocomplete choices
 
@@ -131,7 +140,6 @@ The following fields control how select and autocomplete options are obtained fr
 |---|---|---|
 | {"result": ["A", "B"]}  |  /result |  ["A", "B"] |
 | [{"name":"A"}, {"name":"B"}] | /*/name  |  ["A", "B"] |
-
 
 ### Layout options
 

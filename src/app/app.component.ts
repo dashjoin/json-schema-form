@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Schema } from '@dashjoin/json-schema-form';
+import { Component, OnInit } from '@angular/core';
+import { Schema, JsonSchemaFormService } from '@dashjoin/json-schema-form';
+import { CustomComponent } from './custom.component';
 
 /**
  * JSON schema form demo
@@ -9,7 +10,9 @@ import { Schema } from '@dashjoin/json-schema-form';
   templateUrl: './app.component.html',
   styles: ['textarea {font-family: monospace; height: 300px}']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(private service: JsonSchemaFormService) { }
 
   /**
    * schema nd value bound to component
@@ -145,6 +148,14 @@ export class AppComponent {
         schema: {
           type: 'string',
           widget: 'week'
+        }
+      },
+      custom: {
+        value: 1,
+        schema: {
+          type: 'string',
+          widget: 'custom',
+          widgetType: 'times2'
         }
       },
       enum: {
@@ -372,6 +383,10 @@ export class AppComponent {
    * error string in case the user enters invalid JSON in the value text area
    */
   errorV: any;
+
+  ngOnInit() {
+    this.service.registerComponent('times2', CustomComponent);
+  }
 
   /**
    * select one of the examples

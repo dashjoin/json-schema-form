@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import {
+  Component, OnInit, Input, Output, EventEmitter, SimpleChanges,
+  OnChanges, ComponentFactoryResolver, ViewChild, Type
+} from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -6,6 +9,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { KeyValue } from '@angular/common';
 import { Schema } from './schema';
+import { WidgetComponent } from './widget.component';
+import { WidgetDirective } from './widget.directive';
+import { JsonSchemaFormService } from './json-schema-form.service';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -75,9 +81,17 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   @Input() rootSchema: Schema;
 
   /**
+   * hook for custom widgets
+   */
+  @ViewChild(WidgetDirective, { static: true }) widgetHost: WidgetDirective;
+
+  /**
    * http used for autocomplete REST calls
    */
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private service: JsonSchemaFormService) { }
 
   /**
    * initialize the comonent.
@@ -115,6 +129,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.filteredChoices = [this.value];
       }
     }
+
+    if (this.schema.widget === 'custom') {
+      this.loadComponent();
+    }
   }
 
   /**
@@ -129,6 +147,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.choices = null;
         this.filteredChoices = null;
         this.errorMessage = null;
+        if (this.widgetHost.viewContainerRef) {
+          this.widgetHost.viewContainerRef.clear();
+        }
         this.ngOnInit();
       }
     }
@@ -172,6 +193,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
     if (this.schema.widget === 'upload') {
       return 'upload';
+    }
+    if (this.schema.widget === 'custom') {
+      return 'custom';
     }
     if (this.schema.widget === 'textarea') {
       return 'textarea';
@@ -517,5 +541,31 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       return this.schema.default;
     }
     return null;
+  }
+
+  /**
+   * load the dynamic custom widget
+   */
+  loadComponent() {
+    console.log(this.schema.widgetType);
+    console.log(this.service.registry[this.schema.widgetType]);
+    console.log(this.service.registry);
+
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.service.registry[this.schema.widgetType]);
+    const viewContainerRef = this.widgetHost.viewContainerRef;
+    viewContainerRef.clear();
+    const componentRef = viewContainerRef.createComponent(componentFactory);
+
+    // input values
+    (componentRef.instance as WidgetComponent).label = this.label;
+    (componentRef.instance as WidgetComponent).value = this.value;
+    (componentRef.instance as WidgetComponent).schema = this.schema;
+    (componentRef.instance as WidgetComponent).rootSchema = this.rootSchema;
+
+    // subscribe to value changes and forward them
+    (componentRef.instance as WidgetComponent).valueChange.subscribe(data => {
+      this.value = data;
+      this.valueChange.emit(this.value);
+    });
   }
 }

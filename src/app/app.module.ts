@@ -4,10 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { JsonSchemaFormModule } from '@dashjoin/json-schema-form';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CustomComponent } from './custom.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CustomComponent
   ],
   imports: [
     BrowserModule,
