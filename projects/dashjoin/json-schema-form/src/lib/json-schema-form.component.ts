@@ -81,6 +81,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   @Input() rootSchema: Schema;
 
   /**
+   * if present: value of the switch property that determines whether this component renders itself
+   * (schema.case not present or schema.case === switch)
+   */
+  @Input() switch: string;
+
+  /**
    * hook for custom widgets
    */
   @ViewChild(WidgetDirective, { static: true }) widgetHost: WidgetDirective;
@@ -167,6 +173,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * key method to instruct the display which HTML block to activate.
    */
   getLayout(): string {
+    if (this.switch && this.schema.case && this.schema.case !== this.switch) {
+      return 'none';
+    }
     if (this.schema.type === 'object') {
       if (this.schema.additionalProperties) {
         return 'additionalProperties';

@@ -140,4 +140,16 @@ export interface Schema {
      * select: array is shown as a multi-select (only applies to arrays of string)
      */
     layout?: 'tab' | 'table' | 'vertical' | 'horizontal' | 'select';
+
+    /**
+     * simplified version of conditionals (https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.9.2.2).
+     * works in conjunction with 'case'. switch marks a property whose value determines whether other properties
+     * are shown or not
+     */
+    switch?: string;
+
+    /**
+     * show the property if the switch property's value is case's value
+     */
+    case?: string;
 }

@@ -287,6 +287,20 @@ export class AppComponent implements OnInit {
           items: { type: 'string' }
         }
       },
+      conditional: {
+        value: { type: 'circle' },
+        schema: {
+          type: 'object',
+          switch: 'type',
+          properties: {
+            type: { type: 'string', enum: ['circle', 'rect'] },
+            color: { type: 'string', widget: 'color' },
+            radius: { type: 'number', case: 'circle' },
+            width: { type: 'number', case: 'rect' },
+            height: { type: 'number', case: 'rect' },
+          }
+        }
+      },
       complex: {
         value: [
           {
@@ -357,12 +371,14 @@ export class AppComponent implements OnInit {
           definitions: {
             prop: {
               type: 'object',
+              switch: 'type',
               properties: {
                 type: {
                   type: 'string',
                   enum: ['string', 'number', 'array', 'object']
                 },
                 properties: {
+                  case: 'object',
                   type: 'object',
                   layout: 'vertical',
                   additionalProperties: { $ref: '#/definitions/prop' }
