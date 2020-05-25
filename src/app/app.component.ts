@@ -2,17 +2,83 @@ import { Component, OnInit } from '@angular/core';
 import { Schema, JsonSchemaFormService } from '@dashjoin/json-schema-form';
 import { CustomComponent } from './custom.component';
 
+@Component({
+  selector: 'app-root',
+  template: '<router-outlet></router-outlet>'
+})
+export class AppComponent {
+}
+
 /**
  * JSON schema form demo
  */
 @Component({
-  selector: 'app-root',
   templateUrl: './app.component.html',
   styles: ['textarea {font-family: monospace; height: 300px}']
 })
-export class AppComponent implements OnInit {
+export class MainComponent implements OnInit {
 
   constructor(private service: JsonSchemaFormService) { }
+
+  static schemaExample = {
+    type: 'object',
+    properties: {
+      name: {
+        type: 'string'
+      },
+      age: {
+        type: 'number'
+      },
+      emails: {
+        type: 'array',
+        items: {
+          type: 'string'
+        }
+      }
+    }
+  };
+
+  static metaschema: Schema = {
+    $ref: '#/definitions/prop',
+    definitions: {
+      prop: {
+        type: 'object',
+        switch: 'type',
+        properties: {
+          type: {
+            type: 'string',
+            enum: ['string', 'number', 'array', 'object']
+          },
+          items: {
+            $ref: '#/definitions/propNoRec'
+          },
+          properties: {
+            case: 'object',
+            type: 'object',
+            layout: 'vertical',
+            additionalProperties: { $ref: '#/definitions/prop' }
+          }
+        }
+      },
+      propNoRec: {
+        case: 'array',
+        type: 'object',
+        switch: 'type',
+        properties: {
+          type: {
+            type: 'string',
+            enum: ['string', 'number', 'array', 'object']
+          },
+          properties: {
+            case: 'object',
+            type: 'object',
+            layout: 'vertical',
+            additionalProperties: { $ref: '#/definitions/prop' }
+          }
+        }
+      },
+    }
+  };
 
   /**
    * schema nd value bound to component
@@ -355,64 +421,8 @@ export class AppComponent implements OnInit {
         }
       },
       metaschema: {
-        value: {
-          type: 'object',
-          properties: {
-            name: {
-              type: 'string'
-            },
-            age: {
-              type: 'number'
-            },
-            emails: {
-              type: 'array',
-              items: {
-                type: 'string'
-              }
-            }
-          }
-        },
-        schema: {
-          $ref: '#/definitions/prop',
-          definitions: {
-            prop: {
-              type: 'object',
-              switch: 'type',
-              properties: {
-                type: {
-                  type: 'string',
-                  enum: ['string', 'number', 'array', 'object']
-                },
-                items: {
-                  $ref: '#/definitions/propNoRec'
-                },
-                properties: {
-                  case: 'object',
-                  type: 'object',
-                  layout: 'vertical',
-                  additionalProperties: { $ref: '#/definitions/prop' }
-                }
-              }
-            },
-            propNoRec: {
-              case: 'array',
-              type: 'object',
-              switch: 'type',
-              properties: {
-                type: {
-                  type: 'string',
-                  enum: ['string', 'number', 'array', 'object']
-                },
-                properties: {
-                  case: 'object',
-                  type: 'object',
-                  layout: 'vertical',
-                  additionalProperties: { $ref: '#/definitions/prop' }
-                }
-              }
-            },
-          }
-        }
+        value: MainComponent.schemaExample,
+        schema: MainComponent.metaschema
       }
     };
 

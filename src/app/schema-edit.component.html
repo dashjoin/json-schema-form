@@ -1,0 +1,34 @@
+<mat-expansion-panel expanded>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Edit JSON Schema
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <lib-json-schema-form [(value)]="value" [schema]="schema" [label]="schema.title"></lib-json-schema-form>
+</mat-expansion-panel>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            View and Edit Resulting Schema
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <textarea rows="15" style="width: 100%" [value]="stringify(value)" (change)="change($event)"></textarea>
+    {{error}}
+</mat-expansion-panel>
+<mat-expansion-panel expanded>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Form Based on the Schema
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <lib-json-schema-form [(value)]="instance" [schema]="value"></lib-json-schema-form>
+</mat-expansion-panel>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Form Data
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <textarea rows="15" style="width: 100%" [value]="stringify(instance)" (change)="change2($event)"></textarea>
+    {{error2}}
+</mat-expansion-panel>
