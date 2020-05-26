@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Schema, JsonSchemaFormService } from '@dashjoin/json-schema-form';
 import { CustomComponent } from './custom.component';
 
+/**
+ * router component
+ */
 @Component({
   selector: 'app-root',
   template: '<router-outlet></router-outlet>'
@@ -18,8 +21,14 @@ export class AppComponent {
 })
 export class MainComponent implements OnInit {
 
+  /**
+   * need to access custom component registry
+   */
   constructor(private service: JsonSchemaFormService) { }
 
+  /**
+   * example schema for meta schema case - also used in schema editor component
+   */
   static schemaExample = {
     type: 'object',
     properties: {
@@ -38,6 +47,9 @@ export class MainComponent implements OnInit {
     }
   };
 
+  /**
+   * meta schema for meta schema case - also used in schema editor component
+   */
   static metaschema: Schema = {
     $ref: '#/definitions/prop',
     definitions: {
@@ -81,10 +93,15 @@ export class MainComponent implements OnInit {
   };
 
   /**
-   * schema nd value bound to component
+   * schema bound to component
    * <lib-json-schema-form [(value)]="value" [schema]="schema"></lib-json-schema-form>
    */
   schema: Schema = { type: 'string' };
+
+  /**
+   * value bound to component
+   * <lib-json-schema-form [(value)]="value" [schema]="schema"></lib-json-schema-form>
+   */
   value: any = 'test';
 
   /**
@@ -436,6 +453,9 @@ export class MainComponent implements OnInit {
    */
   errorV: any;
 
+  /**
+   * register custom demo comp
+   */
   ngOnInit() {
     this.service.registerComponent('times2', CustomComponent);
   }

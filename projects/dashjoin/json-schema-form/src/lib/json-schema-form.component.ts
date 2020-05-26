@@ -269,6 +269,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     this.valueChange.emit(this.value);
   }
 
+  /**
+   * event handler for adding a field
+   */
   addField() {
     if (!this.value) {
       this.value = {};
@@ -296,6 +299,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     this.valueChange.emit(this.value);
   }
 
+  /**
+   * event handler for changed field names with "additionalProperties"
+   */
   fieldNameChange(key: string, newvalue: any) {
     this.value[newvalue] = this.value[key];
     delete this.value[key];
@@ -440,10 +446,16 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     });
   }
 
+  /**
+   * evaluate the JSON pointer on o
+   */
   jsonPointer(o: any, pointer: string): any {
     return this.jsonPointer2(o, this.split(pointer));
   }
 
+  /**
+   * evaluate the JSON pointer (parsed array of paths) on o
+   */
   jsonPointer2(o: any, paths: string[]): any {
 
     if (o === undefined) {
@@ -469,6 +481,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * strip leading / and split the JSON pointer
+   */
   split(s: string): string[] {
     if (s === '') {
       return [];
@@ -542,6 +557,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * get example values from example array and default
+   */
   example(): string {
     if (this.schema.examples && this.schema.examples[0]) {
       return this.schema.examples[0];

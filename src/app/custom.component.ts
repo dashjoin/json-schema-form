@@ -9,10 +9,30 @@ import { WidgetComponent, Schema } from '@dashjoin/json-schema-form';
   template: '{{value}} <input type="button" (click)="times2()" value="x 2">',
 })
 export class CustomComponent implements WidgetComponent {
+
+  /**
+   * see WidgetComponent
+   */
   label: string;
+
+  /**
+   * see WidgetComponent
+   */
   value: number;
+
+  /**
+   * see WidgetComponent
+   */
   valueChange: EventEmitter<number> = new EventEmitter();
+
+  /**
+   * see WidgetComponent
+   */
   schema: Schema;
+
+  /**
+   * see WidgetComponent
+   */
   rootSchema: Schema;
 
   /**
