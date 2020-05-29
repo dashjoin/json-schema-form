@@ -173,7 +173,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * key method to instruct the display which HTML block to activate.
    */
   getLayout(): string {
-    if (this.schema.case && this.schema.case !== this.switch) {
+    if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
       return 'none';
     }
     if (this.schema.type === 'object') {

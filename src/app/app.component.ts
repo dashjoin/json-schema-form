@@ -65,7 +65,7 @@ export class MainComponent implements OnInit {
             $ref: '#/definitions/propNoRec'
           },
           properties: {
-            case: 'object',
+            case: ['object'],
             type: 'object',
             layout: 'vertical',
             additionalProperties: { $ref: '#/definitions/prop' }
@@ -73,7 +73,7 @@ export class MainComponent implements OnInit {
         }
       },
       propNoRec: {
-        case: 'array',
+        case: ['array'],
         type: 'object',
         switch: 'type',
         properties: {
@@ -82,7 +82,7 @@ export class MainComponent implements OnInit {
             enum: ['string', 'number', 'array', 'object']
           },
           properties: {
-            case: 'object',
+            case: ['object'],
             type: 'object',
             layout: 'vertical',
             additionalProperties: { $ref: '#/definitions/prop' }
@@ -376,11 +376,11 @@ export class MainComponent implements OnInit {
           type: 'object',
           switch: 'type',
           properties: {
-            type: { type: 'string', enum: ['circle', 'rect'] },
+            type: { type: 'string', enum: ['circle', 'rect', 'square'] },
             color: { type: 'string', widget: 'color' },
-            radius: { type: 'number', case: 'circle' },
-            width: { type: 'number', case: 'rect' },
-            height: { type: 'number', case: 'rect' },
+            radius: { type: 'number', case: ['circle'] },
+            width: { type: 'number', case: ['rect', 'square'] },
+            height: { type: 'number', case: ['rect'] },
           }
         }
       },

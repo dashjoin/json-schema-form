@@ -149,7 +149,7 @@ export interface Schema {
     switch?: string;
 
     /**
-     * show the property if the switch property's value is case's value
+     * show the property if the switch property's value is one of case's values
      */
-    case?: string;
+    case?: string[];
 }
