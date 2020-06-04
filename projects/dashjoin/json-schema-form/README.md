@@ -166,7 +166,7 @@ Layout options determine how the input elements of arrays and objects are arrang
 
 * horizontal (default): input controls are arranged horizontally and flex-wrap if there is insufficient space
 * vertical: input controls are arranged vertically
-* tab: controls are shown in tabs (only applies to arrays)
+* tab: controls are shown in tabs (only applies to arrays and objects with additionalProperties)
 * table: controls are shown in a table with the property names being the column names (only applies to an array of objects)
 * select: array is shown as a multi-select (only applies to arrays of string)
 
