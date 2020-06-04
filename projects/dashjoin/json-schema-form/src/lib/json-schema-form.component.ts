@@ -178,6 +178,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
     if (this.schema.type === 'object') {
       if (this.schema.additionalProperties) {
+        if (this.schema.layout === 'tab') {
+          return 'additionalPropertiesTab';
+        }
         return 'additionalProperties';
       }
       return 'object';
