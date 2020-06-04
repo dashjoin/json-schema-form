@@ -161,11 +161,11 @@ export class MainComponent implements OnInit {
         schema: {
           type: 'string',
           widget: 'textarea',
-          style: { width: '600px', height: '300px' }
+          style: { width: '600px', height: '300px', 'font-family': 'courier' }
         }
       },
       password: {
-        value: '',
+        value: 'secret',
         schema: {
           type: 'string',
           widget: 'password'

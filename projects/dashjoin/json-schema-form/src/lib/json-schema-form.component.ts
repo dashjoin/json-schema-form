@@ -12,6 +12,7 @@ import { Schema } from './schema';
 import { WidgetComponent } from './widget.component';
 import { WidgetDirective } from './widget.directive';
 import { JsonSchemaFormService } from './json-schema-form.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -345,6 +346,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       event = event.value;
     } else if (event instanceof MatDatepickerInputEvent) {
       event = event.value;
+    } else if (event instanceof MatAutocompleteSelectedEvent) {
+      event = event.option.value;
     } else if (event instanceof MatCheckboxChange) {
       event = event.checked;
     } else {

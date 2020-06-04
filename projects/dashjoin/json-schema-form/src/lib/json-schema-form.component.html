@@ -173,7 +173,7 @@
             <mat-label>{{label}}</mat-label>
             <input autocomplete="off" matInput [value]="value" (keyup)="filter($event)" (focus)="load()"
                 (blur)="change($event)" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="change($event)">
                 <mat-option *ngFor="let option of filteredChoices" [value]="option">
                     {{option}}
                 </mat-option>
