@@ -212,9 +212,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.widget === 'textarea') {
       return 'textarea';
     }
-    if (this.schema.widget === 'largetextarea') {
-      return 'largetextarea';
-    }
     if (this.schema.type === 'boolean') {
       return 'checkbox';
     }

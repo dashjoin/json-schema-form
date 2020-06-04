@@ -11,11 +11,3 @@
     position: relative;
     top: -18px
 }
-
-.input-full-width { 
-    min-width: 825px; 
-}
-
-.input-large-width { 
-    min-width: 1225px; 
-}

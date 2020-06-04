@@ -103,7 +103,6 @@ This options specifies a specific input widget to be used. The default is a simp
 * upload: the JSON property is set to the contents of an uploaded file
 * date: uses the material date picker component
 * textarea: displays a multi line textarea
-* largetextarea: like textarea but shows a larger textarea
 * password: input is shown as *****
 * color: shows a color picker widget
 * datetime-local, email, month, tel, time, url, week: uses the browser native [input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
@@ -169,6 +168,18 @@ Layout options determine how the input elements of arrays and objects are arrang
 * tab: controls are shown in tabs (only applies to arrays and objects with additionalProperties)
 * table: controls are shown in a table with the property names being the column names (only applies to an array of objects)
 * select: array is shown as a multi-select (only applies to arrays of string)
+
+The style field allows passing CSS styles to the input fields. For instance, you could accommodate for longer
+input values by increasing the default input element width:
+
+```
+{
+  "type": "string",
+  "style": {
+    "width": "400px"
+  }
+}
+```
 
 Please also see the definition of the [Schema](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/schema.ts) object.
 

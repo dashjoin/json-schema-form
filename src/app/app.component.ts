@@ -157,17 +157,11 @@ export class MainComponent implements OnInit {
         }
       },
       textarea: {
-        value: '',
+        value: 'multi\nline\ntext',
         schema: {
           type: 'string',
-          widget: 'textarea'
-        }
-      },
-      largetextarea: {
-        value: '',
-        schema: {
-          type: 'string',
-          widget: 'largetextarea'
+          widget: 'textarea',
+          style: { width: '600px', height: '300px' }
         }
       },
       password: {
@@ -381,6 +375,20 @@ export class MainComponent implements OnInit {
             radius: { type: 'number', case: ['circle'] },
             width: { type: 'number', case: ['rect', 'square'] },
             height: { type: 'number', case: ['rect'] },
+          }
+        }
+      },
+      style: {
+        value: 'style me!',
+        schema: {
+          type: 'string',
+          style: {
+            'font-size': '44px',
+            'font-family': 'courier',
+            width: '80%',
+            'background-color': 'lightgrey',
+            color: 'blue',
+            padding: '50px'
           }
         }
       },

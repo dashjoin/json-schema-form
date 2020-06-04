@@ -92,13 +92,18 @@ export interface Schema {
      * (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
      * and native angular widgets such as https://material.angular.io/components/datepicker/overview
      */
-    widget?: 'select' | 'upload' | 'date' | 'textarea' | 'largetextarea' | 'password' | 'color' |
+    widget?: 'select' | 'upload' | 'date' | 'textarea' | 'password' | 'color' |
     'datetime-local' | 'email' | 'month' | 'tel' | 'time' | 'url' | 'week' | 'custom';
 
     /**
      * if widget=custom, this fields indicates which entry from the widget registry is to be used
      */
     widgetType?: string;
+
+    /**
+     * style applied to mat-form-field
+     */
+    style?: any;
 
     /**
      * used in case the select / autocomplete options are gathered from a REST service URL.

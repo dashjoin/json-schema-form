@@ -169,7 +169,7 @@
 
     <!-- autocomplete element -->
     <div *ngIf="getLayout() === 'autocomplete'">
-        <mat-form-field *ngIf="schema.widget !== 'select'">
+        <mat-form-field *ngIf="schema.widget !== 'select'" [ngStyle]="schema.style">
             <mat-label>{{label}}</mat-label>
             <input autocomplete="off" matInput [value]="value" (keyup)="filter($event)" (focus)="load()"
                 (blur)="change($event)" [matAutocomplete]="auto">
@@ -179,7 +179,7 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field *ngIf="schema.widget === 'select'">
+        <mat-form-field *ngIf="schema.widget === 'select'" [ngStyle]="schema.style">
             <mat-label>{{label}}</mat-label>
             <mat-select [value]="value" (focus)="load()" (selectionChange)="change($event)">
                 <mat-option *ngFor="let option of choices" [value]="option">
@@ -192,7 +192,7 @@
 
     <!-- single element -->
     <div *ngIf="getLayout() === 'single'">
-        <mat-form-field>
+        <mat-form-field [ngStyle]="schema.style">
             <mat-label>{{label}}</mat-label>
             <input [disabled]="schema.readOnly" [placeholder]="example()" autocomplete="off" matInput
                 [type]="getInputType(schema)" [value]="value" (change)="change($event)">
@@ -202,20 +202,10 @@
 
     <!-- textarea element -->
     <div *ngIf="getLayout() === 'textarea'">
-        <mat-form-field class="input-full-width">
+        <mat-form-field [ngStyle]="schema.style">
             <mat-label>{{label}}</mat-label>
             <textarea [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
-                (change)="change($event)" rows="12"></textarea>
-        </mat-form-field>
-        <p class="error">{{error()}}</p>
-    </div>
-
-    <!-- large textarea element -->
-    <div *ngIf="getLayout() === 'largetextarea'">
-        <mat-form-field class="input-large-width">
-            <mat-label>{{label}}</mat-label>
-            <textarea [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
-                (change)="change($event)" rows="24"></textarea>
+                (change)="change($event)" [ngStyle]="schema.style"></textarea>
         </mat-form-field>
         <p class="error">{{error()}}</p>
     </div>
