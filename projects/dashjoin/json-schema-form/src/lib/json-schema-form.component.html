@@ -40,10 +40,11 @@
     <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'additionalPropertiesTab'">
         <mat-tab *ngFor="let x of value | keyvalue:originalOrder; let i=index" style="margin: 2px; position: relative">
             <ng-template mat-tab-label>
-                <mat-form-field>
-                    <input [disabled]="schema.readOnly" autocomplete="off" matInput [value]="x.key"
+                <mat-form-field *ngIf="!schema.readOnly">
+                    <input autocomplete="off" matInput [value]="x.key"
                         (change)="fieldNameChange(x.key, $event.target.value)">
                 </mat-form-field>
+                <span *ngIf="schema.readOnly">{{x.key}}</span>
             </ng-template>
             <lib-json-schema-form [(value)]="value[x.key]" [rootSchema]="rootSchema"
                 [schema]="schema.additionalProperties">
