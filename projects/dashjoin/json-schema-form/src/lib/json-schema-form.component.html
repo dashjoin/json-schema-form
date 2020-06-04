@@ -19,19 +19,19 @@
             style="display: flex; margin: 2px; position: relative" (mouseenter)="hover=i" (mouseleave)="hover=null">
             <mat-form-field>
                 <mat-label>{{getLabel()}} key</mat-label>
-                <input autocomplete="off" matInput [value]="x.key"
+                <input [disabled]="schema.readOnly" autocomplete="off" matInput [value]="x.key"
                     (change)="fieldNameChange(x.key, $event.target.value)">
             </mat-form-field>
             &nbsp;
             <lib-json-schema-form [label]="getLabel() + ' value'" [(value)]="value[x.key]" [rootSchema]="rootSchema"
                 [schema]="schema.additionalProperties">
             </lib-json-schema-form>
-            <button mat-icon-button (click)="removeField(x.key)" class="example-handle"
+            <button *ngIf="!schema.readOnly" mat-icon-button (click)="removeField(x.key)" class="example-handle"
                 [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </div>
-        <button mat-icon-button (click)=" addField()" matTooltip="{{getLabel()}}">
+        <button *ngIf="!schema.readOnly" mat-icon-button (click)=" addField()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
     </mat-card>
@@ -41,18 +41,19 @@
         <mat-tab *ngFor="let x of value | keyvalue:originalOrder; let i=index" style="margin: 2px; position: relative">
             <ng-template mat-tab-label>
                 <mat-form-field>
-                    <input autocomplete="off" matInput [value]="x.key"
+                    <input [disabled]="schema.readOnly" autocomplete="off" matInput [value]="x.key"
                         (change)="fieldNameChange(x.key, $event.target.value)">
                 </mat-form-field>
             </ng-template>
             <lib-json-schema-form [(value)]="value[x.key]" [rootSchema]="rootSchema"
                 [schema]="schema.additionalProperties">
             </lib-json-schema-form>
-            <button mat-icon-button (click)="removeField(x.key)" class="example-handle" matTooltip="{{getLabel()}}">
+            <button *ngIf="!schema.readOnly" mat-icon-button (click)="removeField(x.key)" class="example-handle"
+                matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </mat-tab>
-        <mat-tab>
+        <mat-tab *ngIf="!schema.readOnly">
             <ng-template mat-tab-label>
                 <button mat-icon-button (click)="addField()" matTooltip="{{getLabel()}}">
                     <mat-icon>add_circle_outline</mat-icon>
@@ -68,12 +69,12 @@
             <lib-json-schema-form [label]="getLabel()" [(value)]="value[i]" [rootSchema]="rootSchema"
                 [schema]="schema.items">
             </lib-json-schema-form>
-            <button mat-icon-button (click)="remove(i)" class="example-handle"
+            <button *ngIf="!schema.readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
                 [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </div>
-        <button mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
+        <button *ngIf="!schema.readOnly" mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
     </mat-card>
@@ -84,11 +85,12 @@
             [label]="getLabel()+' '+i">
             <lib-json-schema-form [(value)]="value[i]" [rootSchema]="rootSchema" [schema]="schema.items">
             </lib-json-schema-form>
-            <button mat-icon-button (click)="remove(i)" class="example-handle" matTooltip="{{getLabel()}}">
+            <button *ngIf="!schema.readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
+                matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </mat-tab>
-        <mat-tab>
+        <mat-tab *ngIf="!schema.readOnly">
             <ng-template mat-tab-label>
                 <button mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
                     <mat-icon>add_circle_outline</mat-icon>
@@ -112,13 +114,13 @@
                     </lib-json-schema-form>
                 </td>
                 <td>
-                    <button mat-icon-button (click)="remove(i)" matTooltip="{{getLabel()}}">
+                    <button *ngIf="!schema.readOnly" mat-icon-button (click)="remove(i)" matTooltip="{{getLabel()}}">
                         <mat-icon>remove_circle_outline</mat-icon>
                     </button>
                 </td>
             </tr>
         </table>
-        <button mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
+        <button *ngIf="!schema.readOnly" mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
     </mat-card>
