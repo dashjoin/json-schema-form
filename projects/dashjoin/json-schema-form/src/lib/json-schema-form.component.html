@@ -37,7 +37,7 @@
     </mat-card>
 
     <!-- additional properties tab layout -->
-    <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'additionalPropertiesTab'">
+    <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'additionalPropertiesTab'" style="max-width: 96vw">
         <mat-tab *ngFor="let x of value | keyvalue:originalOrder; let i=index" style="margin: 2px; position: relative">
             <ng-template mat-tab-label>
                 <mat-form-field *ngIf="!schema.readOnly">
@@ -81,7 +81,7 @@
     </mat-card>
 
     <!-- array tab layout -->
-    <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'tab'">
+    <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'tab'" style="max-width: 96vw">
         <mat-tab *ngFor="let x of value; let i=index" style="margin: 2px; position: relative"
             [label]="getLabel()+' '+i">
             <lib-json-schema-form [(value)]="value[i]" [rootSchema]="rootSchema" [schema]="schema.items">
