@@ -130,6 +130,11 @@ export interface Schema {
     choices?: string[];
 
     /**
+     * name of the displayWith function
+     */
+    displayWith?: string;
+
+    /**
      * used in case the select / autocomplete options are gathered from a REST service URL.
      * used to transform the REST result into a string array
      */

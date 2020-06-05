@@ -15,6 +15,11 @@ export class JsonSchemaFormService {
   registry = {};
 
   /**
+   * registry of displayWith objects
+   */
+  displayWithRegistry = {};
+
+  /**
    * register custom component
    * @param key     the name of the component which is used in schema extension: widget=custom, widgetType=key
    * @param value   the implementation class
@@ -22,4 +27,26 @@ export class JsonSchemaFormService {
   registerComponent(key: string, value: Type<any>) {
     this.registry[key] = value;
   }
+
+  /**
+   * register displayWith implementations
+   * @param key     the name of the implementation which is used in schema extension: displayWith=key
+   * @param value   the implementation class
+   */
+  registerDisplayWith(key: string, value: Displayer) {
+    this.displayWithRegistry[key] = value;
+  }
+}
+
+/**
+ * interface used to transform longer / unreadable IDs into displayable strings when displaying
+ * choices for autocomplete and select inputs. Note that
+ * these strings do not have to be unique. When selecting, the user sees the full ID as a tooltip.
+ */
+export interface Displayer {
+
+  /**
+   * convert option ID to displayable string
+   */
+  displayWith(option: string): string;
 }

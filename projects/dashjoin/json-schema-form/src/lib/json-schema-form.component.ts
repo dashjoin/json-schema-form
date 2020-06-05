@@ -594,4 +594,21 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.valueChange.emit(this.value);
     });
   }
+
+  /**
+   * function to transform a choice option into a display string
+   */
+  displayWith(option: string): string {
+    if (this.schema.displayWith === 'localName') {
+      const parts = option.split('/');
+      return parts[parts.length - 1];
+    }
+    if (this.schema.displayWith) {
+      const displayer = this.service.displayWithRegistry[this.schema.displayWith];
+      if (displayer) {
+        return displayer.displayWith(option);
+      }
+    }
+    return option;
+  }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Schema, JsonSchemaFormService } from '@dashjoin/json-schema-form';
 import { CustomComponent } from './custom.component';
+import { Displayer } from 'projects/dashjoin/json-schema-form/src/public-api';
 
 /**
  * router component
@@ -320,6 +321,28 @@ export class MainComponent implements OnInit {
           choices: ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
         }
       },
+      displayWith: {
+        value: {
+          select: 'WA',
+          autocomplete: 'https://en.wikipedia.org/wiki/Indonesia'
+        },
+        schema: {
+          type: 'object',
+          properties: {
+            autocomplete: {
+              type: 'string',
+              displayWith: 'localName',
+              choices: ['https://en.wikipedia.org/wiki/Indonesia', 'https://en.wikipedia.org/wiki/Peru', 'As is - no tooltip']
+            },
+            select: {
+              type: 'string',
+              widget: 'select',
+              displayWith: 'states',
+              choices: ['CA', 'OR', 'WA']
+            }
+          }
+        }
+      },
       tab: {
         value: [{ name: 'Angular', version: 9 }, { name: 'Vue' }],
         schema: {
@@ -466,6 +489,7 @@ export class MainComponent implements OnInit {
    */
   ngOnInit() {
     this.service.registerComponent('times2', CustomComponent);
+    this.service.registerDisplayWith('states', new MyDisplayer());
   }
 
   /**
@@ -507,5 +531,23 @@ export class MainComponent implements OnInit {
     } catch (e) {
       this.errorV = e;
     }
+  }
+}
+
+/**
+ * sample displayer implemetation
+ */
+export class MyDisplayer implements Displayer {
+  displayWith(option: string): string {
+    if (option === 'CA') {
+      return 'California';
+    }
+    if (option === 'OR') {
+      return 'Oregon';
+    }
+    if (option === 'WA') {
+      return 'Washington';
+    }
+    return null;
   }
 }

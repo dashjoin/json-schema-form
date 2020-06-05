@@ -182,8 +182,9 @@
         <mat-form-field *ngIf="schema.widget === 'select'" [ngStyle]="schema.style">
             <mat-label>{{label}}</mat-label>
             <mat-select [value]="value" (focus)="load()" (selectionChange)="change($event)">
-                <mat-option *ngFor="let option of choices" [value]="option">
-                    {{option}}
+                <mat-option *ngFor="let option of choices" [value]="option"
+                    [matTooltip]="option !== displayWith(option) ? option : null">
+                    {{displayWith(option)}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
