@@ -47,6 +47,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   filteredChoices: string[];
 
   /**
+   * choices for autocomplete with displayWith option
+   */
+  filteredChoicesObj: any[];
+
+  /**
    * filter entered for array-select
    */
   selectfilter = '';
@@ -65,6 +70,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * the input value
    */
   @Input() value: any;
+
+  /**
+   * display name to bind to the autocomplete
+   */
+  name: string;
 
   /**
    * emit changes done by the user in the component
@@ -136,9 +146,14 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.filteredChoices = [this.value];
       }
     }
+    this.filteredChoicesObj = this.displayFilter();
 
     if (this.schema.widget === 'custom') {
       this.loadComponent();
+    }
+
+    if (this.getLayout() === 'autocomplete') {
+      this.name = this.displayWith(this.value);
     }
   }
 
@@ -153,6 +168,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.loading = false;
         this.choices = null;
         this.filteredChoices = null;
+        this.filteredChoicesObj = null;
         this.errorMessage = null;
         if (this.widgetHost.viewContainerRef) {
           this.widgetHost.viewContainerRef.clear();
@@ -418,6 +434,15 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   filter(event: any) {
     if (this.choices != null) {
       this.filteredChoices = this.choices.filter(el => el?.toLowerCase().match(event.target.value?.toLowerCase()));
+
+      // apply filter to display names, not the real values since these are hidden in the dropdown
+      this.filteredChoicesObj = [];
+      for (const c of this.choices) {
+        const name = this.displayWith(c);
+        if (name?.toLowerCase().match(event.target.value?.toLowerCase())) {
+          this.filteredChoicesObj.push({ name, value: c });
+        }
+      }
     }
   }
 
@@ -434,6 +459,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.choices) {
       this.choices = this.schema.choices;
       this.filteredChoices = this.schema.choices;
+      this.filteredChoicesObj = this.displayFilter();
       return;
     }
 
@@ -446,6 +472,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
       this.choices = res;
       this.filteredChoices = res;
+      this.filteredChoicesObj = this.displayFilter();
     });
   }
 
@@ -548,6 +575,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
     this.filteredChoices = this.choices.filter(
       item => item.toLowerCase().includes(this.selectfilter.toLowerCase()) || this.value.indexOf(item) >= 0);
+    this.filteredChoicesObj = this.displayFilter();
   }
 
   /**
@@ -557,6 +585,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (!event) {
       this.selectfilter = '';
       this.filteredChoices = this.choices;
+      this.filteredChoicesObj = this.displayFilter();
     }
   }
 
@@ -610,5 +639,48 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
     }
     return option;
+  }
+
+  /**
+   * displayWith callback from autocomplete
+   */
+  displayFn(option: any): string {
+    return option.name;
+  }
+
+  /**
+   * compute the filteredChoices objects for use in autocomplete
+   */
+  displayFilter() {
+    const res = [];
+    if (this.filteredChoices) {
+      for (const i of this.filteredChoices) {
+        res.push({ name: this.displayWith(i), value: i });
+      }
+    }
+    return res;
+  }
+
+  /**
+   * autocomplete option selected
+   */
+  optionSelected(event: any) {
+    this.name = event.option.value.name;
+    this.value = event.option.value.value;
+    this.valueChange.emit(this.value);
+  }
+
+  /**
+   * autocomplete option changed by hand
+   */
+  optionChange(event: any) {
+    this.name = event.target.value;
+    this.value = this.name;
+    for (const u of this.filteredChoicesObj) {
+      if (u.name === this.name) {
+        this.value = u.value;
+      }
+    }
+    this.valueChange.emit(this.value);
   }
 }

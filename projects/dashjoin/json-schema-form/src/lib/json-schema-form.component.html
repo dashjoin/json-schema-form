@@ -171,11 +171,13 @@
     <div *ngIf="getLayout() === 'autocomplete'">
         <mat-form-field *ngIf="schema.widget !== 'select'" [ngStyle]="schema.style">
             <mat-label>{{label}}</mat-label>
-            <input autocomplete="off" matInput [value]="value" (keyup)="filter($event)" (focus)="load()"
-                (blur)="change($event)" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="change($event)">
-                <mat-option *ngFor="let option of filteredChoices" [value]="option">
-                    {{option}}
+            <input autocomplete="off" matInput [value]="name" (keyup)="filter($event)" (focus)="load()"
+                (blur)="optionChange($event)" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event)"
+                [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredChoicesObj" [value]="option"
+                    [matTooltip]="option.value !== option.name ? option.value : null">
+                    {{option.name}}
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>

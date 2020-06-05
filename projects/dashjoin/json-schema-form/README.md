@@ -113,7 +113,7 @@ It is possible to create custom widgets using the following steps:
 
 * create a component that implements [WidgetComponent](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/widget.component.ts). All relevant data such as the applicable subschema and the current value are passed to the component. Make sure to emit value changes. An example can be found [here](https://github.com/dashjoin/json-schema-form/tree/master/src/app/custom.component.ts)
 * In the parent component, add this service to your constructor: private service: JsonSchemaFormService
-* Register your widget in ngOnInit() using this service: this.service.registerComponent('times2', CustomComponent); }
+* Register your widget in ngOnInit() using this service: this.service.registerComponent('times2', CustomComponent);
 * Include the widget in your schema: { "widget": "custom", "widgetType": "times2" }
 
 ### Autocomplete choices
@@ -139,6 +139,28 @@ The following fields control how select and autocomplete options are obtained fr
 |---|---|---|
 | {"result": ["A", "B"]}  |  /result |  ["A", "B"] |
 | [{"name":"A"}, {"name":"B"}] | /*/name  |  ["A", "B"] |
+
+### Autocomplete and Select Display Names
+
+If you want the option's control value (what is saved in the form) to be different than the option's display value (what is displayed in the text field),
+the "displayWith" option allows you to do so. The value of "displayWith" is the name under which the implementation class to perform this job was registered.
+The class must implement the [Displayer](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/json-schema-form.service.ts) interface. An example can be found at the end of the [playground component](https://github.com/dashjoin/json-schema-form/blob/master/src/app/app.component.ts).
+The registration can be done in ngOnInit() using this service: this.service.registerDisplayWith('states', new MyDisplayer()); Consider the following example:
+
+```
+{
+  "type": "string",
+  "displayWith": "localName",
+  "choices": [
+    "https://en.wikipedia.org/wiki/Indonesia",
+    "https://en.wikipedia.org/wiki/Peru",
+    "As is - no tooltip"
+  ]
+}
+```
+
+The autocomplete is configured with "localName" which is a built-in displayer.
+It treats options like URLs and displays the local name which is the text after the last /. This causes the dropdown to display "Peru" with the tooltip indicating the real value "https://en.wikipedia.org/wiki/Peru" which is written to the JSON value.
 
 ### Layout options
 
