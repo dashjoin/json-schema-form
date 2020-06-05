@@ -106,35 +106,47 @@ export class MainComponent implements OnInit {
   value: any = 'test';
 
   /**
+   * desc of the example
+   */
+  description = 'The simplest JSON schema form. Try clicking on the buttons to get to more complex examples.';
+
+  /**
    * examples
    */
-  examples: { [key: string]: { value: any, schema: Schema } } =
+  examples: { [key: string]: { description: string, value: any, schema: Schema } } =
     {
       string: {
+        description: 'The simplest JSON schema form. Try clicking on the buttons to get to more complex examples.',
         value: 'test',
         schema: { type: 'string' }
       },
       boolean: {
+        description: 'Boolean defaults to a checkbox',
         value: true,
         schema: { type: 'boolean' }
       },
       integer: {
+        description: 'Integer uses a textfield and rounds floating point numbers entered.',
         value: 5,
         schema: { type: 'integer' }
       },
       number: {
+        description: 'Number allows entering any type of integer or floating point',
         value: 3.14,
         schema: { type: 'number' }
       },
       array: {
+        description: 'Arrays display + and - controls',
         value: ['a', 'b'],
         schema: { type: 'array', items: { type: 'string' } }
       },
       object: {
+        description: 'Object displays a key / value form',
         value: { name: 'Angular', version: 9 },
         schema: { type: 'object', properties: { name: { type: 'string' }, version: { type: 'number' } } }
       },
       select: {
+        description: 'The select widget exchanges the input field for a select combo box',
         value: '',
         schema: {
           type: 'string',
@@ -144,6 +156,7 @@ export class MainComponent implements OnInit {
         }
       },
       upload: {
+        description: 'The file contents is written to the JSON value',
         value: '',
         schema: {
           type: 'string',
@@ -151,6 +164,7 @@ export class MainComponent implements OnInit {
         }
       },
       date: {
+        description: 'Entering dates using the material date picker',
         value: '',
         schema: {
           type: 'string',
@@ -158,6 +172,7 @@ export class MainComponent implements OnInit {
         }
       },
       textarea: {
+        description: 'Textarea allows multi-line inputs. Note that the style key controls the input size',
         value: 'multi\nline\ntext',
         schema: {
           type: 'string',
@@ -166,6 +181,7 @@ export class MainComponent implements OnInit {
         }
       },
       password: {
+        description: 'Password entry - hidden on the UI',
         value: 'secret',
         schema: {
           type: 'string',
@@ -173,6 +189,7 @@ export class MainComponent implements OnInit {
         }
       },
       color: {
+        description: 'Color picker generates hex color codes',
         value: '',
         schema: {
           type: 'string',
@@ -180,6 +197,7 @@ export class MainComponent implements OnInit {
         }
       },
       'datetime-local': {
+        description: 'Browser input type (see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)',
         value: '',
         schema: {
           type: 'string',
@@ -187,6 +205,7 @@ export class MainComponent implements OnInit {
         }
       },
       email: {
+        description: 'Browser input type (see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)',
         value: '',
         schema: {
           type: 'string',
@@ -194,6 +213,7 @@ export class MainComponent implements OnInit {
         }
       },
       month: {
+        description: 'Browser input type (see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)',
         value: '',
         schema: {
           type: 'string',
@@ -201,6 +221,7 @@ export class MainComponent implements OnInit {
         }
       },
       tel: {
+        description: 'Browser input type (see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)',
         value: '',
         schema: {
           type: 'string',
@@ -208,6 +229,7 @@ export class MainComponent implements OnInit {
         }
       },
       time: {
+        description: 'Browser input type (see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)',
         value: '',
         schema: {
           type: 'string',
@@ -215,6 +237,7 @@ export class MainComponent implements OnInit {
         }
       },
       url: {
+        description: 'Browser input type (see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)',
         value: '',
         schema: {
           type: 'string',
@@ -222,6 +245,7 @@ export class MainComponent implements OnInit {
         }
       },
       week: {
+        description: 'Browser input type (see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)',
         value: '',
         schema: {
           type: 'string',
@@ -229,6 +253,7 @@ export class MainComponent implements OnInit {
         }
       },
       custom: {
+        description: 'JSON schema form can be extended by providing custom widgets. This example multiplies the value by 2.',
         value: 1,
         schema: {
           type: 'string',
@@ -237,34 +262,42 @@ export class MainComponent implements OnInit {
         }
       },
       enum: {
+        description: 'JSON schema enums defaults to a select combo box',
         value: null,
         schema: { type: 'string', enum: [null, 'true', 'false'] }
       },
       required: {
+        description: 'Required fields warn the user if they are left blank',
         value: null,
         schema: { type: 'string', required: true }
       },
       title: {
+        description: 'JSON schema titles show up in the input field',
         value: null,
         schema: { type: 'string', title: 'My title' }
       },
       description: {
+        description: 'JSON schema description translates to tool tips',
         value: null,
         schema: { type: 'string', description: 'You find me in the tooltip' }
       },
       default: {
+        description: 'JSON schema default values make sure null and undefined values are set',
         value: undefined,
         schema: { type: 'string', default: 'default value' }
       },
       examples: {
+        description: 'JSON schema examples show up as a placeholder',
         value: null,
         schema: { type: 'string', examples: ['A possible entry'] }
       },
       readOnly: {
+        description: 'JSON schema read only causes the input element to be disabled',
         value: 'readOnly value',
         schema: { type: 'string', readOnly: true }
       },
       additionalProperties: {
+        description: 'JSON schema additional properties allow arbitrary key / value objects to be edited',
         value: { url: 'http://example.org', args: { limit: 10 } },
         schema: {
           type: 'object',
@@ -279,6 +312,7 @@ export class MainComponent implements OnInit {
         }
       },
       ref: {
+        description: 'JSON schema ref allows for definitions to be reused. Here we reuse the address to enter both work and home address.',
         value: null,
         schema: {
           definitions: {
@@ -298,6 +332,7 @@ export class MainComponent implements OnInit {
         }
       },
       simpleGet: {
+        description: 'Getting autocomplete options from a REST service',
         value: null,
         schema: {
           type: 'string',
@@ -306,6 +341,7 @@ export class MainComponent implements OnInit {
         }
       },
       jsonPointer: {
+        description: 'Getting autocomplete options from a REST service and processing the result via JSON pointer',
         value: null,
         schema: {
           type: 'string',
@@ -315,6 +351,7 @@ export class MainComponent implements OnInit {
         }
       },
       'static-choices': {
+        description: 'Static options for autocomplete',
         value: null,
         schema: {
           type: 'string',
@@ -322,6 +359,7 @@ export class MainComponent implements OnInit {
         }
       },
       displayWith: {
+        description: 'Select and autocomplete allow display names to be specified in case the values are not easily readable',
         value: {
           select: 'WA',
           autocomplete: 'https://en.wikipedia.org/wiki/Indonesia'
@@ -344,6 +382,7 @@ export class MainComponent implements OnInit {
         }
       },
       tab: {
+        description: 'Tab layout for arrays and objects with arbitrary key / value pairs',
         value: [{ name: 'Angular', version: 9 }, { name: 'Vue' }],
         schema: {
           type: 'array', layout: 'tab',
@@ -351,6 +390,7 @@ export class MainComponent implements OnInit {
         }
       },
       table: {
+        description: 'Table layout for arrays of objects',
         value: [{ name: 'Angular', version: 9 }, { name: 'Vue' }],
         schema: {
           type: 'array', layout: 'table',
@@ -358,6 +398,7 @@ export class MainComponent implements OnInit {
         }
       },
       vertical: {
+        description: 'Vertical flex layout of input elements',
         value: [{ name: 'Angular', version: 9 }, { name: 'Vue' }],
         schema: {
           type: 'array', layout: 'vertical',
@@ -365,6 +406,7 @@ export class MainComponent implements OnInit {
         }
       },
       horizontal: {
+        description: 'Horizontal flex layout of input elements',
         value: [{ name: 'Angular', version: 9 }, { name: 'Vue' }],
         schema: {
           type: 'array', layout: 'horizontal',
@@ -372,6 +414,7 @@ export class MainComponent implements OnInit {
         }
       },
       nested: {
+        description: 'Example showing that layouts can also be nested on different levels',
         value: [{ name: 'Angular', version: 9 }, { name: 'Vue' }],
         schema: {
           type: 'array', layout: 'horizontal',
@@ -379,6 +422,7 @@ export class MainComponent implements OnInit {
         }
       },
       'array-select': {
+        description: 'Allows arrays to be assembled from options',
         value: ['India', 'China'],
         schema: {
           type: 'array', layout: 'select',
@@ -388,6 +432,7 @@ export class MainComponent implements OnInit {
         }
       },
       conditional: {
+        description: 'Allows a switch field to determine which other fields are visible. For instance, cicles show radius but not height',
         value: { type: 'circle' },
         schema: {
           type: 'object',
@@ -402,6 +447,7 @@ export class MainComponent implements OnInit {
         }
       },
       style: {
+        description: 'Shows how css styles can be passed to the input elements',
         value: 'style me!',
         schema: {
           type: 'string',
@@ -416,6 +462,7 @@ export class MainComponent implements OnInit {
         }
       },
       complex: {
+        description: 'A complex example combining multiple features',
         value: [
           {
             name: 'joe',
@@ -469,6 +516,7 @@ export class MainComponent implements OnInit {
         }
       },
       metaschema: {
+        description: 'This schema allows editing JSON schema itself. Note that not all JSON schema features are supported.',
         value: MainComponent.schemaExample,
         schema: MainComponent.metaschema
       }
@@ -498,6 +546,7 @@ export class MainComponent implements OnInit {
   select(key: string) {
     this.value = this.examples[key].value;
     this.schema = this.examples[key].schema;
+    this.description = this.examples[key].description;
   }
 
   /**
