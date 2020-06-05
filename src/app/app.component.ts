@@ -32,12 +32,16 @@ export class MainComponent implements OnInit {
    */
   static schemaExample = {
     type: 'object',
+    title: 'Personal Info',
     properties: {
       name: {
-        type: 'string'
+        type: 'string',
+        title: 'Enter your name',
+        required: true
       },
       age: {
-        type: 'number'
+        type: 'number',
+        title: 'Your age (optional)',
       },
       emails: {
         type: 'array',
@@ -57,11 +61,17 @@ export class MainComponent implements OnInit {
       prop: {
         type: 'object',
         switch: 'type',
+        class: [
+          'mat-elevation-z4'
+        ],
         properties: {
           type: {
             type: 'string',
             enum: ['string', 'number', 'array', 'object']
           },
+          title: { type: 'string' },
+          required: { type: 'boolean', case: ['string', 'number'] },
+          readOnly: { type: 'boolean', case: ['string', 'number', 'array'] },
           items: {
             $ref: '#/definitions/propNoRec'
           },
