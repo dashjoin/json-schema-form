@@ -98,6 +98,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   @Input() switch: string;
 
   /**
+   * are we already in the expansion panel?
+   */
+  @Input() inExpansion: boolean;
+
+  /**
    * hook for custom widgets
    */
   @ViewChild(WidgetDirective, { static: true }) widgetHost: WidgetDirective;
@@ -681,6 +686,14 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.value = u.value;
       }
     }
+    this.valueChange.emit(this.value);
+  }
+
+  /**
+   * used for expansion panels - set value and forward event
+   */
+  setAndEmit(event: any) {
+    this.value = event;
     this.valueChange.emit(this.value);
   }
 }

@@ -190,6 +190,7 @@ Layout options determine how the input elements of arrays and objects are arrang
 * tab: controls are shown in tabs (only applies to arrays and objects with additionalProperties)
 * table: controls are shown in a table with the property names being the column names (only applies to an array of objects)
 * select: array is shown as a multi-select (only applies to arrays of string)
+* Any element can be placed in an expansion panel by adding "expanded": true / false. The Boolean value indicates whether the panel is expanded by default or not
 
 The style and class fields allow passing CSS styles and classes to the input fields. For instance, you could emphasize
 the input with a higher z elevation and accommodate for longer

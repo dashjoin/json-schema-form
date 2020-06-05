@@ -474,6 +474,27 @@ export class MainComponent implements OnInit {
           }
         }
       },
+      expanded: {
+        description: 'If expanded is present, the component is put in an expansion panel. The value indicates if the panel is open or not',
+        value: [{ name: 'Angular' }, {}],
+        schema: {
+          type: 'array',
+          layout: 'vertical',
+          title: 'Software',
+          items: {
+            expanded: false,
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string'
+              },
+              version: {
+                type: 'number'
+              }
+            }
+          }
+        }
+      },
       complex: {
         description: 'A complex example combining multiple features',
         value: [

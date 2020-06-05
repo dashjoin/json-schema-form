@@ -167,4 +167,9 @@ export interface Schema {
      * show the property if the switch property's value is one of case's values
      */
     case?: string[];
+
+    /**
+     * indicates whether the component should be located in an expansion panel
+     */
+    expanded?: boolean;
 }

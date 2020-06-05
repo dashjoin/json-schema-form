@@ -1,4 +1,16 @@
-<div matTooltip="{{schema.description}}">
+<mat-expansion-panel *ngIf="(schema.expanded === true || schema.expanded === false) && !inExpansion"
+    [ngStyle]="schema.style" [ngClass]="schema.class" [expanded]="schema.expanded">
+    <mat-expansion-panel-header>
+        <mat-panel-title>{{label}}</mat-panel-title>
+        <mat-panel-description>{{schema.description}}</mat-panel-description>
+    </mat-expansion-panel-header>
+    <lib-json-schema-form [label]="label" [value]="value" (valueChange)="setAndEmit($event)" [switch]="switch"
+        [rootSchema]="rootSchema" [schema]="schema" [inExpansion]="true">
+    </lib-json-schema-form>
+</mat-expansion-panel>
+
+<div *ngIf="(schema.expanded === null || schema.expanded === undefined) || inExpansion"
+    matTooltip="{{schema.description}}">
 
     <!-- object row wrap layout -->
     <mat-card *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'"
