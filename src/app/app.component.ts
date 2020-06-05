@@ -64,6 +64,9 @@ export class MainComponent implements OnInit {
         class: [
           'mat-elevation-z4'
         ],
+        style: {
+          'font-size': 'small'
+        },
         properties: {
           type: {
             type: 'string',
