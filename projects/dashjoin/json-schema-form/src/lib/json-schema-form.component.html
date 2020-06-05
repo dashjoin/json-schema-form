@@ -1,7 +1,8 @@
 <div matTooltip="{{schema.description}}">
 
     <!-- object row wrap layout -->
-    <mat-card *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
+    <mat-card *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'"
+        [ngStyle]="schema.style" [ngClass]="schema.class">
         <div *ngFor="let x of schema.properties | keyvalue:originalOrder" style="display: flex; margin: 2px">
             <div *ngIf="x.value.type || x.value.$ref">
                 <lib-json-schema-form [label]="x.value.title ? x.value.title : x.key"
@@ -14,7 +15,8 @@
 
     <!-- additional properties -->
     <mat-card *ngIf="getLayout() === 'additionalProperties'"
-        [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
+        [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'" [ngStyle]="schema.style"
+        [ngClass]="schema.class">
         <div *ngFor="let x of value | keyvalue:originalOrder; let i=index"
             style="display: flex; margin: 2px; position: relative" (mouseenter)="hover=i" (mouseleave)="hover=null">
             <mat-form-field>
@@ -37,7 +39,8 @@
     </mat-card>
 
     <!-- additional properties tab layout -->
-    <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'additionalPropertiesTab'" style="max-width: 96vw">
+    <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'additionalPropertiesTab'" style="max-width: 96vw"
+        [ngStyle]="schema.style" [ngClass]="schema.class">
         <mat-tab *ngFor="let x of value | keyvalue:originalOrder; let i=index" style="margin: 2px; position: relative">
             <ng-template mat-tab-label>
                 <mat-form-field *ngIf="!schema.readOnly">
@@ -64,7 +67,8 @@
     </mat-tab-group>
 
     <!-- array row wrap layout -->
-    <mat-card *ngIf="getLayout() === 'array'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'">
+    <mat-card *ngIf="getLayout() === 'array'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'"
+        [ngStyle]="schema.style" [ngClass]="schema.class">
         <div *ngFor="let x of value; let i=index" style="display: flex; margin: 2px; position: relative"
             (mouseenter)="hover=i" (mouseleave)="hover=null">
             <lib-json-schema-form [label]="getLabel()" [(value)]="value[i]" [rootSchema]="rootSchema"
@@ -81,7 +85,8 @@
     </mat-card>
 
     <!-- array tab layout -->
-    <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'tab'" style="max-width: 96vw">
+    <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'tab'" style="max-width: 96vw"
+        [ngStyle]="schema.style" [ngClass]="schema.class">
         <mat-tab *ngFor="let x of value; let i=index" style="margin: 2px; position: relative"
             [label]="getLabel()+' '+i">
             <lib-json-schema-form [(value)]="value[i]" [rootSchema]="rootSchema" [schema]="schema.items">
@@ -101,7 +106,7 @@
     </mat-tab-group>
 
     <!-- array table layout -->
-    <mat-card *ngIf="getLayout() === 'table'">
+    <mat-card *ngIf="getLayout() === 'table'" [ngStyle]="schema.style" [ngClass]="schema.class">
         <table>
             <tr>
                 <th *ngFor="let x of schema.items.properties | keyvalue:originalOrder">
@@ -169,7 +174,7 @@
 
     <!-- autocomplete element -->
     <div *ngIf="getLayout() === 'autocomplete'">
-        <mat-form-field *ngIf="schema.widget !== 'select'" [ngStyle]="schema.style">
+        <mat-form-field *ngIf="schema.widget !== 'select'" [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
             <input autocomplete="off" matInput [value]="name" (keyup)="filter($event)" (focus)="load()"
                 (blur)="optionChange($event)" [matAutocomplete]="auto">
@@ -181,7 +186,7 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field *ngIf="schema.widget === 'select'" [ngStyle]="schema.style">
+        <mat-form-field *ngIf="schema.widget === 'select'" [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
             <mat-select [value]="value" (focus)="load()" (selectionChange)="change($event)">
                 <mat-option *ngFor="let option of choices" [value]="option"
@@ -195,7 +200,7 @@
 
     <!-- single element -->
     <div *ngIf="getLayout() === 'single'">
-        <mat-form-field [ngStyle]="schema.style">
+        <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
             <input [disabled]="schema.readOnly" [placeholder]="example()" autocomplete="off" matInput
                 [type]="getInputType(schema)" [value]="value" (change)="change($event)">
@@ -205,10 +210,10 @@
 
     <!-- textarea element -->
     <div *ngIf="getLayout() === 'textarea'">
-        <mat-form-field [ngStyle]="schema.style">
+        <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
             <textarea [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
-                (change)="change($event)" [ngStyle]="schema.style"></textarea>
+                (change)="change($event)" [ngStyle]="schema.style" [ngClass]="schema.class"></textarea>
         </mat-form-field>
         <p class="error">{{error()}}</p>
     </div>

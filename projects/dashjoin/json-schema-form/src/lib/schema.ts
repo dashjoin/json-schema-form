@@ -101,9 +101,14 @@ export interface Schema {
     widgetType?: string;
 
     /**
-     * style applied to mat-form-field
+     * style applied to form element
      */
     style?: any;
+
+    /**
+     * class applied to form element
+     */
+    class?: string[];
 
     /**
      * used in case the select / autocomplete options are gathered from a REST service URL.

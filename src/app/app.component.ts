@@ -447,7 +447,7 @@ export class MainComponent implements OnInit {
         }
       },
       style: {
-        description: 'Shows how css styles can be passed to the input elements',
+        description: 'Shows how css styles can be passed to form elements',
         value: 'style me!',
         schema: {
           type: 'string',
@@ -458,6 +458,19 @@ export class MainComponent implements OnInit {
             'background-color': 'lightgrey',
             color: 'blue',
             padding: '50px'
+          }
+        }
+      },
+      class: {
+        description: 'Shows how css classes can be passed to the form elements',
+        value: ['a', 'b'],
+        schema: {
+          type: 'array',
+          class: [
+            'mat-elevation-z16'
+          ],
+          items: {
+            type: 'string'
           }
         }
       },

@@ -191,12 +191,16 @@ Layout options determine how the input elements of arrays and objects are arrang
 * table: controls are shown in a table with the property names being the column names (only applies to an array of objects)
 * select: array is shown as a multi-select (only applies to arrays of string)
 
-The style field allows passing CSS styles to the input fields. For instance, you could accommodate for longer
+The style and class fields allow passing CSS styles and classes to the input fields. For instance, you could emphasize
+the input with a higher z elevation and accommodate for longer
 input values by increasing the default input element width:
 
 ```
 {
   "type": "string",
+  "class": [
+    "mat-elevation-z2"
+  ],
   "style": {
     "width": "400px"
   }
