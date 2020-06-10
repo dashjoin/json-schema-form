@@ -108,15 +108,21 @@ export class MainComponent implements OnInit {
 
   /**
    * schema bound to component
-   * <lib-json-schema-form [(value)]="value" [schema]="schema"></lib-json-schema-form>
+   * <lib-json-schema-form [(value)]="value" [schema]="schema" (invalidChange)="invalid=$event"></lib-json-schema-form>
    */
   schema: Schema = { type: 'string' };
 
   /**
    * value bound to component
-   * <lib-json-schema-form [(value)]="value" [schema]="schema"></lib-json-schema-form>
+   * <lib-json-schema-form [(value)]="value" [schema]="schema" (invalidChange)="invalid=$event"></lib-json-schema-form>
    */
   value: any = 'test';
+
+  /**
+   * value bound to component
+   * <lib-json-schema-form [(value)]="value" [schema]="schema" (invalidChange)="invalid=$event"></lib-json-schema-form>
+   */
+  invalid: boolean;
 
   /**
    * desc of the example
@@ -353,7 +359,7 @@ export class MainComponent implements OnInit {
         }
       },
       compute: {
-        description: 'Allows for computed keys on objects',
+        description: 'Allows to computed fields based on string templates that can reference other fields',
         value: null,
         schema: {
           type: 'object',
@@ -611,6 +617,7 @@ export class MainComponent implements OnInit {
     this.value = this.examples[key].value;
     this.schema = this.examples[key].schema;
     this.description = this.examples[key].description;
+    this.invalid = undefined;
   }
 
   /**

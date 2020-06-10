@@ -210,6 +210,40 @@ input values by increasing the default input element width:
 
 Please also see the definition of the [Schema](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/schema.ts) object.
 
+## Application Logic
+
+In some situations, you would like to compute a field based on the contents of other fields.
+This can be achieved via the "compute" option. It can be placed within an object as follows:
+
+```
+{
+  "type": "object",
+  "properties": { "first": {"type": "string"}, "last": { "type": "string" } },
+  "computed": {
+    "salutation": "Dear ${first} ${last},"
+  }
+}
+```
+
+In this example, any change to the first or last fields trigger a change in salutation.
+Note that the salutation field does not show up in the form.
+
+## Validation and Submitting
+
+Some JSON Schema constructs like "pattern" or "required" allow validating an object against the schema.
+The result of this validation is displayed on the UI but it is also propagated to the parent component
+via the "invalid" output variable. The following example shows how this information can be used to
+deactivate form submisson:
+
+```
+<lib-json-schema-form [(value)]="value" [schema]="schema" (invalidChange)="invalid=$event">
+</lib-json-schema-form>
+<button [disabled]="invalid" (click)="submit()">Submit</button>
+```
+
+Note that not all JSON schema validation constructs are supported. Also, arrays and
+additional property objects do not propagate the information and the invalid value is undefined.
+
 ## Structure of this repository
 
 The repository contains:

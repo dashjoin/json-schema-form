@@ -57,11 +57,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   selectfilter = '';
 
   /**
-   * validation error message to be displayed in red
-   */
-  errorMessage: string;
-
-  /**
    * the name of the input field
    */
   @Input() label: string;
@@ -80,6 +75,16 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * emit changes done by the user in the component
    */
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
+
+  /**
+   * emit whether this part of the form is valid
+   */
+  @Output() invalidChange: EventEmitter<boolean> = new EventEmitter();
+
+  /**
+   * for objects, keep track of valid and invalid parts
+   */
+  invalidMap = {};
 
   /**
    * JSON schema to use
@@ -160,6 +165,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.getLayout() === 'autocomplete') {
       this.name = this.displayWith(this.value);
     }
+
+    if (this.schema.type === 'string' || this.schema.type === 'number' ||
+      this.schema.type === 'boolean' || this.schema.type === 'integer') {
+      this.invalidChange.emit(this.error() != null);
+    }
   }
 
   /**
@@ -174,7 +184,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.choices = null;
         this.filteredChoices = null;
         this.filteredChoicesObj = null;
-        this.errorMessage = null;
         if (this.widgetHost.viewContainerRef) {
           this.widgetHost.viewContainerRef.clear();
         }
@@ -361,7 +370,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         return 'illegal string';
       }
     }
-    return this.errorMessage;
+    return null;
   }
 
   /**
@@ -409,28 +418,13 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
 
     if (this.schema.type === 'number') {
-      if (!isNaN(parseFloat(event))) {
-        this.value = parseFloat(event);
-        this.errorMessage = '';
-      } else
-        if (event != null) {
-          this.errorMessage = event + ' is not a number';
-        } else {
-          this.errorMessage = '';
-        }
+      this.value = parseFloat(event);
     } else if (this.schema.type === 'integer') {
-      if (!isNaN(parseInt(event, 10))) {
-        this.value = parseInt(event, 10);
-        this.errorMessage = '';
-        if (eventTarget) {
-          if ('' + this.value !== event) {
-            eventTarget.value = this.value;
-          }
+      this.value = parseInt(event, 10);
+      if (eventTarget) {
+        if ('' + this.value !== event) {
+          eventTarget.value = this.value;
         }
-      } else if (event != null) {
-        this.errorMessage = event + ' is not an integer number';
-      } else {
-        this.errorMessage = '';
       }
     } else if (this.schema.type === 'boolean') {
       if (typeof event === 'string') {
@@ -452,7 +446,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       throw new Error('unknown type: ' + this.schema.type);
     }
 
-    console.log(event)
+    this.invalidChange.emit(this.error() != null);
 
     this.valueChange.emit(this.value);
   }
@@ -580,7 +574,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   handleFileInput(event: any) {
     if (1024 * 1024 <= event.target.files.item(0).size) {
-      this.errorMessage = 'The file size is limited to 1MB';
+      console.log('The file size is limited to 1MB');
       return;
     }
     const reader = new FileReader();
@@ -719,5 +713,16 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   setAndEmit(event: any) {
     this.value = event;
     this.valueChange.emit(this.value);
+  }
+
+  onInvalid(key: string, invalid: boolean) {
+    this.invalidMap[key] = invalid;
+    let res = false;
+    for (const fieldInvalid of Object.values(this.invalidMap)) {
+      if (fieldInvalid) {
+        res = true;
+      }
+    }
+    setTimeout(() => this.invalidChange.emit(res), 10);
   }
 }
