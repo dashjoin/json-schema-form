@@ -178,4 +178,9 @@ export interface Schema {
      * indicates whether the component should be located in an expansion panel
      */
     expanded?: boolean;
+
+    /**
+     * allows defining computed properties that are set when the value changes
+     */
+    computed?: { [key: string]: string };
 }

@@ -270,6 +270,19 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.value = {};
     }
     this.value[key] = value;
+
+    if (this.schema.computed) {
+      for (const field of Object.keys(this.schema.computed)) {
+        let label = this.schema.computed[field];
+        label = label.replace(/\${([^{}]*)}/g, (x) => {
+          x = x.substring(2);
+          x = x.substring(0, x.length - 1);
+          return this.value[x];
+        });
+        this.value[field] = label;
+      }
+    }
+
     this.valueChange.emit(this.value);
   }
 
@@ -438,6 +451,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     } else {
       throw new Error('unknown type: ' + this.schema.type);
     }
+
+    console.log(event)
 
     this.valueChange.emit(this.value);
   }

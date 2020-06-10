@@ -352,6 +352,15 @@ export class MainComponent implements OnInit {
           pattern: '^[a-z]+$'
         }
       },
+      compute: {
+        description: 'Allows for computed keys on objects',
+        value: null,
+        schema: {
+          type: 'object',
+          properties: { first: { type: 'string' }, last: { type: 'string' } },
+          computed: { salutation: 'Dear ${first} ${last},' }
+        }
+      },
       simpleGet: {
         description: 'Getting autocomplete options from a REST service',
         value: null,
