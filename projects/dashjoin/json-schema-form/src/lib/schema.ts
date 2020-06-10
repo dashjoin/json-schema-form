@@ -30,6 +30,12 @@ export interface Schema {
     required?: boolean;
 
     /**
+     * string pattern
+     * https://json-schema.org/understanding-json-schema/reference/regular_expressions.html
+     */
+    pattern?: string;
+
+    /**
      * additional properties (with unknown name) have the following schema
      */
     additionalProperties?: Schema;

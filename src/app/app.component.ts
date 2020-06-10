@@ -344,6 +344,14 @@ export class MainComponent implements OnInit {
           }
         }
       },
+      pattern: {
+        description: 'JSON schema pattern allows specifying a pattern that must match the input (^ matches the beginning, $ the end)',
+        value: 'abcd3456',
+        schema: {
+          type: 'string',
+          pattern: '^[a-z]+$'
+        }
+      },
       simpleGet: {
         description: 'Getting autocomplete options from a REST service',
         value: null,
