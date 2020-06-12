@@ -49,7 +49,7 @@ import { Schema } from '@dashjoin/json-schema-form/lib/schema';
 @Component({
   selector: 'app-root',
   template: `
-    <lib-json-schema-form [(value)]="value" [schema]="schema"></lib-json-schema-form>
+    <lib-json-schema-form [(value)]="value" [schema]="schema" [label]="schema.title"></lib-json-schema-form>
     <pre>{{print()}}<pre>
   `
 })
@@ -236,7 +236,7 @@ via the "invalid" output variable. The following example shows how this informat
 deactivate form submisson:
 
 ```
-<lib-json-schema-form [(value)]="value" [schema]="schema" (invalidChange)="invalid=$event">
+<lib-json-schema-form [(value)]="value" [schema]="schema" [label]="schema.title"(invalidChange)="invalid=$event">
 </lib-json-schema-form>
 <button [disabled]="invalid" (click)="submit()">Submit</button>
 ```
