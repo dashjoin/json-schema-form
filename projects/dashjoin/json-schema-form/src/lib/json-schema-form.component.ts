@@ -399,6 +399,13 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     return null;
   }
 
+  e(error: string): string {
+    if (this.schema.errorMessage) {
+      return this.schema.errorMessage;
+    }
+    return error;
+  }
+
   /**
    * return error string
    */
@@ -406,28 +413,28 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.maxItems) {
       if (this.value) {
         if (!(this.value.length <= this.schema.maxItems)) {
-          return 'Only ' + this.schema.maxItems + ' array entries allowed';
+          return this.e('Only ' + this.schema.maxItems + ' array entries allowed');
         }
       }
     }
     if (this.schema.uniqueItems) {
       if (this.value) {
         if (!(new Set(this.value).size === this.value.length)) {
-          return 'Array entries must be unique';
+          return this.e('Array entries must be unique');
         }
       }
     }
     if (this.schema.minItems) {
       if (this.value) {
         if (!(this.value.length >= this.schema.minItems)) {
-          return 'At least ' + this.schema.minItems + ' array entries required';
+          return this.e('At least ' + this.schema.minItems + ' array entries required');
         }
       }
     }
     if (this.schema.maxProperties) {
       if (this.value) {
         if (!(Object.keys(this.value).length <= this.schema.maxProperties)) {
-          return 'Only ' + this.schema.maxProperties + ' fields allowed';
+          return this.e('Only ' + this.schema.maxProperties + ' fields allowed');
         }
       }
     }
@@ -436,7 +443,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         for (const key of Object.keys(this.value)) {
           const re = new RegExp(this.schema.propertyNames);
           if (!re.test(key)) {
-            return 'illegal field name: ' + key;
+            return this.e('illegal field name: ' + key);
           }
         }
       }
@@ -447,7 +454,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
           if (this.value[dep]) {
             for (const l of this.schema.dependencies[dep]) {
               if (!this.value[l]) {
-                return dep + ' depends on ' + l;
+                return this.e(dep + ' depends on ' + l);
               }
             }
           }
@@ -457,87 +464,87 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.minProperties) {
       if (this.value) {
         if (!(Object.keys(this.value).length >= this.schema.minProperties)) {
-          return 'At least ' + this.schema.minProperties + ' fields required';
+          return this.e('At least ' + this.schema.minProperties + ' fields required');
         }
       }
     }
     if (this.required) {
       if (this.value == null) {
-        return 'required';
+        return this.e('required');
       }
     }
     if (this.schema.required) {
       for (const dep of this.schema.required) {
         if (!this.value[dep]) {
-          return dep + ' is required';
+          return this.e(dep + ' is required');
         }
       }
     }
     if (this.schema.pattern) {
       const re = new RegExp(this.schema.pattern);
       if (!this.value) {
-        return 'illegal string';
+        return this.e('illegal string');
       }
       if (!re.test(this.value)) {
-        return 'illegal string';
+        return this.e('illegal string');
       }
     }
     if (this.schema.maxLength) {
       if (this.value) {
         if (!(('' + this.value).length <= this.schema.maxLength)) {
-          return 'Input is longer than ' + this.schema.maxLength;
+          return this.e('Input is longer than ' + this.schema.maxLength);
         }
       }
     }
     if (this.schema.minLength) {
       if (this.value) {
         if (!(('' + this.value).length >= this.schema.minLength)) {
-          return 'Input is shorter than ' + this.schema.minLength;
+          return this.e('Input is shorter than ' + this.schema.minLength);
         }
       }
     }
     if (this.schema.multipleOf) {
       if (this.value) {
         if (!Number.isInteger(Number(this.value) / this.schema.multipleOf)) {
-          return 'Must be multiple of ' + this.schema.multipleOf;
+          return this.e('Must be multiple of ' + this.schema.multipleOf);
         }
       }
     }
     if (this.schema.exclusiveMaximum) {
       if (this.value) {
         if (!(Number(this.value) < this.schema.exclusiveMaximum)) {
-          return 'Must be less than ' + this.schema.exclusiveMaximum;
+          return this.e('Must be less than ' + this.schema.exclusiveMaximum);
         }
       }
     }
     if (this.schema.maximum) {
       if (this.value) {
         if (!(Number(this.value) <= this.schema.maximum)) {
-          return 'Must be less than or equal ' + this.schema.maximum;
+          return this.e('Must be less than or equal ' + this.schema.maximum);
         }
       }
     }
     if (this.schema.exclusiveMinimum) {
       if (this.value) {
         if (!(Number(this.value) > this.schema.exclusiveMinimum)) {
-          return 'Must greater than ' + this.schema.exclusiveMinimum;
+          return this.e('Must greater than ' + this.schema.exclusiveMinimum);
         }
       }
     }
     if (this.schema.minimum) {
       if (this.value) {
         if (!(Number(this.value) >= this.schema.minimum)) {
-          return 'Must greater than or equal ' + this.schema.minimum;
+          return this.e('Must greater than or equal ' + this.schema.minimum);
         }
       }
     }
     if (this.schema.format && this.service.formats[this.schema.format]) {
       const re = new RegExp(this.service.formats[this.schema.format]);
       if (!this.value) {
-        return 'illegal string';
+        return this.e('illegal string');
       }
       if (!re.test(this.value)) {
-        return 'illegal string';
+        return this.e('illegal string');
       }
     }
     return null;

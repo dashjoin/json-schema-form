@@ -235,4 +235,9 @@ export interface Schema {
      * allows defining computed properties that are set when the value changes
      */
     computed?: { [key: string]: string };
+
+    /**
+     * allows customizing the validation error message
+     */
+    errorMessage?: string;
 }

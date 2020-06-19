@@ -36,17 +36,16 @@ export class MainComponent implements OnInit {
     properties: {
       name: {
         type: 'string',
-        title: 'Enter your name',
-        required: true
+        title: 'Enter your name'
       },
       age: {
         type: 'number',
-        title: 'Your age (optional)',
+        title: 'Your age',
       },
       emails: {
         type: 'array',
         items: {
-          type: 'string'
+          type: 'string', format: 'email'
         }
       }
     }
@@ -73,8 +72,8 @@ export class MainComponent implements OnInit {
             enum: ['string', 'number', 'array', 'object']
           },
           title: { type: 'string' },
-          required: { type: 'boolean', case: ['string', 'number'] },
           readOnly: { type: 'boolean', case: ['string', 'number', 'array'] },
+          format: { type: 'string', case: ['string'], enum: ['email', 'ipv4', 'url', 'uri'] },
           items: {
             $ref: '#/definitions/propNoRec'
           },
@@ -455,6 +454,13 @@ export class MainComponent implements OnInit {
           type: 'object',
           properties: { first: { type: 'string' }, last: { type: 'string' } },
           computed: { salutation: 'Dear ${first} ${last},' }
+        }
+      },
+      errorMessage: {
+        description: 'Allows customizing the validation error message',
+        value: '1234',
+        schema: {
+          type: 'string', widget: 'password', errorMessage: 'Your passowrd must have at least 6 characters', minLength: 6
         }
       },
       simpleGet: {
