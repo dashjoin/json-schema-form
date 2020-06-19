@@ -903,6 +903,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   }
 
   showProperty(prop: string) {
+    if (!this.value) {
+      this.value = {};
+    }
     if (this.value[prop] === undefined) {
       this.value[prop] = null;
     } else if (this.value[prop] === null) {
@@ -911,7 +914,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   }
 
   showPropertyList(): string[] {
-    if (this.schema.switch) {
+    if (this.schema.switch && this.value) {
       const sw = this.value[this.schema.switch];
       const props = [];
       for (const [k, v] of Object.entries(this.schema.properties)) {

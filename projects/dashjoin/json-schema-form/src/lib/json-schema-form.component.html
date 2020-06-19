@@ -16,7 +16,7 @@
     <mat-card *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'"
         [ngStyle]="schema.style" [ngClass]="schema.class">
         <div *ngFor="let x of schema.properties | keyvalue:originalOrder" style="display: flex; margin: 2px">
-            <div *ngIf="x.value.type || x.value.$ref">
+            <div *ngIf="x.value && (x.value.type || x.value.$ref)">
                 <lib-json-schema-form #children [label]="x.value.title ? x.value.title : x.key"
                     [value]="value ? value[x.key] : undefined" (valueChange)="onValueChange(x.key, $event)"
                     [switch]="value ? value[schema.switch] : undefined" [rootSchema]="rootSchema" [schema]="x.value"
@@ -31,7 +31,8 @@
             </button>
             <mat-menu #menu="matMenu">
                 <div *ngFor="let x of showPropertyList()">
-                    <mat-checkbox [disabled]="value[x]" [checked]="value[x] !== undefined" (change)="showProperty(x)">
+                    <mat-checkbox [disabled]="value ? value[x] : false" [checked]="value && (value[x] !== undefined)"
+                        (change)="showProperty(x)">
                         {{x}}
                     </mat-checkbox>
                 </div>
