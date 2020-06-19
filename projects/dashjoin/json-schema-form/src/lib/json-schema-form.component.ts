@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, SimpleChanges,
-  OnChanges, ComponentFactoryResolver, ViewChild, Type
+  OnChanges, ComponentFactoryResolver, ViewChild, Type, ViewChildren, QueryList
 } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -24,6 +24,16 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
   styleUrls: ['./json-schema-form.component.css']
 })
 export class JsonSchemaFormComponent implements OnInit, OnChanges {
+
+  /**
+   * container children for event propagation
+   */
+  @ViewChildren('children') children: QueryList<JsonSchemaFormComponent>;
+
+  /**
+   * container children for event propagation
+   */
+  @ViewChild('child') child: JsonSchemaFormComponent;
 
   /**
    * if an array is displayed, indicates which array index is being hovered over in order to
@@ -79,12 +89,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   /**
    * emit whether this part of the form is valid
    */
-  @Output() invalidChange: EventEmitter<boolean> = new EventEmitter();
-
-  /**
-   * for objects, keep track of valid and invalid parts
-   */
-  invalidMap = {};
+  @Output() errorChange: EventEmitter<string> = new EventEmitter();
 
   /**
    * JSON schema to use
@@ -95,6 +100,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * root JSON schema to use when looking up $ref (simply passed along the tree)
    */
   @Input() rootSchema: Schema;
+
+  isRoot = false;
 
   /**
    * if present: value of the switch property that determines whether this component renders itself
@@ -132,6 +139,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     if (!this.rootSchema) {
       this.rootSchema = this.schema;
+      this.isRoot = true;
     }
 
     if (!this.schema.type) {
@@ -145,7 +153,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (typeof this.value === 'undefined') {
       if (this.schema.default) {
         this.value = this.schema.default;
-        setTimeout(() => this.valueChange.emit(this.value), 500);
+        setTimeout(() => this.emit(this.value), 500);
       } else {
         this.value = null;
       }
@@ -171,9 +179,19 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.name = this.displayWith(this.value);
     }
 
-    if (this.schema.type === 'string' || this.schema.type === 'number' ||
-      this.schema.type === 'boolean' || this.schema.type === 'integer') {
-      this.invalidChange.emit(this.error() != null);
+    if (this.isRoot) {
+      setTimeout(() => {
+        this.errorChange.emit(this.recursiveError());
+      }, 10);
+    }
+  }
+
+  emit(event: any) {
+    this.valueChange.emit(event);
+    if (this.isRoot) {
+      setTimeout(() => {
+        this.errorChange.emit(this.recursiveError());
+      }, 10);
     }
   }
 
@@ -297,7 +315,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
     }
 
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
   }
 
   /**
@@ -315,7 +333,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     } else {
       this.value.push(null);
     }
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
   }
 
   /**
@@ -329,7 +347,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       return;
     }
     this.value[''] = null;
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
   }
 
   /**
@@ -337,7 +355,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   remove(i: number) {
     this.value.splice(i, 1);
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
   }
 
   /**
@@ -345,7 +363,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   removeField(key: string) {
     delete this.value[key];
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
   }
 
   /**
@@ -354,7 +372,26 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   fieldNameChange(key: string, newvalue: any) {
     this.value[newvalue] = this.value[key];
     delete this.value[key];
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
+  }
+
+  recursiveError(): string {
+    const e = this.error();
+    if (e) {
+      return e;
+    }
+    if (this.child) {
+      return this.child.recursiveError();
+    }
+    if (this.children) {
+      for (const c of this.children) {
+        const r = c.recursiveError();
+        if (r) {
+          return r;
+        }
+      }
+    }
+    return null;
   }
 
   /**
@@ -509,9 +546,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       throw new Error('unknown type: ' + this.schema.type);
     }
 
-    this.invalidChange.emit(this.error() != null);
-
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
   }
 
   /**
@@ -643,7 +678,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     const reader = new FileReader();
     reader.onload = () => {
       this.value = reader.result;
-      this.valueChange.emit(this.value);
+      this.emit(this.value);
     };
     reader.readAsText(event.target.files.item(0));
   }
@@ -706,7 +741,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     // subscribe to value changes and forward them
     (componentRef.instance as WidgetComponent).valueChange.subscribe(data => {
       this.value = data;
-      this.valueChange.emit(this.value);
+      this.emit(this.value);
     });
   }
 
@@ -753,7 +788,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   optionSelected(event: any) {
     this.name = event.option.value.name;
     this.value = event.option.value.value;
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
   }
 
   /**
@@ -767,7 +802,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.value = u.value;
       }
     }
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
   }
 
   /**
@@ -775,22 +810,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   setAndEmit(event: any) {
     this.value = event;
-    this.valueChange.emit(this.value);
+    this.emit(this.value);
   }
 
   setIndexAndEmit(i: number, event: any) {
     this.value[i] = event;
-    this.valueChange.emit(this.value);
-  }
-
-  onInvalid(key: string, invalid: boolean) {
-    this.invalidMap[key] = invalid;
-    let res = false;
-    for (const fieldInvalid of Object.values(this.invalidMap)) {
-      if (fieldInvalid) {
-        res = true;
-      }
-    }
-    setTimeout(() => this.invalidChange.emit(res), 10);
+    this.emit(this.value);
   }
 }

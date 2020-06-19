@@ -122,7 +122,7 @@ export class MainComponent implements OnInit {
    * value bound to component
    * <lib-json-schema-form [(value)]="value" [schema]="schema" (invalidChange)="invalid=$event"></lib-json-schema-form>
    */
-  invalid: boolean;
+  error: string;
 
   /**
    * desc of the example
@@ -650,7 +650,7 @@ export class MainComponent implements OnInit {
     this.value = this.examples[key].value;
     this.schema = this.examples[key].schema;
     this.description = this.examples[key].description;
-    this.invalid = undefined;
+    this.error = undefined;
   }
 
   /**

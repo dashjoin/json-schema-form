@@ -129,7 +129,7 @@
 <label class="mat-typography"><b>{{description}}</b></label>
 <br>
 <label class="mat-typography">Form (Changes are applied to the JSON textarea onBlur)</label>
-<lib-json-schema-form [(value)]="value" [schema]="schema" [label]="schema.title" (invalidChange)="invalid=$event">
+<lib-json-schema-form [(value)]="value" [schema]="schema" [label]="schema.title" (errorChange)="error=$event">
 </lib-json-schema-form>
 <br>
-<label class=" mat-typography">{{invalid ? "invalid" : (invalid===false ? "valid" : null)}}</label>
+<label class=" mat-typography">{{error === null ? "From is valid" : "From is invalid: "+error}}</label>
