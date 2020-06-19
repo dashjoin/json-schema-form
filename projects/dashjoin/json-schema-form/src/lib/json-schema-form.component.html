@@ -84,7 +84,7 @@
         [ngStyle]="schema.style" [ngClass]="schema.class">
         <div *ngFor="let x of value; let i=index" style="display: flex; margin: 2px; position: relative"
             (mouseenter)="hover=i" (mouseleave)="hover=null">
-            <lib-json-schema-form [label]="getLabel()" [(value)]="value[i]" [rootSchema]="rootSchema"
+            <lib-json-schema-form [label]="getLabel()" [(value)]="value[i]" inArray="true" [rootSchema]="rootSchema"
                 [schema]="schema.items">
             </lib-json-schema-form>
             <button *ngIf="!schema.readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
@@ -102,7 +102,7 @@
         [ngStyle]="schema.style" [ngClass]="schema.class">
         <mat-tab *ngFor="let x of value; let i=index" style="margin: 2px; position: relative"
             [label]="getLabel()+' '+i">
-            <lib-json-schema-form [(value)]="value[i]" [rootSchema]="rootSchema" [schema]="schema.items">
+            <lib-json-schema-form [(value)]="value[i]" inArray="true" [rootSchema]="rootSchema" [schema]="schema.items">
             </lib-json-schema-form>
             <button *ngIf="!schema.readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
                 matTooltip="{{getLabel()}}">
@@ -215,8 +215,10 @@
     <div *ngIf="getLayout() === 'single'">
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <input [disabled]="schema.readOnly" [placeholder]="example()" autocomplete="off" matInput
+            <input *ngIf="!inArray" [disabled]="schema.readOnly" [placeholder]="example()" autocomplete="off" matInput
                 [type]="getInputType(schema)" [value]="value" (input)="change($event)">
+            <input *ngIf="inArray" [disabled]="schema.readOnly" [placeholder]="example()" autocomplete="off" matInput
+                [type]="getInputType(schema)" [value]="value" (change)="change($event)">
         </mat-form-field>
         <p class="error mat-typography">{{error()}}</p>
     </div>
@@ -225,8 +227,10 @@
     <div *ngIf="getLayout() === 'textarea'">
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <textarea [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
+            <textarea *ngIf="!inArray" [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
                 (input)="change($event)" [ngStyle]="schema.style" [ngClass]="schema.class"></textarea>
+            <textarea *ngIf="inArray" [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
+                (change)="change($event)" [ngStyle]="schema.style" [ngClass]="schema.class"></textarea>
         </mat-form-field>
         <p class="error mat-typography">{{error()}}</p>
     </div>

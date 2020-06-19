@@ -108,6 +108,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   @Input() inExpansion: boolean;
 
   /**
+   * are we already in an array?
+   */
+  @Input() inArray: boolean;
+
+  /**
    * hook for custom widgets
    */
   @ViewChild(WidgetDirective, { static: true }) widgetHost: WidgetDirective;
