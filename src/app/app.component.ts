@@ -79,9 +79,18 @@ export class MainComponent implements OnInit {
           pattern: { type: 'string', case: ['string'] },
           maxItems: { type: 'number', case: ['array'] },
           minItems: { type: 'number', case: ['array'] },
+          uniqueItems: { type: 'boolean', case: ['array'] },
+          maxProperties: { type: 'number', case: ['object'] },
+          minProperties: { type: 'number', case: ['object'] },
+          additionalProperties: { $ref: '#/definitions/prop' },
+          required: { type: 'array', case: ['object'], items: { type: 'string' } },
+          propertyNames: { type: 'string', case: ['object'] },
           title: { type: 'string' },
+          description: { type: 'string' },
+          default: { type: 'string' },
+          examples: { type: 'array', items: { type: 'string' }, case: ['string'] },
           readOnly: { type: 'boolean', case: ['string', 'number', 'array'] },
-          format: { type: 'string', case: ['string'], enum: ['email', 'ipv4', 'url', 'uri'] },
+          format: { type: 'string', case: ['string'], enum: [null, 'email', 'ipv4', 'url', 'uri'] },
           items: {
             $ref: '#/definitions/propNoRec'
           },
@@ -94,6 +103,8 @@ export class MainComponent implements OnInit {
         }
       },
       propNoRec: {
+        case: ['array'],
+
         type: 'object',
         hideUndefined: true,
         switch: 'type',
@@ -116,9 +127,18 @@ export class MainComponent implements OnInit {
           pattern: { type: 'string', case: ['string'] },
           maxItems: { type: 'number', case: ['array'] },
           minItems: { type: 'number', case: ['array'] },
+          uniqueItems: { type: 'boolean', case: ['array'] },
+          maxProperties: { type: 'number', case: ['object'] },
+          minProperties: { type: 'number', case: ['object'] },
+          additionalProperties: { $ref: '#/definitions/prop' },
+          required: { type: 'array', case: ['object'], items: { type: 'string' } },
+          propertyNames: { type: 'string', case: ['object'] },
           title: { type: 'string' },
+          description: { type: 'string' },
+          default: { type: 'string' },
+          examples: { type: 'array', items: { type: 'string' }, case: ['string'] },
           readOnly: { type: 'boolean', case: ['string', 'number', 'array'] },
-          format: { type: 'string', case: ['string'], enum: ['email', 'ipv4', 'url', 'uri'] },
+          format: { type: 'string', case: ['string'], enum: [null, 'email', 'ipv4', 'url', 'uri'] },
           properties: {
             case: ['object'],
             type: 'object',
