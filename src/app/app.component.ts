@@ -411,6 +411,15 @@ export class MainComponent implements OnInit {
           maxProperties: 3,
         }
       },
+      propertyNames: {
+        description: `JSON schema propertyNames requires field names to match this regular expression`,
+        value: { key: 'value' },
+        schema: {
+          type: 'object',
+          additionalProperties: { type: 'string' },
+          propertyNames: '^[a-z]+$'
+        }
+      },
       compute: {
         description: 'Allows to computed fields based on string templates that can reference other fields',
         value: null,

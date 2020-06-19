@@ -72,6 +72,11 @@ export interface Schema {
     minProperties?: number;
 
     /**
+     * field names must match this regular expression
+     */
+    propertyNames?: string;
+
+    /**
      * additional properties (with unknown name) have the following schema
      */
     additionalProperties?: Schema;
