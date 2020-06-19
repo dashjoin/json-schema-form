@@ -370,6 +370,13 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         return 'illegal string';
       }
     }
+    if (this.schema.multipleOf) {
+      if (this.value) {
+        if (!Number.isInteger(Number(this.value) / this.schema.multipleOf)) {
+          return 'Must be multiple of ' + this.schema.multipleOf;
+        }
+      }
+    }
     if (this.schema.format && this.service.formats[this.schema.format]) {
       const re = new RegExp(this.service.formats[this.schema.format]);
       if (!this.value) {

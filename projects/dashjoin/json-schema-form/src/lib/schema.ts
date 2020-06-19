@@ -41,6 +41,11 @@ export interface Schema {
     format?: string;
 
     /**
+     * input must be multiple of x
+     */
+    multipleOf?: number;
+
+    /**
      * additional properties (with unknown name) have the following schema
      */
     additionalProperties?: Schema;

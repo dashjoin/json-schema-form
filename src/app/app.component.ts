@@ -366,6 +366,14 @@ export class MainComponent implements OnInit {
           format: 'email'
         }
       },
+      multipleOf: {
+        description: 'JSON schema multipleOf requires the input to be a multiple of x',
+        value: '88',
+        schema: {
+          type: 'number',
+          multipleOf: 11
+        }
+      },
       compute: {
         description: 'Allows to computed fields based on string templates that can reference other fields',
         value: null,
