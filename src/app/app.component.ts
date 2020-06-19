@@ -408,6 +408,15 @@ export class MainComponent implements OnInit {
           maxItems: 3,
         }
       },
+      uniqueItems: {
+        description: `JSON schema uniqueItems states that every array element must be unique`,
+        value: [1, 2, 2, 3],
+        schema: {
+          type: 'array',
+          items: { type: 'number' },
+          uniqueItems: true,
+        }
+      },
       maxProperties: {
         description: `JSON schema maxProperties (minProperties) restricts the number of fields`,
         value: { key: 'value' },

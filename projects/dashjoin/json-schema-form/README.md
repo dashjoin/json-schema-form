@@ -257,6 +257,7 @@ We support JSON Schema Draft 6 with these exceptions:
 * patternProperties: allows defining a property type depending on the property name. You can work around this using additionalProperties.
 * const: allows defining a value to be constant. Work around this using default and /or enum with a single option.
 * Combining schemas (oneOf, anyOf, not, allOf): this allows giving multiple options (schemas) for a property. These constructs make a lot of sense for validation but are hard to apply in the context of a form and therefore, they are not supported.
+* contains: specifies that an array must contain one instance of a given type. As with the schema combination constructs, this makes sense for validation for not for forms.
 
 ## Structure of this repository
 

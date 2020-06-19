@@ -410,6 +410,13 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         }
       }
     }
+    if (this.schema.uniqueItems) {
+      if (this.value) {
+        if (!(new Set(this.value).size === this.value.length)) {
+          return 'Array entries must be unique';
+        }
+      }
+    }
     if (this.schema.minItems) {
       if (this.value) {
         if (!(this.value.length >= this.schema.minItems)) {

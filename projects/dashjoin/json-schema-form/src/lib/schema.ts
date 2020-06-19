@@ -65,6 +65,11 @@ export interface Schema {
     minItems?: number;
 
     /**
+     * makes sure array items are unique
+     */
+    uniqueItems?: boolean;
+
+    /**
      * restrict object number of properties
      */
     maxProperties?: number;
