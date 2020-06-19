@@ -232,6 +232,11 @@ export interface Schema {
     expanded?: boolean;
 
     /**
+     * hide undefined properties in object layouts
+     */
+    hideUndefined?: boolean;
+
+    /**
      * allows defining computed properties that are set when the value changes
      */
     computed?: { [key: string]: string };

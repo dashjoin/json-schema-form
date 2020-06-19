@@ -627,6 +627,20 @@ export class MainComponent implements OnInit {
           }
         }
       },
+      hideUndefined: {
+        description: 'For object layouts, hides the input elements for undefined properties',
+        value: { p1: 'x' },
+        schema: {
+          type: 'object',
+          hideUndefined: true,
+          properties: {
+            p1: { type: 'string' },
+            p2: { type: 'string' },
+            p3: { type: 'array', items: { type: 'string' } },
+            p4: { type: 'object', properties: { x: { type: 'string' } } }
+          }
+        }
+      },
       complex: {
         description: 'A complex example combining multiple features',
         value: [
@@ -713,7 +727,7 @@ export class MainComponent implements OnInit {
     this.value = this.examples[key].value;
     this.schema = this.examples[key].schema;
     this.description = this.examples[key].description;
-    this.error = undefined;
+    this.error = null;
   }
 
   /**

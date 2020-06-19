@@ -20,9 +20,22 @@
                 <lib-json-schema-form #children [label]="x.value.title ? x.value.title : x.key"
                     [value]="value ? value[x.key] : undefined" (valueChange)="onValueChange(x.key, $event)"
                     [switch]="value ? value[schema.switch] : undefined" [rootSchema]="rootSchema" [schema]="x.value"
-                    [required]="schema.required ? schema.required.includes(x.key) : false">
+                    [required]="schema.required ? schema.required.includes(x.key) : false"
+                    [hideUndefined]="schema.hideUndefined">
                 </lib-json-schema-form>
             </div>
+        </div>
+        <div *ngIf="schema.hideUndefined">
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <div *ngFor="let x of schema.properties | keyvalue:originalOrder">
+                    <mat-checkbox [disabled]="value[x.key]" [checked]="value[x.key] !== undefined"
+                        (change)="showProperty(x.key)">{{x.key}}
+                    </mat-checkbox>
+                </div>
+            </mat-menu>
         </div>
     </mat-card>
 

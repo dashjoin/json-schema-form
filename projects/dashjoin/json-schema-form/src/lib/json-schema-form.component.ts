@@ -109,6 +109,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   @Input() switch: string;
 
+  @Input() hideUndefined: boolean;
+
   /**
    * are we already in the expansion panel?
    */
@@ -160,7 +162,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.value = this.schema.default;
         setTimeout(() => this.emit(this.value), 500);
       } else {
-        this.value = null;
+        if (!this.hideUndefined) {
+          this.value = null;
+        }
       }
     }
 
@@ -233,6 +237,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   getLayout(): string {
     if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
+      return 'none';
+    }
+    if (this.hideUndefined && this.value === undefined) {
       return 'none';
     }
     if (this.schema.type === 'object') {
@@ -893,5 +900,13 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   setIndexAndEmit(i: number, event: any) {
     this.value[i] = event;
     this.emit(this.value);
+  }
+
+  showProperty(prop: string) {
+    if (this.value[prop] === undefined) {
+      this.value[prop] = null;
+    } else if (this.value[prop] === null) {
+      this.value[prop] = undefined;
+    }
   }
 }
