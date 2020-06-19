@@ -32,7 +32,6 @@ export class MainComponent implements OnInit {
    */
   static schemaExample = {
     type: 'object',
-    title: 'Personal Info',
     properties: {
       name: {
         type: 'string',
@@ -68,10 +67,18 @@ export class MainComponent implements OnInit {
           'font-size': 'small'
         },
         properties: {
-          type: {
-            type: 'string',
-            enum: ['string', 'number', 'array', 'object']
-          },
+          type: { type: 'string', enum: ['string', 'number', 'array', 'object'] },
+          enum: { type: 'array', items: { type: 'string' }, case: ['string'] },
+          multipleOf: { type: 'number', case: ['number'] },
+          maximum: { type: 'number', case: ['number'] },
+          exclusiveMaximum: { type: 'number', case: ['number'] },
+          minimum: { type: 'number', case: ['number'] },
+          exclusiveMinimum: { type: 'number', case: ['number'] },
+          maxLength: { type: 'number', case: ['string'] },
+          minLength: { type: 'number', case: ['string'] },
+          pattern: { type: 'string', case: ['string'] },
+          maxItems: { type: 'number', case: ['array'] },
+          minItems: { type: 'number', case: ['array'] },
           title: { type: 'string' },
           readOnly: { type: 'boolean', case: ['string', 'number', 'array'] },
           format: { type: 'string', case: ['string'], enum: ['email', 'ipv4', 'url', 'uri'] },
@@ -87,14 +94,31 @@ export class MainComponent implements OnInit {
         }
       },
       propNoRec: {
-        case: ['array'],
         type: 'object',
+        hideUndefined: true,
         switch: 'type',
+        class: [
+          'mat-elevation-z4'
+        ],
+        style: {
+          'font-size': 'small'
+        },
         properties: {
-          type: {
-            type: 'string',
-            enum: ['string', 'number', 'array', 'object']
-          },
+          type: { type: 'string', enum: ['string', 'number', 'array', 'object'] },
+          enum: { type: 'array', items: { type: 'string' }, case: ['string'] },
+          multipleOf: { type: 'number', case: ['number'] },
+          maximum: { type: 'number', case: ['number'] },
+          exclusiveMaximum: { type: 'number', case: ['number'] },
+          minimum: { type: 'number', case: ['number'] },
+          exclusiveMinimum: { type: 'number', case: ['number'] },
+          maxLength: { type: 'number', case: ['string'] },
+          minLength: { type: 'number', case: ['string'] },
+          pattern: { type: 'string', case: ['string'] },
+          maxItems: { type: 'number', case: ['array'] },
+          minItems: { type: 'number', case: ['array'] },
+          title: { type: 'string' },
+          readOnly: { type: 'boolean', case: ['string', 'number', 'array'] },
+          format: { type: 'string', case: ['string'], enum: ['email', 'ipv4', 'url', 'uri'] },
           properties: {
             case: ['object'],
             type: 'object',
