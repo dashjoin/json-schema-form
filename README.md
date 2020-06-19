@@ -2,14 +2,20 @@
 
 ![](https://raw.github.com/jdorn/json-editor/master/jsoneditor.png)
 
+## Goal
+
+* Implement any web form with flexible styling and validation in a completely declarative way
 * Live demo: https://dashjoin.github.io/
 
 ## Features
 
+* Supports JSON Schema Draft 6
 * Renders compact forms
 * Supports 2-way databinding
 * Autocomplete based on REST services (complex responses can be processed via extended JSON Pointer)
-* Flexible layout options (tab, table, vertical, horizontal)
+* CSS styling
+* Built-in validation
+* Flexible layout options (tab, table, vertical, horizontal, ...)
 * Several input widgets (file upload, date / color picker, autocomplete, ...)
 * Lightweight: < 1000 lines of code
 
@@ -243,6 +249,14 @@ valid. The following example shows how this information can be used to deactivat
 
 Note that not all JSON schema validation constructs are supported. Also, arrays and
 additional property objects do not propagate the information and the invalid value is undefined.
+
+### Unsupported JSON Schema properties
+
+We support JSON Schema Draft 6 with these exceptions:
+
+* patternProperties: allows defining a property type depending on the property name. You can work around this using additionalProperties.
+* const: allows defining a value to be constant. Work around this using default and /or enum with a single option.
+* Combining schemas (oneOf, anyOf, not, allOf): this allows giving multiple options (schemas) for a property. These constructs make a lot of sense for validation but are hard to apply in the context of a form and therefore, they are not supported.
 
 ## Structure of this repository
 
