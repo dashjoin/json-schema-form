@@ -398,6 +398,20 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * return error string
    */
   error(): string {
+    if (this.schema.maxItems) {
+      if (this.value) {
+        if (!(this.value.length <= this.schema.maxItems)) {
+          return 'Only ' + this.schema.maxItems + ' array entries allowed';
+        }
+      }
+    }
+    if (this.schema.minItems) {
+      if (this.value) {
+        if (!(this.value.length >= this.schema.minItems)) {
+          return 'At least ' + this.schema.minItems + ' array entries required';
+        }
+      }
+    }
     if (this.schema.required) {
       if (this.value == null) {
         return 'required';

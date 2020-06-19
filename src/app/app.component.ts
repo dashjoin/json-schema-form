@@ -391,6 +391,16 @@ export class MainComponent implements OnInit {
           maximum: 10
         }
       },
+      maxItems: {
+        description: `JSON schema maxItems (minItems) restricts array length`,
+        value: [1],
+        schema: {
+          type: 'array',
+          items: { type: 'string' },
+          minItems: 2,
+          maxItems: 3,
+        }
+      },
       compute: {
         description: 'Allows to computed fields based on string templates that can reference other fields',
         value: null,

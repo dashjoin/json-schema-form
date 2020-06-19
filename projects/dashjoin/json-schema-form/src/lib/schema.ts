@@ -60,6 +60,12 @@ export interface Schema {
     minLength?: number;
 
     /**
+     * restrict array length
+     */
+    maxItems?: number;
+    minItems?: number;
+
+    /**
      * additional properties (with unknown name) have the following schema
      */
     additionalProperties?: Schema;
