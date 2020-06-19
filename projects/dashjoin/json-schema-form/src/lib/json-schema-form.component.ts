@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, SimpleChanges,
-  OnChanges, ComponentFactoryResolver, ViewChild, Type, ViewChildren, QueryList
+  OnChanges, ComponentFactoryResolver, ViewChild, ViewChildren, QueryList
 } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -118,6 +118,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * are we already in an array?
    */
   @Input() inArray: boolean;
+
+  /**
+   * required imported from parent
+   */
+  @Input() required: boolean;
 
   /**
    * hook for custom widgets
@@ -449,9 +454,16 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         }
       }
     }
-    if (this.schema.required) {
+    if (this.required) {
       if (this.value == null) {
         return 'required';
+      }
+    }
+    if (this.schema.required) {
+      for (const dep of this.schema.required) {
+        if (!this.value[dep]) {
+          return dep + ' is required';
+        }
       }
     }
     if (this.schema.pattern) {

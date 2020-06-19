@@ -287,8 +287,15 @@ export class MainComponent implements OnInit {
       },
       required: {
         description: 'Required fields warn the user if they are left blank',
-        value: null,
-        schema: { type: 'string', required: true }
+        value: {},
+        schema: {
+          type: 'object',
+          required: ['id'],
+          properties: {
+            id: { type: 'string' },
+            name: { type: 'string' }
+          }
+        }
       },
       title: {
         description: 'JSON schema titles show up in the input field',
@@ -626,6 +633,7 @@ export class MainComponent implements OnInit {
           items: {
             type: 'object',
             layout: 'vertical',
+            required: ['consent'],
             properties: {
               name: { type: 'string' },
               country: {
@@ -646,12 +654,11 @@ export class MainComponent implements OnInit {
               email: {
                 type: 'array',
                 layout: 'vertical',
-                items: { type: 'string' }
+                items: { type: 'string', format: 'email' }
               },
               consent: {
                 title: 'I consent',
                 description: 'This is a required field',
-                required: true,
                 type: 'string',
                 enum: [null, 'yes', 'no']
               },

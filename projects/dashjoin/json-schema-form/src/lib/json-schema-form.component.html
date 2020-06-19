@@ -19,7 +19,8 @@
             <div *ngIf="x.value.type || x.value.$ref">
                 <lib-json-schema-form #children [label]="x.value.title ? x.value.title : x.key"
                     [value]="value ? value[x.key] : undefined" (valueChange)="onValueChange(x.key, $event)"
-                    [switch]="value ? value[schema.switch] : undefined" [rootSchema]="rootSchema" [schema]="x.value">
+                    [switch]="value ? value[schema.switch] : undefined" [rootSchema]="rootSchema" [schema]="x.value"
+                    [required]="schema.required ? schema.required.includes(x.key) : false">
                 </lib-json-schema-form>
             </div>
         </div>

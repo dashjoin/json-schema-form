@@ -24,10 +24,9 @@ export interface Schema {
 
     /**
      * indicates that the property is required (i.e. must be non null)
-     * note that the latest spec defines required as an array of prop names:
      * https://json-schema.org/understanding-json-schema/reference/object.html#required
      */
-    required?: boolean;
+    required?: string[];
 
     /**
      * string pattern
