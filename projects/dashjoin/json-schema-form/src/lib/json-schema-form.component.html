@@ -54,7 +54,7 @@
             &nbsp;
             <lib-json-schema-form #children [label]="getLabel() + ' value'" [value]="value[x.key]"
                 (valueChange)="onValueChange(x.key, $event)" [rootSchema]="rootSchema"
-                [schema]="schema.additionalProperties">
+                [schema]="schema.additionalProperties" inArray="true">
             </lib-json-schema-form>
             <button *ngIf="!schema.readOnly" mat-icon-button (click)="removeField(x.key)" class="example-handle"
                 [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
@@ -78,7 +78,7 @@
                 <span *ngIf="schema.readOnly">{{x.key}}</span>
             </ng-template>
             <lib-json-schema-form #children [value]="value[x.key]" (valueChange)="onValueChange(x.key, $event)"
-                [rootSchema]="rootSchema" [schema]="schema.additionalProperties">
+                [rootSchema]="rootSchema" [schema]="schema.additionalProperties" inArray="true">
             </lib-json-schema-form>
             <button *ngIf="!schema.readOnly" mat-icon-button (click)="removeField(x.key)" class="example-handle"
                 matTooltip="{{getLabel()}}">
