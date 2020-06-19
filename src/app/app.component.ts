@@ -374,6 +374,15 @@ export class MainComponent implements OnInit {
           multipleOf: 11
         }
       },
+      maximum: {
+        description: `JSON schema maximum requires the input to be less
+          than x (exclusiveMaximum, minimum and exclusiveMinimum work accordingly)`,
+        value: '4',
+        schema: {
+          type: 'number',
+          maximum: 10
+        }
+      },
       compute: {
         description: 'Allows to computed fields based on string templates that can reference other fields',
         value: null,

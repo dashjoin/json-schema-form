@@ -46,6 +46,14 @@ export interface Schema {
     multipleOf?: number;
 
     /**
+     * number < > <= >=
+     */
+    maximum?: number;
+    minimum?: number;
+    exclusiveMaximum?: number;
+    exclusiveMinimum?: number;
+
+    /**
      * additional properties (with unknown name) have the following schema
      */
     additionalProperties?: Schema;

@@ -377,6 +377,34 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         }
       }
     }
+    if (this.schema.exclusiveMaximum) {
+      if (this.value) {
+        if (!(Number(this.value) < this.schema.exclusiveMaximum)) {
+          return 'Must be less than ' + this.schema.exclusiveMaximum;
+        }
+      }
+    }
+    if (this.schema.maximum) {
+      if (this.value) {
+        if (!(Number(this.value) <= this.schema.maximum)) {
+          return 'Must be less than or equal ' + this.schema.maximum;
+        }
+      }
+    }
+    if (this.schema.exclusiveMinimum) {
+      if (this.value) {
+        if (!(Number(this.value) > this.schema.exclusiveMinimum)) {
+          return 'Must greater than ' + this.schema.exclusiveMinimum;
+        }
+      }
+    }
+    if (this.schema.minimum) {
+      if (this.value) {
+        if (!(Number(this.value) >= this.schema.minimum)) {
+          return 'Must greater than or equal ' + this.schema.minimum;
+        }
+      }
+    }
     if (this.schema.format && this.service.formats[this.schema.format]) {
       const re = new RegExp(this.service.formats[this.schema.format]);
       if (!this.value) {
