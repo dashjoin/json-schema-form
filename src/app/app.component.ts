@@ -420,6 +420,18 @@ export class MainComponent implements OnInit {
           propertyNames: '^[a-z]+$'
         }
       },
+      dependencies: {
+        description: `JSON schema dependencies defines which properties depend on other properties being present`,
+        value: { credit_card: 5555555555555555 },
+        schema: {
+          type: 'object',
+          properties: {
+            credit_card: { type: 'number' },
+            billing_address: { type: 'string' }
+          },
+          dependencies: { credit_card: ['billing_address'] }
+        }
+      },
       compute: {
         description: 'Allows to computed fields based on string templates that can reference other fields',
         value: null,

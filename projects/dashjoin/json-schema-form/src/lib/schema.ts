@@ -77,6 +77,13 @@ export interface Schema {
     propertyNames?: string;
 
     /**
+     * dependencies allows specifying a map of field names to the fields they depend on:
+     * "dependencies": {"credit_card": ["billing_address"]} states that a credit card
+     * can only be present if the billing address is present
+     */
+    dependencies?: { [key: string]: string[] };
+
+    /**
      * additional properties (with unknown name) have the following schema
      */
     additionalProperties?: Schema;

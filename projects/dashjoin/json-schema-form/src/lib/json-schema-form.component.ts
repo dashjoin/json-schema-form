@@ -429,6 +429,19 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         }
       }
     }
+    if (this.schema.dependencies) {
+      if (this.value) {
+        for (const dep of Object.keys(this.schema.dependencies)) {
+          if (this.value[dep]) {
+            for (const l of this.schema.dependencies[dep]) {
+              if (!this.value[l]) {
+                return dep + ' depends on ' + l;
+              }
+            }
+          }
+        }
+      }
+    }
     if (this.schema.minProperties) {
       if (this.value) {
         if (!(Object.keys(this.value).length >= this.schema.minProperties)) {
