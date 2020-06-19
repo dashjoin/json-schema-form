@@ -370,6 +370,15 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         return 'illegal string';
       }
     }
+    if (this.schema.format && this.service.formats[this.schema.format]) {
+      const re = new RegExp(this.service.formats[this.schema.format]);
+      if (!this.value) {
+        return 'illegal string';
+      }
+      if (!re.test(this.value)) {
+        return 'illegal string';
+      }
+    }
     return null;
   }
 

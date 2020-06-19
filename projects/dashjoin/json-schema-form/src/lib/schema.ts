@@ -36,6 +36,11 @@ export interface Schema {
     pattern?: string;
 
     /**
+     * choose a pattern based on pre-defined identifiers such as email etc.
+     */
+    format?: string;
+
+    /**
      * additional properties (with unknown name) have the following schema
      */
     additionalProperties?: Schema;

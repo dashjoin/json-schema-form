@@ -358,6 +358,14 @@ export class MainComponent implements OnInit {
           pattern: '^[a-z]+$'
         }
       },
+      format: {
+        description: 'JSON schema format work like built-in patterns (email, ipv4, uri, url)',
+        value: 'john@example.org',
+        schema: {
+          type: 'string',
+          format: 'email'
+        }
+      },
       compute: {
         description: 'Allows to computed fields based on string templates that can reference other fields',
         value: null,
