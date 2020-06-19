@@ -108,19 +108,19 @@ export class MainComponent implements OnInit {
 
   /**
    * schema bound to component
-   * <lib-json-schema-form [(value)]="value" [schema]="schema" (invalidChange)="invalid=$event"></lib-json-schema-form>
+   * <lib-json-schema-form [(value)]="value" [schema]="schema" (errorChange)="error=$event"></lib-json-schema-form>
    */
   schema: Schema = { type: 'string' };
 
   /**
    * value bound to component
-   * <lib-json-schema-form [(value)]="value" [schema]="schema" (invalidChange)="invalid=$event"></lib-json-schema-form>
+   * <lib-json-schema-form [(value)]="value" [schema]="schema" (errorChange)="error=$event"></lib-json-schema-form>
    */
   value: any = 'test';
 
   /**
    * value bound to component
-   * <lib-json-schema-form [(value)]="value" [schema]="schema" (invalidChange)="invalid=$event"></lib-json-schema-form>
+   * <lib-json-schema-form [(value)]="value" [schema]="schema" (errorChange)="error=$event"></lib-json-schema-form>
    */
   error: string;
 
