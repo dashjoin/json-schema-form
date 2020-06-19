@@ -401,6 +401,16 @@ export class MainComponent implements OnInit {
           maxItems: 3,
         }
       },
+      maxProperties: {
+        description: `JSON schema maxProperties (minProperties) restricts the number of fields`,
+        value: { key: 'value' },
+        schema: {
+          type: 'object',
+          additionalProperties: { type: 'string' },
+          minProperties: 2,
+          maxProperties: 3,
+        }
+      },
       compute: {
         description: 'Allows to computed fields based on string templates that can reference other fields',
         value: null,

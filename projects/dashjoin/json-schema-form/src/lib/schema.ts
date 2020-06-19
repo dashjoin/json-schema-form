@@ -66,6 +66,12 @@ export interface Schema {
     minItems?: number;
 
     /**
+     * restrict object number of properties
+     */
+    maxProperties?: number;
+    minProperties?: number;
+
+    /**
      * additional properties (with unknown name) have the following schema
      */
     additionalProperties?: Schema;
