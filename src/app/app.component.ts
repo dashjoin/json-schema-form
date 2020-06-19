@@ -358,6 +358,14 @@ export class MainComponent implements OnInit {
           pattern: '^[a-z]+$'
         }
       },
+      maxLength: {
+        description: 'JSON schema maxLength (minLength) allows specifying that a string must be at most (least) x characters long',
+        value: 'CA',
+        schema: {
+          type: 'string',
+          maxLength: 2
+        }
+      },
       format: {
         description: 'JSON schema format work like built-in patterns (email, ipv4, uri, url)',
         value: 'john@example.org',

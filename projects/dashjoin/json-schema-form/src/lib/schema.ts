@@ -54,6 +54,12 @@ export interface Schema {
     exclusiveMinimum?: number;
 
     /**
+     * string must be shorter / longer than x
+     */
+    maxLength?: number;
+    minLength?: number;
+
+    /**
      * additional properties (with unknown name) have the following schema
      */
     additionalProperties?: Schema;

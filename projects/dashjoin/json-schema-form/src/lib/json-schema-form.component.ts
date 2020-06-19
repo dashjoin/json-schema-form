@@ -370,6 +370,20 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         return 'illegal string';
       }
     }
+    if (this.schema.maxLength) {
+      if (this.value) {
+        if (!(('' + this.value).length <= this.schema.maxLength)) {
+          return 'Input is longer than ' + this.schema.maxLength;
+        }
+      }
+    }
+    if (this.schema.minLength) {
+      if (this.value) {
+        if (!(('' + this.value).length >= this.schema.minLength)) {
+          return 'Input is shorter than ' + this.schema.minLength;
+        }
+      }
+    }
     if (this.schema.multipleOf) {
       if (this.value) {
         if (!Number.isInteger(Number(this.value) / this.schema.multipleOf)) {

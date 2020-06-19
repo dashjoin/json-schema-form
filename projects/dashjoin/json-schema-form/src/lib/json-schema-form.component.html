@@ -152,7 +152,7 @@
                 <mat-option *ngFor="let x of schema.enum" [value]="x">{{x}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <p class="error">{{error()}}</p>
+        <p class="error mat-typography">{{error()}}</p>
     </div>
 
     <!-- array-select -->
@@ -165,7 +165,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <p class="error">{{error()}}</p>
+        <p class="error mat-typography">{{error()}}</p>
     </div>
 
     <!-- date element -->
@@ -176,13 +176,13 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <p class="error">{{error()}}</p>
+        <p class="error mat-typography">{{error()}}</p>
     </div>
 
     <!-- checkbox element -->
     <div *ngIf="getLayout() === 'checkbox'">
         <mat-checkbox [checked]="value" (change)="change($event)">{{label}}</mat-checkbox>
-        <p class="error">{{error()}}</p>
+        <p class="error mat-typography">{{error()}}</p>
     </div>
 
     <!-- autocomplete element -->
@@ -208,7 +208,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <p class="error">{{error()}}</p>
+        <p class="error mat-typography">{{error()}}</p>
     </div>
 
     <!-- single element -->
@@ -218,7 +218,7 @@
             <input [disabled]="schema.readOnly" [placeholder]="example()" autocomplete="off" matInput
                 [type]="getInputType(schema)" [value]="value" (input)="change($event)">
         </mat-form-field>
-        <p class="error">{{error()}}</p>
+        <p class="error mat-typography">{{error()}}</p>
     </div>
 
     <!-- textarea element -->
@@ -228,13 +228,13 @@
             <textarea [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
                 (input)="change($event)" [ngStyle]="schema.style" [ngClass]="schema.class"></textarea>
         </mat-form-field>
-        <p class="error">{{error()}}</p>
+        <p class="error mat-typography">{{error()}}</p>
     </div>
 
     <!-- upload -->
     <div *ngIf="getLayout() === 'upload'">
         <input type="file" id="file" (change)="handleFileInput($event)">
-        <p class="error">{{error()}}</p>
+        <p class="error mat-typography">{{error()}}</p>
     </div>
 </div>
 <ng-template libWidgetHost></ng-template>
