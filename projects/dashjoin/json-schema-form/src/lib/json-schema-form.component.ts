@@ -778,6 +778,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     this.valueChange.emit(this.value);
   }
 
+  setIndexAndEmit(i: number, event: any) {
+    this.value[i] = event;
+    this.valueChange.emit(this.value);
+  }
+
   onInvalid(key: string, invalid: boolean) {
     this.invalidMap[key] = invalid;
     let res = false;
