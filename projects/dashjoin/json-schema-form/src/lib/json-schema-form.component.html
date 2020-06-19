@@ -25,14 +25,14 @@
                 </lib-json-schema-form>
             </div>
         </div>
-        <div *ngIf="schema.hideUndefined">
+        <div *ngIf="schema.hideUndefined" style="margin-right: 20px;">
             <button mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <div *ngFor="let x of schema.properties | keyvalue:originalOrder">
-                    <mat-checkbox [disabled]="value[x.key]" [checked]="value[x.key] !== undefined"
-                        (change)="showProperty(x.key)">{{x.key}}
+                <div *ngFor="let x of showPropertyList()">
+                    <mat-checkbox [disabled]="value[x]" [checked]="value[x] !== undefined" (change)="showProperty(x)">
+                        {{x}}
                     </mat-checkbox>
                 </div>
             </mat-menu>

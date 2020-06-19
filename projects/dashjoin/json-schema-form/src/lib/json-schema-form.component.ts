@@ -909,4 +909,23 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.value[prop] = undefined;
     }
   }
+
+  showPropertyList(): string[] {
+    if (this.schema.switch) {
+      const sw = this.value[this.schema.switch];
+      const props = [];
+      for (const [k, v] of Object.entries(this.schema.properties)) {
+        if (v.case) {
+          if (v.case.includes(sw)) {
+            props.push(k);
+          }
+        } else {
+          props.push(k);
+        }
+      }
+      return props.sort();
+    } else {
+      return Object.keys(this.schema.properties).sort();
+    }
+  }
 }

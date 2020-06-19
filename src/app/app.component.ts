@@ -59,6 +59,7 @@ export class MainComponent implements OnInit {
     definitions: {
       prop: {
         type: 'object',
+        hideUndefined: true,
         switch: 'type',
         class: [
           'mat-elevation-z4'
