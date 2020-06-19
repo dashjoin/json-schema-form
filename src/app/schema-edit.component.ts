@@ -38,6 +38,8 @@ export class SchemaEditComponent {
    */
   error2: any;
 
+  validation: string;
+
   /**
    * cannot access JSON.stringify from template
    */

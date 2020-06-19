@@ -27,7 +27,9 @@
             Form Based on the Schema
         </mat-panel-title>
     </mat-expansion-panel-header>
-    <lib-json-schema-form [(value)]="instance" [schema]="value"></lib-json-schema-form>
+    <lib-json-schema-form [(value)]="instance" [schema]="value" (errorChange)="validation=$event">
+    </lib-json-schema-form>
+    {{validation}}
 </mat-expansion-panel>
 <mat-expansion-panel>
     <mat-expansion-panel-header>
