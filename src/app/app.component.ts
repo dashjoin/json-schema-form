@@ -813,6 +813,10 @@ export class MainComponent implements OnInit {
  * sample displayer implemetation
  */
 export class MyDisplayer implements Displayer {
+
+  /**
+   * transform 2-letter state abbr to long name
+   */
   displayWith(option: string): string {
     if (option === 'CA') {
       return 'California';

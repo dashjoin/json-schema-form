@@ -38,6 +38,9 @@ export class SchemaEditComponent {
    */
   error2: any;
 
+  /**
+   * validation error emitted by the form
+   */
   validation: string;
 
   /**

@@ -101,6 +101,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   @Input() rootSchema: Schema;
 
+  /**
+   * indicates whether this is the root of the component tree
+   */
   isRoot = false;
 
   /**
@@ -109,6 +112,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   @Input() switch: string;
 
+  /**
+   * indicates to child components whether the parent object has hideUndefined set (i.e. do not render yourself
+   * if your value is undefined)
+   */
   @Input() hideUndefined: boolean;
 
   /**
@@ -195,6 +202,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * emit valueChange event and also any validation error
+   */
   emit(event: any) {
     this.valueChange.emit(event);
     if (this.isRoot) {
@@ -387,6 +397,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     this.emit(this.value);
   }
 
+  /**
+   * returns the validation error on this level and call recursively for all children.
+   * returns null if the form contents is valid
+   */
   recursiveError(): string {
     const e = this.error();
     if (e) {
@@ -406,6 +420,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     return null;
   }
 
+  /**
+   * return the error message provided in the schema or the generic error message
+   * returned from the validation code
+   */
   e(error: string): string {
     if (this.schema.errorMessage) {
       return this.schema.errorMessage;
@@ -897,11 +915,18 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     this.emit(this.value);
   }
 
+  /**
+   * set an array element and emit value change event
+   */
   setIndexAndEmit(i: number, event: any) {
     this.value[i] = event;
     this.emit(this.value);
   }
 
+  /**
+   * used when hideUndefined is active. Called from the UI to
+   * show a property with undefined value (in order to be able to set if in the form)
+   */
   showProperty(prop: string) {
     if (!this.value) {
       this.value = {};
@@ -913,6 +938,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * used when hideUndefined is active. Called from the UI
+   * to determine which properties are included in the "to add" list
+   */
   showPropertyList(): string[] {
     if (this.schema.switch && this.value) {
       const sw = this.value[this.schema.switch];

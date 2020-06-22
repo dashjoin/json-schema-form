@@ -48,20 +48,40 @@ export interface Schema {
      * number < > <= >=
      */
     maximum?: number;
+
+    /**
+     * number < > <= >=
+     */
     minimum?: number;
+
+    /**
+     * number < > <= >=
+     */
     exclusiveMaximum?: number;
+
+    /**
+     * number < > <= >=
+     */
     exclusiveMinimum?: number;
 
     /**
      * string must be shorter / longer than x
      */
     maxLength?: number;
+
+    /**
+     * string must be shorter / longer than x
+     */
     minLength?: number;
 
     /**
      * restrict array length
      */
     maxItems?: number;
+
+    /**
+     * restrict array length
+     */
     minItems?: number;
 
     /**
@@ -73,6 +93,10 @@ export interface Schema {
      * restrict object number of properties
      */
     maxProperties?: number;
+
+    /**
+     * restrict object number of properties
+     */
     minProperties?: number;
 
     /**
