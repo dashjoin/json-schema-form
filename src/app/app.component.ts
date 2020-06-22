@@ -728,7 +728,7 @@ export class MainComponent implements OnInit {
               email: {
                 type: 'array',
                 layout: 'vertical',
-                items: { type: 'string', format: 'email' }
+                items: { type: 'string', format: 'email', errorMessage: 'Please enter a valid email' }
               },
               consent: {
                 title: 'I consent',
