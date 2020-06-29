@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Schema, JsonSchemaFormService } from '@dashjoin/json-schema-form';
 import { CustomComponent } from './custom.component';
 import { Displayer } from 'projects/dashjoin/json-schema-form/src/public-api';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 /**
  * router component
@@ -25,7 +27,7 @@ export class MainComponent implements OnInit {
   /**
    * need to access custom component registry
    */
-  constructor(private service: JsonSchemaFormService) { }
+  constructor(private service: JsonSchemaFormService, private route: ActivatedRoute) { }
 
   /**
    * example schema for meta schema case - also used in schema editor component
@@ -793,6 +795,11 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.service.registerComponent('times2', CustomComponent);
     this.service.registerDisplayWith('states', new MyDisplayer());
+    this.route.params.subscribe(res => {
+      if (res.id) {
+        this.select(res.id);
+      }
+    });
   }
 
   /**

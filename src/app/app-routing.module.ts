@@ -5,6 +5,7 @@ import { SchemaEditComponent } from './schema-edit.component';
 
 const routes: Routes = [
     { path: 'schema', component: SchemaEditComponent },
+    { path: 'example/:id', component: MainComponent },
     { path: '**', component: MainComponent }
 ];
 
