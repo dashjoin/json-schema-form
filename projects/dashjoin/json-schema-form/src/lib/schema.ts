@@ -17,6 +17,11 @@ export interface Schema {
     '$ref'?: string;
 
     /**
+     * referenced schemas can be embedded here, this key must be schema.$id
+     */
+    referenced?: { [key: string]: any };
+
+    /**
      * fixed property value range.
      * if set, the editor uses a select element
      */

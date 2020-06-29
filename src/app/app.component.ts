@@ -401,6 +401,36 @@ export class MainComponent implements OnInit {
           }
         }
       },
+      refUrl: {
+        description: `JSON schema $ref is loaded from a URL`,
+        value: null,
+        schema: { $ref: 'https://raw.githubusercontent.com/riskine/ontology/master/schemas/core/profession.json' }
+      },
+      refLocal: {
+        description: `JSON schema $ref is loaded via the referenced field in the root schema.
+          It is up to the application to load the referenced schemas and place them in the map.
+          Note that the map key is the schema $id`,
+        value: null,
+        schema: {
+          $ref: 'http://www.dashjoin.org/#/concept',
+          referenced: {
+            'http://www.dashjoin.org/': {
+              $id: 'http://www.dashjoin.org/',
+              concept: {
+                type: 'object',
+                properties: {
+                  a: { $ref: 'string.json' },
+                  b: { $ref: 'string.json' }
+                }
+              }
+            },
+            'http://www.dashjoin.org/string.json': {
+              $id: 'http://www.dashjoin.org/string.json',
+              type: 'string'
+            }
+          }
+        }
+      },
       pattern: {
         description: 'JSON schema pattern allows specifying a pattern that must match the input (^ matches the beginning, $ the end)',
         value: 'abcd3456',

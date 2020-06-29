@@ -10,6 +10,7 @@
 ## Features
 
 * Supports JSON Schema Draft 6
+* Can load referenced schemas from URLs
 * Renders compact forms
 * Supports 2-way databinding
 * Autocomplete based on REST services (complex responses can be processed via extended JSON Pointer)
@@ -234,7 +235,7 @@ This can be achieved via the "compute" option. It can be placed within an object
 In this example, any change to the first or last fields trigger a change in salutation.
 Note that the salutation field does not show up in the form.
 
-### Validation and Submitting
+## Validation and Submitting
 
 Some JSON Schema constructs like "pattern" or "required" allow validating an object against the schema.
 The result of this validation is displayed on the UI but it is also propagated to the parent component
@@ -250,7 +251,7 @@ valid. The following example shows how this information can be used to deactivat
 Note that not all JSON schema validation constructs are supported. Also, arrays and
 additional property objects do not propagate the information and the invalid value is undefined.
 
-### Unsupported JSON Schema properties
+## Unsupported JSON Schema properties
 
 We support JSON Schema Draft 6 with these exceptions:
 
@@ -258,6 +259,32 @@ We support JSON Schema Draft 6 with these exceptions:
 * const: allows defining a value to be constant. Work around this using default and /or enum with a single option.
 * Combining schemas (oneOf, anyOf, not, allOf): this allows giving multiple options (schemas) for a property. These constructs make a lot of sense for validation but are hard to apply in the context of a form and therefore, they are not supported.
 * contains: specifies that an array must contain one instance of a given type. As with the schema combination constructs, this makes sense for validation for not for forms.
+
+## Referenced Schemas
+
+In order to foster reuse, schemas are often made available on the web. In this case, you can use JSON schema's $ref mechanism to have the browser load the schema as follows:
+
+```
+<lib-json-schema-form [schema]="{$ref:'https://raw.githubusercontent.com/riskine/ontology/master/schemas/core/profession.json'}">
+```
+
+The URL can also be relative to the form's URL:
+
+```
+<lib-json-schema-form [schema]="{$ref:'schema.json'}">
+```
+
+If you do not want the schema to be downloaded, you can also manually provide referenced schemas via the root schema:
+
+```
+{
+  ...
+  referenced: {
+    'http://example.org/': { $id: 'http://example.org/', ... },
+    'urn:myschema': { $id: 'urn:myschema', ... },
+  }
+}
+```
 
 ## Structure of this repository
 

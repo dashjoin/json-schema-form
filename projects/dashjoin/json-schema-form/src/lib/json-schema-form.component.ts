@@ -102,6 +102,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   @Input() rootSchema: Schema;
 
   /**
+   * base URL for resolving $ref
+   */
+  @Input() base: string;
+
+  /**
    * indicates whether this is the root of the component tree
    */
   isRoot = false;
@@ -157,11 +162,20 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
 
     if (!this.schema.type) {
-      let p = this.schema.$ref;
-      if (p.startsWith('#')) {
-        p = p.substring(1);
+      const p = this.schema.$ref;
+      const parts = p.split('#');
+      if (parts.length === 1) {
+        // URL only
+        this.url(parts[0], null);
+      } else {
+        if (parts[0]) {
+          // URL + anchor
+          this.url(parts[0], parts[1]);
+        } else {
+          // local ref
+          this.schema = this.jsonPointer(this.rootSchema, parts[1]);
+        }
       }
-      this.schema = this.jsonPointer(this.rootSchema, p);
     }
 
     if (typeof this.value === 'undefined') {
@@ -200,6 +214,28 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.errorChange.emit(this.recursiveError());
       }, 10);
     }
+  }
+
+  /**
+   * load schema from ref, apply pointer if needed
+   */
+  url(ref: string, pointer: string) {
+    // URL + anchor
+    this.base = this.base ? new URL(ref, this.base).href : ref;
+
+    // check root schema referenced map
+    if (this.rootSchema.referenced && this.rootSchema.referenced[this.base]) {
+      const res = this.rootSchema.referenced[this.base];
+      this.schema = pointer ? this.jsonPointer(res, pointer) : res;
+      return;
+    }
+
+    this.http.get(this.base).subscribe(res => {
+      this.schema = pointer ? this.jsonPointer(res, pointer) : res;
+    }, error => console.log(error));
+
+    // set temporary pseudo schema
+    this.schema = { type: 'string' };
   }
 
   /**
