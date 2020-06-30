@@ -6,7 +6,7 @@
 
 * Implement any web form with flexible styling and validation in a completely declarative way
 * Live demo: https://dashjoin.github.io/
-* Stackblitz: https://dashjoin.stackblitz.io
+* Stackblitz: https://stackblitz.com/edit/dashjoin
 
 ## Features
 
