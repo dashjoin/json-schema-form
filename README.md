@@ -98,7 +98,7 @@ We define a couple of extensions to JSON Schema in order to define the user inte
 
 ### Widget
 
-This options specifies a specific input widget to be used. The default is a simple text field. The following options are available:
+This option specifies a specific input widget to be used. The default is a simple text field. The following options are available:
 
 ```
 {
