@@ -1,5 +1,8 @@
 # A Lightweight Angular JSON Schema Form Component
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dashjoin_json-schema-form&metric=alert_status)](https://sonarcloud.io/dashboard?id=dashjoin_json-schema-form)
+[![npm version](https://img.shields.io/npm/v/@dashjoin/json-schema-form.svg?style=flat-square)](https://www.npmjs.com/package/@dashjoin/json-schema-form)
+
 ![](https://raw.github.com/jdorn/json-editor/master/jsoneditor.png)
 
 ## Goal
