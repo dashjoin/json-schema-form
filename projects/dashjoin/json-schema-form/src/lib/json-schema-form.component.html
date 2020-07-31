@@ -137,8 +137,7 @@
 
     <!-- array table layout -->
     <mat-card *ngIf="getLayout() === 'table'" [ngStyle]="schema.style" [ngClass]="schema.class">
-        <table>
-            <caption>Properties table</caption>
+        <table summary="Properties table">
             <tr>
                 <th *ngFor="let x of schema.items.properties | keyvalue:originalOrder" scope="col">
                     {{x.value.title ? x.value.title : x.key}}</th>
