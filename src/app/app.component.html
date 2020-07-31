@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">Angular JSON Schema Form Demo Playground</mat-toolbar>
-<table class="mat-typography">
+<table class="mat-typography" summary="Value, Schema, Examples">
     <tr>
         <th scope="col">Value (Changes are applied to the form onBlur)</th>
         <th scope="col">Schema (Changes are applied to the form onBlur)</th>
@@ -13,7 +13,7 @@
             <textarea style="width: 600px" [value]="stringify(schema)" (change)="changeS($event)"></textarea>
         </td>
         <td>
-            <table summary="Example categories">
+            <table summary="Example categories" role="presentation">
                 <tr>
                     <td>
                         Types:
