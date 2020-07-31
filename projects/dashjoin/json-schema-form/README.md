@@ -1,5 +1,8 @@
 # A Lightweight Angular JSON Schema Form Component
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dashjoin_json-schema-form&metric=alert_status)](https://sonarcloud.io/dashboard?id=dashjoin_json-schema-form)
+[![npm version](https://img.shields.io/npm/v/@dashjoin/json-schema-form.svg?style=flat-square)](https://www.npmjs.com/package/@dashjoin/json-schema-form)
+
 ![](https://raw.github.com/jdorn/json-editor/master/jsoneditor.png)
 
 ## Goal
@@ -98,7 +101,7 @@ We define a couple of extensions to JSON Schema in order to define the user inte
 
 ### Widget
 
-This options specifies a specific input widget to be used. The default is a simple text field. The following options are available:
+This option specifies a specific input widget to be used. The default is a simple text field. The following options are available:
 
 ```
 {
@@ -293,3 +296,12 @@ The repository contains:
 
 * [The actual library code](https://github.com/dashjoin/json-schema-form/tree/master/projects/dashjoin/json-schema-form/src/lib)
 * [Sources of the online demo playground](https://github.com/dashjoin/json-schema-form/tree/master/src/app)
+
+## Contribute
+
+We welcome contributions. If you are interested in contributing to Dashjoin, let us know!
+You'll get to know an open-minded and motivated team working together to build the next generation data management platform.
+
+* [Join our Slack](https://join.slack.com/t/dashjoin/shared_invite/zt-gc66g8p0-skFTfjL2xVXZKvoVvSZObw) and say hello
+* [Submit](https://github.com/dashjoin/query-editor/issues) your ideas by opening an issue with the enhancement label
+* [Help out](https://github.com/dashjoin/json-schema-form/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) by fixing "a good first issue"

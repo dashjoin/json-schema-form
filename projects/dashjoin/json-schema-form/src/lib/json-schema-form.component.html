@@ -138,10 +138,11 @@
     <!-- array table layout -->
     <mat-card *ngIf="getLayout() === 'table'" [ngStyle]="schema.style" [ngClass]="schema.class">
         <table>
+            <caption>Properties table</caption>
             <tr>
-                <th *ngFor="let x of schema.items.properties | keyvalue:originalOrder">
+                <th *ngFor="let x of schema.items.properties | keyvalue:originalOrder" scope="col">
                     {{x.value.title ? x.value.title : x.key}}</th>
-                <th></th>
+                <th id="remove_row"></th>
             </tr>
             <tr *ngFor="let row of value; let i=index">
                 <td *ngFor="let x of schema.items.properties | keyvalue:originalOrder">
