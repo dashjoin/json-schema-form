@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Schema, JsonSchemaFormService } from '@dashjoin/json-schema-form';
 import { CustomComponent } from './custom.component';
 import { Displayer } from 'projects/dashjoin/json-schema-form/src/public-api';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * router component

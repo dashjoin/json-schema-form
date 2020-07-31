@@ -300,7 +300,7 @@ The repository contains:
 ## Contribute
 
 We welcome contributions. If you are interested in contributing to Dashjoin, let us know!
-You'll get to know an open-minded and motivated team working together to build the next generation data management platform.
+You'll get to know an open-minded and motivated team working together to build the next generation platform.
 
 * [Join our Slack](https://join.slack.com/t/dashjoin/shared_invite/zt-gc66g8p0-skFTfjL2xVXZKvoVvSZObw) and say hello
 * [Submit](https://github.com/dashjoin/query-editor/issues) your ideas by opening an issue with the enhancement label
