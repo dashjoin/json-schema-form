@@ -303,5 +303,6 @@ We welcome contributions. If you are interested in contributing to Dashjoin, let
 You'll get to know an open-minded and motivated team working together to build the next generation platform.
 
 * [Join our Slack](https://join.slack.com/t/dashjoin/shared_invite/zt-gc66g8p0-skFTfjL2xVXZKvoVvSZObw) and say hello
+* [Follow us](https://twitter.com/dashjoin) on Twitter
 * [Submit](https://github.com/dashjoin/json-schema-form/issues) your ideas by opening an issue with the enhancement label
 * [Help out](https://github.com/dashjoin/json-schema-form/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) by fixing "a good first issue"
