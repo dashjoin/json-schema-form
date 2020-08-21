@@ -536,7 +536,7 @@ export class MainComponent implements OnInit {
         description: 'Allows customizing the validation error message',
         value: '1234',
         schema: {
-          type: 'string', widget: 'password', errorMessage: 'Your passowrd must have at least 6 characters', minLength: 6
+          type: 'string', widget: 'password', errorMessage: 'Your password must have at least 6 characters', minLength: 6
         }
       },
       simpleGet: {
