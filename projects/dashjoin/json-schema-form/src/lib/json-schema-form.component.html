@@ -145,8 +145,9 @@
             </tr>
             <tr *ngFor="let row of value; let i=index">
                 <td *ngFor="let x of schema.items.properties | keyvalue:originalOrder">
-                    <lib-json-schema-form #children [value]="row[x.key]" (valueChange)="onValueChange(x.key, $event)"
-                        [rootSchema]="rootSchema" [schema]="schema.items.properties[x.key]" [base]="base">
+                    <lib-json-schema-form #children [value]="row[x.key]"
+                        (valueChange)="setIndexAndEmitTable(i, x.key, $event)" [rootSchema]="rootSchema"
+                        [schema]="schema.items.properties[x.key]" [base]="base">
                     </lib-json-schema-form>
                 </td>
                 <td>

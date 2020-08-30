@@ -960,6 +960,14 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   }
 
   /**
+   * set an array element's field and emit value change event (applies to table layout)
+   */
+  setIndexAndEmitTable(i: number, field: string, event: any) {
+    this.value[i][field] = event;
+    this.emit(this.value);
+  }
+
+  /**
    * used when hideUndefined is active. Called from the UI to
    * show a property with undefined value (in order to be able to set if in the form)
    */
