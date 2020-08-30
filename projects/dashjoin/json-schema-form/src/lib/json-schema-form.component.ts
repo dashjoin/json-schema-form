@@ -933,7 +933,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * autocomplete option changed by hand
    */
   optionChange(event: any) {
-    this.name = event.target.value;
+    this.name = event.target.value ? event.target.value : null;
     this.value = this.name;
     for (const u of this.filteredChoicesObj) {
       if (u.name === this.name) {
