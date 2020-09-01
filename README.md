@@ -123,7 +123,7 @@ This option specifies a specific input widget to be used. The default is a simpl
 
 It is possible to create custom widgets using the following steps:
 
-* create a component that implements [WidgetComponent](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/widget.component.ts). All relevant data such as the applicable subschema and the current value are passed to the component. Make sure to emit value changes. An example can be found [here](https://github.com/dashjoin/json-schema-form/tree/master/src/app/custom.component.ts)
+* Create a component that implements [WidgetComponent](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/widget.component.ts). All relevant data such as the applicable subschema and the current value are passed to the component. Make sure to emit value changes. An example can be found [here](https://github.com/dashjoin/json-schema-form/tree/master/src/app/custom.component.ts)
 * Include the component in your @NgModule declarations
 * In the parent component, add this service to your constructor: private service: JsonSchemaFormService
 * Register your widget in ngOnInit() using this service: this.service.registerComponent('times2', CustomComponent);
