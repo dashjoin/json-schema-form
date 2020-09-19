@@ -1,154 +1,178 @@
 <mat-toolbar color="primary">Angular JSON Schema Form Demo Playground</mat-toolbar>
-<table class="mat-typography" summary="Value, Schema, Examples">
-    <tr>
-        <th scope="col">Value (Changes are applied to the form onBlur)</th>
-        <th scope="col">Schema (Changes are applied to the form onBlur)</th>
-        <th scope="col">Examples (Press to select sample data and schema)</th>
-    </tr>
-    <tr>
-        <td>
-            <textarea style="width: 300px" [value]="stringify(value)" (change)="changeV($event)"></textarea>
-        </td>
-        <td>
-            <textarea style="width: 600px" [value]="stringify(schema)" (change)="changeS($event)"></textarea>
-        </td>
-        <td>
-            <table role="presentation">
-                <tr>
-                    <td>
-                        Types:
-                    </td>
-                    <td>
-                        <button (click)="select('string')">string</button>
-                        <button (click)="select('boolean')">boolean</button>
-                        <button (click)="select('integer')">integer</button>
-                        <button (click)="select('number')">number</button>
-                        <button (click)="select('array')">array</button>
-                        <button (click)="select('object')">object</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Widgets:
-                    </td>
-                    <td>
-                        <button (click)="select('select')">select</button>
-                        <button (click)="select('upload')">upload</button>
-                        <button (click)="select('date')">date</button>
-                        <button (click)="select('textarea')">textarea</button>
-                        <button (click)="select('password')">password</button>
-                        <button (click)="select('color')">color</button>
-                        <button (click)="select('datetime-local')">datetime-local</button>
-                        <button (click)="select('email')">email</button>
-                        <button (click)="select('month')">month</button>
-                        <button (click)="select('tel')">tel</button>
-                        <button (click)="select('time')">time</button>
-                        <button (click)="select('url')">url</button>
-                        <button (click)="select('week')">week</button>
-                        <button (click)="select('custom')">custom</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        JSON schema constructs:
-                    </td>
-                    <td>
-                        <button (click)="select('enum')">enum</button>
-                        <button (click)="select('required')">required</button>
-                        <button (click)="select('title')">title</button>
-                        <button (click)="select('description')">description</button>
-                        <button (click)="select('default')">default</button>
-                        <button (click)="select('examples')">examples</button>
-                        <button (click)="select('readOnly')">readOnly</button>
-                        <button (click)="select('additionalProperties')">additionalProperties</button>
-                        <button (click)="select('ref')">ref</button>
-                        <button (click)="select('refUrl')">refUrl</button>
-                        <button (click)="select('refLocal')">refLocal</button>
-                        <button (click)="select('pattern')">pattern</button>
-                        <button (click)="select('maxLength')">maxLength</button>
-                        <button (click)="select('format')">format</button>
-                        <button (click)="select('multipleOf')">multipleOf</button>
-                        <button (click)="select('maximum')">maximum</button>
-                        <button (click)="select('maxItems')">maxItems</button>
-                        <button (click)="select('uniqueItems')">uniqueItems</button>
-                        <button (click)="select('maxProperties')">maxProperties</button>
-                        <button (click)="select('propertyNames')">propertyNames</button>
-                        <button (click)="select('dependencies')">dependencies</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Logic:
-                    </td>
-                    <td>
-                        <button (click)="select('compute')">compute</button>
-                        <button (click)="select('errorMessage')">errorMessage</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Autocomplete:
-                    </td>
-                    <td>
-                        <button (click)="select('simpleGet')">simpleGet</button>&nbsp;
-                        <a href="assets/autocomplete-simple.json">data</a>&nbsp;
-                        <button (click)="select('jsonPointer')">jsonPointer</button>&nbsp;
-                        <a href="assets/autocomplete-complex.json">data</a>&nbsp;
-                        <button (click)="select('static-choices')">static-choices</button>
-                        <button (click)="select('select')">select</button>
-                        <button (click)="select('displayWith')">displayWith</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Layout:
-                    </td>
-                    <td>
-                        <button (click)="select('tab')">tab</button>
-                        <button (click)="select('table')">table</button>
-                        <button (click)="select('vertical')">vertical</button>
-                        <button (click)="select('horizontal')">horizontal</button>
-                        <button (click)="select('nested')">nested</button>
-                        <button (click)="select('array-select')">array-select</button>
-                        <button (click)="select('conditional')">conditional</button>
-                        <button (click)="select('style')">style</button>
-                        <button (click)="select('class')">class</button>
-                        <button (click)="select('expanded')">expanded</button>
-                        <button (click)="select('hideUndefined')">hideUndefined</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Complex:
-                    </td>
-                    <td>
-                        <button (click)="select('complex')">complex</button>
-                        <button (click)="select('metaschema')">metaschema</button>&nbsp;
-                        <a routerLink="/schema">also see JSON schema editor</a>&nbsp;
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>{{errorV}}</td>
-        <td>{{errorS}}</td>
-</table>
-<br>
-<label class="mat-typography"><strong>{{description}}</strong></label>
-<br>
-<lib-json-schema-form [(value)]="value" [schema]="schema" [label]="schema.title" (errorChange)="error=$event">
-</lib-json-schema-form>
+
+<mat-expansion-panel expanded="false">
+    <mat-expansion-panel-header>
+        <mat-panel-title>JSON Schema and Data</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <table>
+        <tr>
+            <th scope="col">Value (Changes are applied to the form onBlur)</th>
+            <th scope="col">Schema (Changes are applied to the form onBlur)</th>
+        </tr>
+        <tr>
+            <td style="border-bottom:none">
+                <textarea style="width: 300px" [value]="stringify(value)" (change)="changeV($event)"></textarea>
+            </td>
+            <td style="border-bottom:none">
+                <textarea style="width: 600px" [value]="stringify(schema)" (change)="changeS($event)"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom:none">
+                {{errorV}}
+            </td>
+            <td style="border-bottom:none">
+                {{errorS}}
+            </td>
+        </tr>
+    </table>
+</mat-expansion-panel>
+
 <br>
 
-<label class="mat-typography">{{error === null ? "Form is valid" : "Form is invalid: "+error}}</label>
-<br>
-<br>
-<br>
+<mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Examples (Press to select sample data and schema)</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <table role="presentation">
+        <tr>
+            <td>
+                Types:
+            </td>
+            <td>
+                <button (click)="select('string')">string</button>
+                <button (click)="select('boolean')">boolean</button>
+                <button (click)="select('integer')">integer</button>
+                <button (click)="select('number')">number</button>
+                <button (click)="select('array')">array</button>
+                <button (click)="select('object')">object</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Widgets:
+            </td>
+            <td>
+                <button (click)="select('select')">select</button>
+                <button (click)="select('upload')">upload</button>
+                <button (click)="select('date')">date</button>
+                <button (click)="select('textarea')">textarea</button>
+                <button (click)="select('password')">password</button>
+                <button (click)="select('color')">color</button>
+                <button (click)="select('datetime-local')">datetime-local</button>
+                <button (click)="select('email')">email</button>
+                <button (click)="select('month')">month</button>
+                <button (click)="select('tel')">tel</button>
+                <button (click)="select('time')">time</button>
+                <button (click)="select('url')">url</button>
+                <button (click)="select('week')">week</button>
+                <button (click)="select('custom')">custom</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                JSON schema constructs:
+            </td>
+            <td>
+                <button (click)="select('enum')">enum</button>
+                <button (click)="select('required')">required</button>
+                <button (click)="select('title')">title</button>
+                <button (click)="select('description')">description</button>
+                <button (click)="select('default')">default</button>
+                <button (click)="select('examples')">examples</button>
+                <button (click)="select('readOnly')">readOnly</button>
+                <button (click)="select('additionalProperties')">additionalProperties</button>
+                <button (click)="select('ref')">ref</button>
+                <button (click)="select('refUrl')">refUrl</button>
+                <button (click)="select('refLocal')">refLocal</button>
+                <button (click)="select('pattern')">pattern</button>
+                <button (click)="select('maxLength')">maxLength</button>
+                <button (click)="select('format')">format</button>
+                <button (click)="select('multipleOf')">multipleOf</button>
+                <button (click)="select('maximum')">maximum</button>
+                <button (click)="select('maxItems')">maxItems</button>
+                <button (click)="select('uniqueItems')">uniqueItems</button>
+                <button (click)="select('maxProperties')">maxProperties</button>
+                <button (click)="select('propertyNames')">propertyNames</button>
+                <button (click)="select('dependencies')">dependencies</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Logic:
+            </td>
+            <td>
+                <button (click)="select('compute')">compute</button>
+                <button (click)="select('errorMessage')">errorMessage</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Autocomplete:
+            </td>
+            <td>
+                <button (click)="select('simpleGet')">simpleGet</button>&nbsp;
+                <a href="assets/autocomplete-simple.json">data</a>&nbsp;
+                <button (click)="select('jsonPointer')">jsonPointer</button>&nbsp;
+                <a href="assets/autocomplete-complex.json">data</a>&nbsp;
+                <button (click)="select('static-choices')">static-choices</button>
+                <button (click)="select('select')">select</button>
+                <button (click)="select('displayWith')">displayWith</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Layout:
+            </td>
+            <td>
+                <button (click)="select('tab')">tab</button>
+                <button (click)="select('table')">table</button>
+                <button (click)="select('vertical')">vertical</button>
+                <button (click)="select('horizontal')">horizontal</button>
+                <button (click)="select('nested')">nested</button>
+                <button (click)="select('array-select')">array-select</button>
+                <button (click)="select('conditional')">conditional</button>
+                <button (click)="select('style')">style</button>
+                <button (click)="select('class')">class</button>
+                <button (click)="select('expanded')">expanded</button>
+                <button (click)="select('hideUndefined')">hideUndefined</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Complex:
+            </td>
+            <td>
+                <button (click)="select('complex')">complex</button>
+                <button (click)="select('metaschema')">metaschema</button>&nbsp;
+                <a routerLink="/schema">also see JSON schema editor</a>&nbsp;
+            </td>
+        </tr>
+    </table>
+</mat-expansion-panel>
+
 <br>
 
-<label class="mat-typography"><strong>To add this form to your application:</strong></label>
-<pre>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{description}}</mat-card-title>
+        <mat-card-subtitle>{{error === null ? "Form is valid" : "Form is invalid: "+error}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <lib-json-schema-form [(value)]="value" [schema]="schema" [label]="schema.title" (errorChange)="error=$event">
+        </lib-json-schema-form>
+    </mat-card-content>
+</mat-card>
+
+<br>
+
+<mat-expansion-panel expanded="false">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Code to add this form to your application</mat-panel-title>
+    </mat-expansion-panel-header>
+    <pre>
 CLI:
 npm i @angular/material
 npm i @angular/flex-layout
@@ -174,4 +198,5 @@ imports: [JsonSchemaFormModule,
 CSS:
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
-</pre>
+    </pre>
+</mat-expansion-panel>

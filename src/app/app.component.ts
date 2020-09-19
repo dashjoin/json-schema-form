@@ -19,7 +19,7 @@ export class AppComponent {
  */
 @Component({
   templateUrl: './app.component.html',
-  styles: ['textarea {font-family: monospace; height: 300px}']
+  styles: ['textarea {font-family: monospace; height: 300px}', 'td {border-bottom: 1px solid #ddd;}']
 })
 export class MainComponent implements OnInit {
 
