@@ -1,21 +1,21 @@
-<mat-toolbar color="primary">Angular JSON Schema Form Demo Playground</mat-toolbar>
+<mat-toolbar color="primary">JSON Schema Form Playground</mat-toolbar>
 
 <mat-expansion-panel expanded="false">
     <mat-expansion-panel-header>
         <mat-panel-title>JSON Schema and Data</mat-panel-title>
     </mat-expansion-panel-header>
 
-    <table>
+    <table role="presentation" style="width: 100%">
         <tr>
             <th scope="col">Value (Changes are applied to the form onBlur)</th>
             <th scope="col">Schema (Changes are applied to the form onBlur)</th>
         </tr>
         <tr>
             <td style="border-bottom:none">
-                <textarea style="width: 300px" [value]="stringify(value)" (change)="changeV($event)"></textarea>
+                <textarea style="width: 100%" [value]="stringify(value)" (change)="changeV($event)"></textarea>
             </td>
             <td style="border-bottom:none">
-                <textarea style="width: 600px" [value]="stringify(schema)" (change)="changeS($event)"></textarea>
+                <textarea style="width: 100%" [value]="stringify(schema)" (change)="changeS($event)"></textarea>
             </td>
         </tr>
         <tr>
