@@ -9,8 +9,8 @@
     </lib-json-schema-form>
 </mat-expansion-panel>
 
-<div *ngIf="(schema.expanded === null || schema.expanded === undefined) || inExpansion"
-    matTooltip="{{schema.description}}">
+<!-- should add [matTooltip]="schema.description" but this does not work because of https://github.com/angular/components/issues/4892 -->
+<div *ngIf="(schema.expanded === null || schema.expanded === undefined) || inExpansion">
 
     <!-- object row wrap layout -->
     <mat-card *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'"
