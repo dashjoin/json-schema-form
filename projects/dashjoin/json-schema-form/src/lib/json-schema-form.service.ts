@@ -1,4 +1,5 @@
 import { Injectable, Type } from '@angular/core';
+import { ChoiceHandler } from './choice';
 
 /**
  * service for registering custom components
@@ -27,7 +28,7 @@ export class JsonSchemaFormService {
   /**
    * registry of displayWith objects
    */
-  displayWithRegistry = {};
+  displayWithRegistry: { [key: string]: ChoiceHandler } = {};
 
   /**
    * register custom component
@@ -43,20 +44,7 @@ export class JsonSchemaFormService {
    * @param key     the name of the implementation which is used in schema extension: displayWith=key
    * @param value   the implementation class
    */
-  registerDisplayWith(key: string, value: Displayer) {
+  registerDisplayWith(key: string, value: ChoiceHandler) {
     this.displayWithRegistry[key] = value;
   }
-}
-
-/**
- * interface used to transform longer / unreadable IDs into displayable strings when displaying
- * choices for autocomplete and select inputs. Note that
- * these strings do not have to be unique. When selecting, the user sees the full ID as a tooltip.
- */
-export interface Displayer {
-
-  /**
-   * convert option ID to displayable string
-   */
-  displayWith(option: string): string;
 }

@@ -840,7 +840,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.displayWith) {
       const displayer = this.service.displayWithRegistry[this.schema.displayWith];
       if (displayer) {
-        return displayer.displayWith(option);
+        return displayer.choice(option, this.schema).name;
       }
     }
     return option;

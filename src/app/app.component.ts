@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Schema, JsonSchemaFormService } from '@dashjoin/json-schema-form';
 import { CustomComponent } from './custom.component';
-import { Displayer } from 'projects/dashjoin/json-schema-form/src/public-api';
 import { ActivatedRoute } from '@angular/router';
+import { Choice, ChoiceHandler } from 'projects/dashjoin/json-schema-form/src/lib/choice';
+import { Observable, of } from 'rxjs';
 
 /**
  * router component
@@ -848,21 +849,26 @@ export class MainComponent implements OnInit {
 /**
  * sample displayer implemetation
  */
-export class MyDisplayer implements Displayer {
+export class MyDisplayer implements ChoiceHandler {
 
-  /**
-   * transform 2-letter state abbr to long name
-   */
-  displayWith(option: string): string {
-    if (option === 'CA') {
-      return 'California';
-    }
-    if (option === 'OR') {
-      return 'Oregon';
-    }
-    if (option === 'WA') {
-      return 'Washington';
-    }
+  load(value: any, schema: Schema): Observable<Choice[]> {
     return null;
+  }
+
+  filter(value: any, schema: Schema, current: string): Observable<Choice[]> {
+    return null;
+  }
+
+  choice(value: any, schema: Schema): Choice {
+    if (value === 'CA') {
+      return { value, name: 'California' };
+    }
+    if (value === 'OR') {
+      return { value, name: 'Oregon' };
+    }
+    if (value === 'WA') {
+      return { value, name: 'Washington' };
+    }
+    return { value, name: value };
   }
 }
