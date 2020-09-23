@@ -13,6 +13,7 @@ import { WidgetComponent } from './widget.component';
 import { WidgetDirective } from './widget.directive';
 import { JsonSchemaFormService } from './json-schema-form.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { JsonPointer } from './json-pointer';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -173,7 +174,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
           this.url(parts[0], parts[1]);
         } else {
           // local ref
-          this.schema = this.jsonPointer(this.rootSchema, parts[1]);
+          this.schema = JsonPointer.jsonPointer(this.rootSchema, parts[1]);
         }
       }
     }
@@ -226,12 +227,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     // check root schema referenced map
     if (this.rootSchema.referenced && this.rootSchema.referenced[this.base]) {
       const res = this.rootSchema.referenced[this.base];
-      this.schema = pointer ? this.jsonPointer(res, pointer) : res;
+      this.schema = pointer ? JsonPointer.jsonPointer(res, pointer) : res;
       return;
     }
 
     this.http.get(this.base).subscribe(res => {
-      this.schema = pointer ? this.jsonPointer(res, pointer) : res;
+      this.schema = pointer ? JsonPointer.jsonPointer(res, pointer) : res;
     }, error => console.log(error));
 
     // set temporary pseudo schema
@@ -724,7 +725,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
 
     this.getChoices(this.schema.choicesUrl, this.schema.choicesUrlArgs, this.schema.choicesVerb).subscribe(res => {
       if (this.schema.jsonPointer != null) {
-        res = this.jsonPointer(res, this.schema.jsonPointer);
+        res = JsonPointer.jsonPointer(res, this.schema.jsonPointer);
         if (!Array.isArray(res)) {
           res = [res];
         }
@@ -733,61 +734,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.filteredChoices = res;
       this.filteredChoicesObj = this.displayFilter();
     });
-  }
-
-  /**
-   * evaluate the JSON pointer on o
-   */
-  jsonPointer(o: any, pointer: string): any {
-    return this.jsonPointer2(o, this.split(pointer));
-  }
-
-  /**
-   * evaluate the JSON pointer (parsed array of paths) on o
-   */
-  jsonPointer2(o: any, paths: string[]): any {
-
-    if (o === undefined) {
-      return undefined;
-    }
-
-    if (paths.length === 0) {
-      return o;
-    }
-
-    const path = paths[0];
-    const np = Object.assign([], paths);
-    np.splice(0, 1);
-
-    if (paths[0] === '*') {
-      const res = [];
-      for (const f of (typeof (o) === 'object' ? Object.values(o) : o)) {
-        res.push(this.jsonPointer2(f, np));
-      }
-      return res;
-    } else {
-      return this.jsonPointer2(o[path], np);
-    }
-  }
-
-  /**
-   * strip leading / and split the JSON pointer
-   */
-  split(s: string): string[] {
-    if (s === '') {
-      return [];
-    }
-    if (s.startsWith('/')) {
-      s = s.substring(1);
-      const arr = s.split('/');
-      for (const a of arr) {
-        if (a === '') {
-          throw new Error('JSON Pointer must not contain an empty reference token');
-        }
-      }
-      return arr;
-    }
-    throw new Error('JSON Pointer must start with /');
   }
 
   /**
