@@ -175,11 +175,12 @@
 
     <!-- array-select -->
     <div *ngIf="getLayout() === 'array-select'">
-        <mat-form-field [matTooltip]="schema.description ? '' : 'Type to filter'">
+        <mat-form-field [matTooltip]="schema.description">
             <mat-label>{{label}}</mat-label>
-            <mat-select [value]="value" (focus)="load()" (selectionChange)="change($event)" multiple
-                (keydown)="keyDown($event)" (openedChange)="openedChange($event)">
-                <mat-option *ngFor="let x of filteredChoices" [value]="x" matTooltip="{{selectfilter}}">{{x}}
+            <mat-select multiple [value]="value" (focus)="focus()" (selectionChange)="change($event)">
+                <mat-option *ngFor="let choice of choices | async" [value]="choice.value"
+                    [matTooltip]="choice.name !== choice.value ? choice.value : null">
+                    {{choice.name}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -205,26 +206,24 @@
 
     <!-- autocomplete element -->
     <div *ngIf="getLayout() === 'autocomplete'">
-        <mat-form-field *ngIf="schema.widget !== 'select'" [ngStyle]="schema.style" [ngClass]="schema.class">
-            <mat-label>{{label}}</mat-label>
-            <input autocomplete="off" matInput [value]="value" (keyup)="filter($event)" (focus)="load()"
-                (blur)="optionChange($event)" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="optionSelected($event)"
-                [displayWith]="displayFn">
-                <mat-option *ngFor="let option of filteredChoicesObj" [value]="option"
-                    [matTooltip]="option.value !== option.name ? option.value : null">
-                    {{option.name}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
         <mat-form-field *ngIf="schema.widget === 'select'" [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <mat-select [value]="value" (focus)="load()" (selectionChange)="change($event)">
-                <mat-option *ngFor="let option of choices" [value]="option"
-                    [matTooltip]="option !== displayWith(option) ? option : null">
-                    {{displayWith(option)}}
+            <mat-select [value]="value" (focus)="focus()" (selectionChange)="change($event)">
+                <mat-option *ngFor="let choice of choices | async" [value]="choice.value"
+                    [matTooltip]="choice.name !== choice.value ? choice.value : null">
+                    {{choice.name}}
                 </mat-option>
             </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="schema.widget !== 'select'" [ngStyle]="schema.style" [ngClass]="schema.class">
+            <mat-label>{{label}}</mat-label>
+            <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" (focus)="focus()">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let choice of choices | async" [value]="choice.value"
+                    [matTooltip]="choice.name !== choice.value ? choice.value : null">
+                    {{choice.name}}
+                </mat-option>
+            </mat-autocomplete>
         </mat-form-field>
         <p class="error mat-typography">{{error()}}</p>
     </div>

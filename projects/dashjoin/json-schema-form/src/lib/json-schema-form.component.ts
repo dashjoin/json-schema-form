@@ -6,7 +6,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable, ReplaySubject } from 'rxjs';
 import { KeyValue } from '@angular/common';
 import { Schema } from './schema';
 import { WidgetComponent } from './widget.component';
@@ -14,6 +14,8 @@ import { WidgetDirective } from './widget.directive';
 import { JsonSchemaFormService } from './json-schema-form.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { JsonPointer } from './json-pointer';
+import { Choice, ChoiceHandler, DefaultChoiceHandler } from './choice';
+import { FormControl } from '@angular/forms';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -43,31 +45,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   hover: number;
 
   /**
-   * contains the REST autocomplete response (unfiltered)
-   */
-  choices: string[];
-
-  /**
-   * flag to make sure we only send one request
-   */
-  loading: boolean;
-
-  /**
-   * choices filtered by the current user input (only display the choices that match the input)
-   */
-  filteredChoices: string[];
-
-  /**
-   * choices for autocomplete with displayWith option
-   */
-  filteredChoicesObj: any[];
-
-  /**
-   * filter entered for array-select
-   */
-  selectfilter = '';
-
-  /**
    * the name of the input field
    */
   @Input() label: string;
@@ -76,11 +53,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * the input value
    */
   @Input() value: any;
-
-  /**
-   * display name to bind to the autocomplete
-   */
-  name: string;
 
   /**
    * emit changes done by the user in the component
@@ -152,6 +124,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     private componentFactoryResolver: ComponentFactoryResolver,
     private service: JsonSchemaFormService) { }
 
+  choices: ReplaySubject<Choice[]>;
+  control: FormControl;
+  ch: ChoiceHandler;
+
   /**
    * initialize the comonent.
    * replace undefined with null and init autocomplete choices
@@ -190,24 +166,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
     }
 
-    if (this.value) {
-      if (Array.isArray(this.value)) {
-        // multi-select is a special case since the value is already an array
-        this.choices = this.value;
-        this.filteredChoices = this.value;
-      } else {
-        this.choices = [this.value];
-        this.filteredChoices = [this.value];
-      }
-    }
-    this.filteredChoicesObj = this.displayFilter();
-
     if (this.schema.widget === 'custom') {
       this.loadComponent();
-    }
-
-    if (this.getLayout() === 'autocomplete') {
-      this.name = this.displayWith(this.value);
     }
 
     if (this.isRoot) {
@@ -215,6 +175,45 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.errorChange.emit(this.recursiveError());
       }, 10);
     }
+
+    this.ch = this.service.displayWithRegistry[this.schema.displayWith];
+    if (!this.ch) {
+      this.ch = new DefaultChoiceHandler(this.http);
+    }
+    this.control = new FormControl(this.value);
+    this.choices = new ReplaySubject();
+    if (Array.isArray(this.value)) {
+      const arr = [];
+      for (const i of this.value) {
+        arr.push({ name: i, value: i });
+      }
+      this.choices.next(arr);
+    } else {
+      this.choices.next([{ name: this.value, value: this.value }]);
+    }
+    if (this.value) {
+      if (Array.isArray(this.value)) {
+        const arr: Observable<Choice>[] = [];
+        for (const i of this.value) {
+          arr.push(this.ch.choice(i, this.schema));
+        }
+        forkJoin(arr).subscribe(res => this.choices.next(res));
+      } else {
+        this.ch.choice(this.value, this.schema).subscribe(res => this.choices.next([res]));
+      }
+    }
+    this.control.valueChanges.subscribe(x => {
+      this.value = x;
+      this.ch.filter(this.value, this.schema, x, this.choices).subscribe(f => {
+        this.change({ target: { value: x } });
+      });
+    });
+  }
+
+  focus() {
+    this.ch.load(this.value, this.schema).subscribe(res => {
+      this.choices.next(res);
+    });
   }
 
   /**
@@ -259,10 +258,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (changes.schema) {
       if (changes.schema.previousValue) {
         this.rootSchema = null;
-        this.loading = false;
-        this.choices = null;
-        this.filteredChoices = null;
-        this.filteredChoicesObj = null;
         if (this.widgetHost.viewContainerRef) {
           this.widgetHost.viewContainerRef.clear();
         }
@@ -689,69 +684,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   }
 
   /**
-   * autocomplete filter
-   */
-  filter(event: any) {
-    if (this.choices != null) {
-      this.filteredChoices = this.choices.filter(el => el?.toLowerCase().match(event.target.value?.toLowerCase()));
-
-      // apply filter to display names, not the real values since these are hidden in the dropdown
-      this.filteredChoicesObj = [];
-      for (const c of this.choices) {
-        const name = this.displayWith(c);
-        if (name?.toLowerCase().match(event.target.value?.toLowerCase())) {
-          this.filteredChoicesObj.push({ name, value: c });
-        }
-      }
-    }
-  }
-
-  /**
-   * autocomplete REST loader
-   */
-  load() {
-    if (this.loading) {
-      return;
-    }
-
-    this.loading = true;
-
-    if (this.schema.choices) {
-      this.choices = this.schema.choices;
-      this.filteredChoices = this.schema.choices;
-      this.filteredChoicesObj = this.displayFilter();
-      return;
-    }
-
-    this.getChoices(this.schema.choicesUrl, this.schema.choicesUrlArgs, this.schema.choicesVerb).subscribe(res => {
-      if (this.schema.jsonPointer != null) {
-        res = JsonPointer.jsonPointer(res, this.schema.jsonPointer);
-        if (!Array.isArray(res)) {
-          res = [res];
-        }
-      }
-      this.choices = res;
-      this.filteredChoices = res;
-      this.filteredChoicesObj = this.displayFilter();
-    });
-  }
-
-  /**
-   * handle GET / POST
-   */
-  getChoices(url: string, args: any, verb: string): Observable<any> {
-    if (verb === 'GET') {
-      return this.http.get<any[]>(url, args);
-    } else {
-      return this.http.post<any[]>(url, args, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        })
-      });
-    }
-  }
-
-  /**
    * allows for the result of a file upload to be written into a text form element
    */
   handleFileInput(event: any) {
@@ -765,33 +697,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.emit(this.value);
     };
     reader.readAsText(event.target.files.item(0));
-  }
-
-  /**
-   * key pressed on array select - apply filter
-   */
-  keyDown(event: any) {
-    if (event.key === 'Backspace') {
-      this.selectfilter = this.selectfilter.substring(0, this.selectfilter.length - 1);
-    } else if (event.key.length === 1 && event.key !== ' ') {
-      this.selectfilter = this.selectfilter + event.key;
-    } else {
-      return;
-    }
-    this.filteredChoices = this.choices.filter(
-      item => item.toLowerCase().includes(this.selectfilter.toLowerCase()) || this.value.indexOf(item) >= 0);
-    this.filteredChoicesObj = this.displayFilter();
-  }
-
-  /**
-   * array select options opened / closed. reset filter when closed
-   */
-  openedChange(event: boolean) {
-    if (!event) {
-      this.selectfilter = '';
-      this.filteredChoices = this.choices;
-      this.filteredChoicesObj = this.displayFilter();
-    }
   }
 
   /**
@@ -827,66 +732,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.value = data;
       this.emit(this.value);
     });
-  }
-
-  /**
-   * function to transform a choice option into a display string
-   */
-  displayWith(option: string): string {
-    if (this.schema.displayWith === 'localName') {
-      const parts = option.split('/');
-      return parts[parts.length - 1];
-    }
-    if (this.schema.displayWith) {
-      const displayer = this.service.displayWithRegistry[this.schema.displayWith];
-      if (displayer) {
-        return displayer.choice(option, this.schema).name;
-      }
-    }
-    return option;
-  }
-
-  /**
-   * displayWith callback from autocomplete
-   */
-  displayFn(option: any): string {
-    return option.name;
-  }
-
-  /**
-   * compute the filteredChoices objects for use in autocomplete
-   */
-  displayFilter() {
-    const res = [];
-    if (this.filteredChoices) {
-      for (const i of this.filteredChoices) {
-        res.push({ name: this.displayWith(i), value: i });
-      }
-    }
-    return res;
-  }
-
-  /**
-   * autocomplete option selected
-   */
-  optionSelected(event: any) {
-    this.name = event.option.value.name;
-    this.value = event.option.value.value;
-    this.emit(this.value);
-  }
-
-  /**
-   * autocomplete option changed by hand
-   */
-  optionChange(event: any) {
-    this.name = event.target.value ? event.target.value : null;
-    this.value = this.name;
-    for (const u of this.filteredChoicesObj) {
-      if (u.name === this.name) {
-        this.value = u.value;
-      }
-    }
-    this.emit(this.value);
   }
 
   /**

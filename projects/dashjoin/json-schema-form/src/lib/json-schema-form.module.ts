@@ -22,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { WidgetDirective } from './widget.directive';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [JsonSchemaFormComponent, WidgetDirective],
@@ -45,7 +46,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatNativeDateModule,
     MatButtonModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
+    ReactiveFormsModule
   ],
   exports: [JsonSchemaFormComponent]
 })

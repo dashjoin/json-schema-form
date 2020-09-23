@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Schema, JsonSchemaFormService } from '@dashjoin/json-schema-form';
+import { Schema, JsonSchemaFormService, DefaultChoiceHandler } from '@dashjoin/json-schema-form';
 import { CustomComponent } from './custom.component';
 import { ActivatedRoute } from '@angular/router';
 import { Choice, ChoiceHandler } from 'projects/dashjoin/json-schema-form/src/lib/choice';
@@ -212,7 +212,7 @@ export class MainComponent implements OnInit {
       },
       select: {
         description: 'The select widget exchanges the input field for a select combo box',
-        value: '',
+        value: 'France',
         schema: {
           type: 'string',
           widget: 'select',
@@ -794,7 +794,7 @@ export class MainComponent implements OnInit {
    */
   ngOnInit() {
     this.service.registerComponent('times2', CustomComponent);
-    this.service.registerDisplayWith('states', new MyDisplayer());
+    this.service.registerDisplayWith('states', new MyDisplayer(null));
     this.route.params.subscribe(res => {
       if (res.id) {
         this.select(res.id);
@@ -849,26 +849,18 @@ export class MainComponent implements OnInit {
 /**
  * sample displayer implemetation
  */
-export class MyDisplayer implements ChoiceHandler {
+export class MyDisplayer extends DefaultChoiceHandler {
 
-  load(value: any, schema: Schema): Observable<Choice[]> {
-    return null;
-  }
-
-  filter(value: any, schema: Schema, current: string): Observable<Choice[]> {
-    return null;
-  }
-
-  choice(value: any, schema: Schema): Choice {
+  choice(value: any, schema: Schema): Observable<Choice> {
     if (value === 'CA') {
-      return { value, name: 'California' };
+      return of({ value, name: 'California' });
     }
     if (value === 'OR') {
-      return { value, name: 'Oregon' };
+      return of({ value, name: 'Oregon' });
     }
     if (value === 'WA') {
-      return { value, name: 'Washington' };
+      return of({ value, name: 'Washington' });
     }
-    return { value, name: value };
+    return of({ value, name: value });
   }
 }
