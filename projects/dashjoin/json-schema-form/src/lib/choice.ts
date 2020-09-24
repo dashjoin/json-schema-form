@@ -98,7 +98,17 @@ export class DefaultChoiceHandler implements ChoiceHandler {
     }
 
     filter(value: any, schema: Schema, current: string, choices: Observable<Choice[]>): Observable<Choice[]> {
-        return choices;
+        return choices.pipe(map(arr => {
+            if (!current) {
+                return arr;
+            }
+            const res = arr.filter(i => this.include(i, current));
+            return res;
+        }));
+    }
+
+    include(i: Choice, current: string): boolean {
+        return i.name?.toLowerCase().includes(current.toLowerCase());
     }
 
     /**

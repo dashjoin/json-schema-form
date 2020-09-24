@@ -219,7 +219,7 @@
             <mat-label>{{label}}</mat-label>
             <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" (focus)="focus()">
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let choice of choices | async" [value]="choice.value"
+                <mat-option *ngFor="let choice of filteredOptions | async" [value]="choice.value"
                     [matTooltip]="choice.name !== choice.value ? choice.value : null">
                     {{choice.name}}
                 </mat-option>

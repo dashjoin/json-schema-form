@@ -16,6 +16,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { JsonPointer } from './json-pointer';
 import { Choice, ChoiceHandler, DefaultChoiceHandler } from './choice';
 import { FormControl } from '@angular/forms';
+import { map, startWith, switchMap } from 'rxjs/operators';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -125,6 +126,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     private service: JsonSchemaFormService) { }
 
   choices: ReplaySubject<Choice[]>;
+  filteredOptions: Observable<Choice[]>;
   control: FormControl;
   ch: ChoiceHandler;
 
@@ -202,12 +204,14 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.ch.choice(this.value, this.schema).subscribe(res => this.choices.next([res]));
       }
     }
-    this.control.valueChanges.subscribe(x => {
-      this.value = x;
-      this.ch.filter(this.value, this.schema, x, this.choices).subscribe(f => {
-        this.change({ target: { value: x } });
-      });
-    });
+    this.filteredOptions = this.control.valueChanges
+      .pipe(
+        startWith(this.value),
+        switchMap(x => {
+          this.change({ target: { value: x } });
+          return this.ch.filter(this.value, this.schema, x, this.choices);
+        })
+      );
   }
 
   focus() {
