@@ -16,7 +16,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { JsonPointer } from './json-pointer';
 import { Choice, ChoiceHandler, DefaultChoiceHandler } from './choice';
 import { FormControl } from '@angular/forms';
-import { map, startWith, switchMap } from 'rxjs/operators';
+import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -125,9 +125,24 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     private componentFactoryResolver: ComponentFactoryResolver,
     private service: JsonSchemaFormService) { }
 
+  /**
+   * choices that might be loaded async, initialized with current value and its potentially delayed toString value
+   */
   choices: ReplaySubject<Choice[]>;
+
+  /**
+   * autocomplete filtered choices
+   */
   filteredOptions: Observable<Choice[]>;
+
+  /**
+   * autocomplete form control for simpler change detection
+   */
   control: FormControl;
+
+  /**
+   * implementation specified in displayWith
+   */
   ch: ChoiceHandler;
 
   /**
@@ -207,6 +222,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     this.filteredOptions = this.control.valueChanges
       .pipe(
         startWith(this.value),
+        debounceTime(this.ch.debounceTime()),
         switchMap(x => {
           this.change({ target: { value: x } });
           return this.ch.filter(this.value, this.schema, x, this.choices);
@@ -214,6 +230,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       );
   }
 
+  /**
+   * choice element activated - load values
+   */
   focus() {
     this.ch.load(this.value, this.schema).subscribe(res => {
       this.choices.next(res);
@@ -331,6 +350,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       return 'autocomplete';
     }
     if (this.schema.choices) {
+      return 'autocomplete';
+    }
+    if (this.schema.displayWith) {
       return 'autocomplete';
     }
     return 'single';

@@ -39,6 +39,11 @@ export interface ChoiceHandler {
      * return a single choice (i.e. convert value to Choice)
      */
     choice(value: any, schema: Schema): Observable<Choice>;
+
+    /**
+     * delay between keystrokes before new data is loaded
+     */
+    debounceTime(): number;
 }
 
 /**
@@ -59,6 +64,9 @@ export class DefaultChoiceHandler implements ChoiceHandler {
      */
     cache: Observable<Choice[]>;
 
+    /**
+     * load choices
+     */
     load(value: any, schema: Schema): Observable<Choice[]> {
 
         if (!this.cache) {
@@ -97,6 +105,9 @@ export class DefaultChoiceHandler implements ChoiceHandler {
         return this.cache;
     }
 
+    /**
+     * filter after keystroke
+     */
     filter(value: any, schema: Schema, current: string, choices: Observable<Choice[]>): Observable<Choice[]> {
         return choices.pipe(map(arr => {
             if (!current) {
@@ -107,6 +118,9 @@ export class DefaultChoiceHandler implements ChoiceHandler {
         }));
     }
 
+    /**
+     * called from filter, intended to allow subclasses to easily change filter algorithm
+     */
     include(i: Choice, current: string): boolean {
         return i.name?.toLowerCase().includes(current.toLowerCase());
     }
@@ -136,5 +150,12 @@ export class DefaultChoiceHandler implements ChoiceHandler {
                 })
             });
         }
+    }
+
+    /**
+     * default: no delay
+     */
+    debounceTime() {
+        return 0;
     }
 }

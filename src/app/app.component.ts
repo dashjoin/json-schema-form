@@ -4,6 +4,7 @@ import { CustomComponent } from './custom.component';
 import { ActivatedRoute } from '@angular/router';
 import { Choice, ChoiceHandler } from 'projects/dashjoin/json-schema-form/src/lib/choice';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 /**
  * router component
@@ -568,7 +569,7 @@ export class MainComponent implements OnInit {
         }
       },
       displayWith: {
-        description: 'Select and autocomplete allow display names to be specified in case the values are not easily readable',
+        description: 'Select and autocomplete allow associating display names to value options',
         value: {
           select: 'WA',
           autocomplete: 'https://en.wikipedia.org/wiki/Indonesia'
@@ -588,6 +589,14 @@ export class MainComponent implements OnInit {
               choices: ['CA', 'OR', 'WA']
             }
           }
+        }
+      },
+      typeAhead: {
+        description: 'Custom ChoiceHandler allows implementing typeahead functionality',
+        value: null,
+        schema: {
+          type: 'string',
+          displayWith: 'typeAhead'
         }
       },
       tab: {
@@ -795,6 +804,7 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.service.registerComponent('times2', CustomComponent);
     this.service.registerDisplayWith('states', new MyDisplayer(null));
+    this.service.registerDisplayWith('typeAhead', new MyTypeAhead());
     this.route.params.subscribe(res => {
       if (res.id) {
         this.select(res.id);
@@ -851,6 +861,9 @@ export class MainComponent implements OnInit {
  */
 export class MyDisplayer extends DefaultChoiceHandler {
 
+  /**
+   * hard coded state IDs
+   */
   choice(value: any, schema: Schema): Observable<Choice> {
     if (value === 'CA') {
       return of({ value, name: 'California' });
@@ -862,5 +875,71 @@ export class MyDisplayer extends DefaultChoiceHandler {
       return of({ value, name: 'Washington' });
     }
     return of({ value, name: value });
+  }
+}
+
+/**
+ * sample typeahead implementation
+ */
+export class MyTypeAhead implements ChoiceHandler {
+
+  /**
+   * sample data
+   */
+  countries = [
+    'China',
+    'India',
+    'United States',
+    'Indonesia',
+    'Brazil',
+    'Pakistan',
+    'Nigeria',
+    'Bangladesh',
+    'Russia',
+    'Mexico',
+    'Japan',
+    'Philippines',
+    'Egypt',
+    'Ethiopia',
+    'Vietnam',
+    'DR Congo',
+    'Iran',
+    'Turkey',
+    'Germany',
+    'France'
+  ];
+
+  /**
+   * initially, we do not load any choices
+   */
+  load(value: any, schema: Schema): Observable<Choice[]> {
+    return of();
+  }
+
+  /**
+   * called whenever the user types something
+   */
+  filter(value: any, schema: Schema, current: string, choices: Observable<Choice[]>): Observable<Choice[]> {
+    // filter and convert to Choice[]
+    const filtered = this.countries.filter(c => c?.toLowerCase().includes(current?.toLowerCase()));
+    const mapped: Choice[] = filtered.map(c => ({ name: c, value: c }));
+
+    // return with a delay of 1 second to simulate an HTTP call
+    console.log('requesting data for ' + current);
+    return of(mapped).pipe(delay(1000));
+  }
+
+  /**
+   * initial value
+   */
+  choice(value: any, schema: Schema): Observable<Choice> {
+    return of({ name: value, value });
+  }
+
+  /**
+   * wait a half second before making a new HTTP request
+   */
+  debounceTime() {
+    return 500;
   }
 }
