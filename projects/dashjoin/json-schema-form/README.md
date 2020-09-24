@@ -145,6 +145,8 @@ The following fields control how select and autocomplete options are obtained fr
 * choicesUrl: defines the REST service URL
 * choicesVerb: defines the HTTP verb to use for the REST service URL, default is POST
 * choicesUrlArgs: defines the REST service parameter. The convention is to have a single parameter. Multiple fields need to be wrapped into a single object
+* jsonName: JSON is assumed to be an object array, identifies the field to be used as option name
+* jsonValue: JSON is assumed to be an object array, identifies the field to be used as option value
 * jsonPointer: used to transform the REST result into a string array if it is not already in that form.
   Note that we use a slightly extended version of [JSON Pointer](https://tools.ietf.org/html/rfc6901) that allows processing arrays of objects. Consider the following examples:
 
@@ -153,11 +155,11 @@ The following fields control how select and autocomplete options are obtained fr
 | {"result": ["A", "B"]}  |  /result |  ["A", "B"] |
 | [{"name":"A"}, {"name":"B"}] | /*/name  |  ["A", "B"] |
 
-### Autocomplete and Select Display Names
+### Autocomplete and Select Display Names and Values
 
 If you want the option's control value (what is saved in the form) to be different than the option's display value (what is displayed in the text field),
 the "displayWith" option allows you to do so. The value of "displayWith" is the name under which the implementation class to perform this job was registered.
-The class must implement the [Displayer](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/json-schema-form.service.ts) interface. An example can be found at the end of the [playground component](https://github.com/dashjoin/json-schema-form/blob/master/src/app/app.component.ts).
+The class must implement the [ChoiceHandler](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/choice.ts) interface. An example can be found at the end of the [playground component](https://github.com/dashjoin/json-schema-form/blob/master/src/app/app.component.ts).
 The registration can be done in ngOnInit() using this service: this.service.registerDisplayWith('states', new MyDisplayer()); Consider the following example:
 
 ```
@@ -174,6 +176,9 @@ The registration can be done in ngOnInit() using this service: this.service.regi
 
 The autocomplete is configured with "localName" which is a built-in displayer.
 It treats options like URLs and displays the local name which is the text after the last /. This causes the dropdown to display "Peru" with the tooltip indicating the real value "https://en.wikipedia.org/wiki/Peru" which is written to the JSON value.
+
+The custom implementation also enables you to exercise tight control over filtering, typeahead loading of options, and determining the display value.
+For an example of a typeahead implementation, see the class MyTypeAhead at the bottom of the [playground component](https://github.com/dashjoin/json-schema-form/blob/master/src/app/app.component.ts).
 
 ### Layout options
 
