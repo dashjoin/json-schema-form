@@ -233,6 +233,18 @@ export interface Schema {
     jsonPointer?: string;
 
     /**
+     * used in case the select / autocomplete options are gathered from a REST service URL.
+     * JSON is assumed to be an object array, identified the field to be used as option name
+     */
+    jsonName?: string;
+
+    /**
+     * used in case the select / autocomplete options are gathered from a REST service URL.
+     * JSON is assumed to be an object array, identified the field to be used as option value
+     */
+    jsonValue?: string;
+
+    /**
      * input control layout:
      *
      * horizontal (default): input controls are arranged horizontally and flex-wrap if there is insufficient space

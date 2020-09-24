@@ -134,6 +134,9 @@ export class DefaultChoiceHandler implements ChoiceHandler {
             const parts = value.split('/');
             return of({ value, name: parts[parts.length - 1] });
         }
+        if (schema.jsonName && schema.jsonValue) {
+            return of({ value: value[schema.jsonValue], name: value[schema.jsonName] });
+        }
         return of({ value, name: value });
     }
 

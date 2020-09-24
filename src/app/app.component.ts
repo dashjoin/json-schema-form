@@ -560,6 +560,18 @@ export class MainComponent implements OnInit {
           choicesVerb: 'GET'
         }
       },
+      jsonName: {
+        description: 'Getting autocomplete options (name and value) from a REST service and processing the result via JSON pointer',
+        value: null,
+        schema: {
+          type: 'string',
+          choicesUrl: '/assets/autocomplete-complex.json',
+          jsonPointer: '/result',
+          jsonName: 'name',
+          jsonValue: 'url',
+          choicesVerb: 'GET'
+        }
+      },
       'static-choices': {
         description: 'Static options for autocomplete',
         value: null,
