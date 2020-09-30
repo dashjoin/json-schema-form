@@ -18,7 +18,7 @@
 * Can load referenced schemas from URLs
 * Renders compact forms
 * Supports 2-way databinding
-* Autocomplete based on REST services (complex responses can be processed via extended JSON Pointer)
+* Autocomplete & typeahead based on REST services (complex responses can be processed via extended JSON Pointer)
 * CSS styling
 * Built-in validation
 * Flexible layout options (tab, table, vertical, horizontal, ...)
