@@ -137,6 +137,9 @@ export class DefaultChoiceHandler implements ChoiceHandler {
         if (schema.jsonName && schema.jsonValue) {
             return of({ value: value[schema.jsonValue], name: value[schema.jsonName] });
         }
+        if (schema.displayWithChoices) {
+            return of({ value, name: schema.displayWithChoices[schema.choices.indexOf(value)] });
+        }
         return of({ value, name: value });
     }
 

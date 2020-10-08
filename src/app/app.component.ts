@@ -603,6 +603,16 @@ export class MainComponent implements OnInit {
           }
         }
       },
+      displayWithChoices: {
+        description: 'Select with fixed value and display options',
+        value: 'WA',
+        schema: {
+          type: 'string',
+          widget: 'select',
+          displayWithChoices: ['California', 'Orgeon', 'Washington'],
+          choices: ['CA', 'OR', 'WA']
+        }
+      },
       typeAhead: {
         description: 'Custom ChoiceHandler allows implementing typeahead functionality',
         value: null,
