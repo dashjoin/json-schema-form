@@ -117,6 +117,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   @ViewChild(WidgetDirective, { static: true }) widgetHost: WidgetDirective;
 
+  orderedProperties: { [key: string]: Schema }[];
+
   /**
    * http used for autocomplete REST calls
    */
@@ -145,6 +147,27 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   ch: ChoiceHandler;
 
+  setOrderedProperties() {
+    if (this.schema.order) {
+      this.orderedProperties = [];
+      for (const p of this.schema.order) {
+        const arr = Array.isArray(p) ? p : [p];
+        const o = {};
+        for (const q of arr) {
+          o[q] = this.schema.properties[q];
+        }
+        this.orderedProperties.push(o);
+      }
+    } else if (this.schema.properties) {
+      this.orderedProperties = [];
+      for (const [key, value] of Object.entries(this.schema.properties)) {
+        const o = {};
+        o[key] = value;
+        this.orderedProperties.push(o);
+      }
+    }
+  }
+
   /**
    * initialize the comonent.
    * replace undefined with null and init autocomplete choices
@@ -168,8 +191,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         } else {
           // local ref
           this.schema = JsonPointer.jsonPointer(this.rootSchema, parts[1]);
+          this.setOrderedProperties();
         }
       }
+    } else {
+      this.setOrderedProperties();
     }
 
     if (typeof this.value === 'undefined') {
@@ -250,15 +276,18 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.rootSchema.referenced && this.rootSchema.referenced[this.base]) {
       const res = this.rootSchema.referenced[this.base];
       this.schema = pointer ? JsonPointer.jsonPointer(res, pointer) : res;
+      this.setOrderedProperties();
       return;
     }
 
     this.http.get(this.base).subscribe(res => {
       this.schema = pointer ? JsonPointer.jsonPointer(res, pointer) : res;
+      this.setOrderedProperties();
     }, error => console.log(error));
 
     // set temporary pseudo schema
     this.schema = { type: 'string' };
+    this.setOrderedProperties();
   }
 
   /**

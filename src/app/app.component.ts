@@ -639,6 +639,59 @@ export class MainComponent implements OnInit {
           displayWith: 'typeAhead'
         }
       },
+      order: {
+        description: 'Define order, omission, and hierarchy of object fields',
+        value: {
+          name: 'Joe',
+          hidden: 'not in form',
+          age: 22,
+          emails: ['joe@example.org', 'joe@gmail.com'],
+          address: { city: 'LA' }
+        },
+        schema: {
+          type: 'object',
+          layout: 'vertical',
+          order: [
+            [
+              'name',
+              'age'
+            ],
+            'emails',
+            'address'
+          ],
+          properties: {
+            emails: {
+              class: [
+                'mat-elevation-z0'
+              ],
+              type: 'array',
+              items: {
+                type: 'string'
+              }
+            },
+            name: {
+              type: 'string'
+            },
+            hidden: {
+              type: 'string'
+            },
+            age: {
+              type: 'number'
+            },
+            address: {
+              type: 'object',
+              properties: {
+                city: {
+                  type: 'string'
+                },
+                zip: {
+                  type: 'integer'
+                }
+              }
+            }
+          }
+        }
+      },
       tab: {
         description: 'Tab layout for arrays and objects with arbitrary key / value pairs',
         value: [{ name: 'Angular', version: 9 }, { name: 'Vue' }],

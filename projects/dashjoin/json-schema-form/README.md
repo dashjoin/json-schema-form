@@ -210,6 +210,12 @@ Layout options determine how the input elements of arrays and objects are arrang
 * select: array is shown as a multi-select (only applies to arrays of string)
 * Any element can be placed in an expansion panel by adding "expanded": true / false. The Boolean value indicates whether the panel is expanded by default or not
 
+The order field allows to control the inputs of objects:
+
+* The order field can be a list of field names. For example "order": ["firstname", "lastname"] defines the first name input to appear before the last name, regardless of their order in the properties
+* If a property is omitted, the form does not display an input. So in the example above, an age field is not in the form even if it is listed in properties.
+* Order can also specify a 2-level hierarchy like "order": [["firstname", "lastname"], "emails"]. If a vertical layout is chosen, this displays firstname and lastname in the first row and the array of emails in the second row. The first row automatically chooses the opposite layout direction internally.
+
 The style and class fields allow passing CSS styles and classes to the input fields. For instance, you could emphasize
 the input with a higher z elevation and accommodate for longer
 input values by increasing the default input element width:

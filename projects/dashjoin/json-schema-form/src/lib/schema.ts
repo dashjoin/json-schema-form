@@ -267,6 +267,12 @@ export interface Schema {
     layout?: 'tab' | 'table' | 'vertical' | 'horizontal' | 'select';
 
     /**
+     * defines order, omission, and 2-level hierarchy (via nested lists) of the object properties.
+     * The top level layout is defined as either horizontal or vertical, sublists use the opposite direction
+     */
+    order?: (string | string[])[];
+
+    /**
      * simplified version of conditionals (https://json-schema.org/draft/2019-09/json-schema-core.html#rfc.section.9.2.2).
      * works in conjunction with 'case'. switch marks a property whose value determines whether other properties
      * are shown or not
