@@ -225,7 +225,7 @@ export interface Schema {
     /**
      * used in case the select / autocomplete options are defined statically
      */
-    choices?: string[];
+    choices?: (string | number)[];
 
     /**
      * name of the displayWith function

@@ -234,7 +234,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     } else {
       this.choices.next([{ name: this.value, value: this.value }]);
     }
-    if (this.value) {
+    if (this.value || this.value === 0) {
       if (Array.isArray(this.value)) {
         const arr: Observable<Choice>[] = [];
         for (const i of this.value) {
