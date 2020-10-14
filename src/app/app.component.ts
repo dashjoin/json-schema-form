@@ -1014,12 +1014,18 @@ export class MyTypeAhead implements ChoiceHandler {
    */
   filter(value: any, schema: Schema, current: string, choices: Observable<Choice[]>): Observable<Choice[]> {
     // filter and convert to Choice[]
-    const filtered = this.countries.filter(c => c?.toLowerCase().includes(current?.toLowerCase()));
+    const filtered = this.countries.filter(c => current ? c?.toLowerCase().includes(current.toLowerCase()) : true);
+
+    // limit to 5 preview results
+    while (filtered.length > 5) {
+      filtered.pop();
+    }
+
     const mapped: Choice[] = filtered.map(c => ({ name: c, value: c }));
 
-    // return with a delay of 1 second to simulate an HTTP call
+    // return with a delay of 0.5 second to simulate an HTTP call
     console.log('requesting data for ' + current);
-    return of(mapped).pipe(delay(1000));
+    return of(mapped).pipe(delay(500));
   }
 
   /**
@@ -1030,9 +1036,9 @@ export class MyTypeAhead implements ChoiceHandler {
   }
 
   /**
-   * wait a half second before making a new HTTP request
+   * wait 0.2 second before making a new HTTP request
    */
   debounceTime() {
-    return 500;
+    return 200;
   }
 }
