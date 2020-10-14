@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MatCardModule } from '@angular/material/card';
     MatExpansionModule,
     MatToolbarModule,
     AppRoutingModule,
-    MatCardModule
+    MatCardModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
