@@ -191,7 +191,8 @@
     <div *ngIf="getLayout() === 'date'">
         <mat-form-field>
             <mat-label>{{label}}</mat-label>
-            <input autocomplete="off" matInput [value]="value" (dateChange)="change($event)" [matDatepicker]="picker">
+            <input autocomplete="off" matInput [value]="parseDate(value, schema.dateFormat)"
+                (dateChange)="change($event)" [matDatepicker]="picker">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>

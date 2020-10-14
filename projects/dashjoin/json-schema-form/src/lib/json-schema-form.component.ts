@@ -657,7 +657,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (event instanceof MatSelectChange) {
       event = event.value;
     } else if (event instanceof MatDatepickerInputEvent) {
-      event = event.value;
+      event = this.serializeDate(event.value, this.schema.dateFormat, this.schema.type);
     } else if (event instanceof MatAutocompleteSelectedEvent) {
       event = event.option.value;
     } else if (event instanceof MatCheckboxChange) {
@@ -820,5 +820,43 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     } else {
       return Object.keys(this.schema.properties).sort();
     }
+  }
+
+  parseDate(date: any, format: string): Date {
+    if (!date && date !== 0) {
+      return date;
+    }
+    if (typeof date === 'number') {
+      return new Date(date);
+    }
+    if (!format) {
+      return date;
+    }
+    const pdate = date.split(this.getDelimiter(format));
+    const pformat = format.split(this.getDelimiter(format));
+    return new Date(pdate[pformat.indexOf('yyyy')], pdate[pformat.indexOf('MM')] - 1, pdate[pformat.indexOf('dd')]);
+  }
+
+  serializeDate(date: Date, format: string, type: string): string {
+    if (type === 'integer' || type === 'number') {
+      return '' + date.valueOf();
+    }
+    if (!format) {
+      return date.toISOString();
+    }
+    const pformat = format.split(this.getDelimiter(format));
+    const pdate = [null, null, null];
+    pdate[pformat.indexOf('yyyy')] = date.getFullYear();
+    pdate[pformat.indexOf('MM')] = date.getMonth() + 1;
+    pdate[pformat.indexOf('dd')] = date.getDate();
+    return pdate[0] + this.getDelimiter(format) + pdate[1] + this.getDelimiter(format) + pdate[2];
+  }
+
+  getDelimiter(format: string): string {
+    const delim = format.match(/\W/g);
+    if (!delim[0]) {
+      throw new Error('No delimiter found in date format: ' + format);
+    }
+    return delim[0];
   }
 }

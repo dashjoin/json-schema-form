@@ -231,10 +231,28 @@ export class MainComponent implements OnInit {
       },
       date: {
         description: 'Entering dates using the material date picker',
-        value: '',
+        value: {
+          ISO8601: '2020-10-14T00:00:00.000Z',
+          formatted: '12/31/2020',
+          millisecs: 0
+        },
         schema: {
-          type: 'string',
-          widget: 'date'
+          type: 'object',
+          properties: {
+            ISO8601: {
+              type: 'string',
+              widget: 'date'
+            },
+            formatted: {
+              type: 'string',
+              widget: 'date',
+              dateFormat: 'MM/dd/yyyy'
+            },
+            millisecs: {
+              type: 'integer',
+              widget: 'date'
+            }
+          }
         }
       },
       textarea: {

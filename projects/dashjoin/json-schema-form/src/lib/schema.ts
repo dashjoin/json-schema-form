@@ -45,6 +45,12 @@ export interface Schema {
     format?: string;
 
     /**
+     * Pattern to parse and serialize date strings. Bases on https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
+     * but supports only year (yyyy), month (MM), and day (dd), Only applies to "widget: date"
+     */
+    dateFormat?: string;
+
+    /**
      * input must be multiple of x
      */
     multipleOf?: number;
