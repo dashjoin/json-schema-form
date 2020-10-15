@@ -4,7 +4,7 @@ import { JsonSchemaFormComponent } from './json-schema-form.component';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTooltipModule, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -49,6 +49,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     ReactiveFormsModule
   ],
-  exports: [JsonSchemaFormComponent]
+  exports: [JsonSchemaFormComponent],
+  providers: [
+    // turn off tooltip gestures on mobile: https://github.com/angular/components/issues/4892
+    { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: { touchGestures: 'off' } }
+  ]
+
 })
 export class JsonSchemaFormModule { }
