@@ -368,7 +368,7 @@ export class MainComponent implements OnInit {
         schema: { type: 'string', title: 'My title' }
       },
       description: {
-        description: 'JSON schema description translates to tool tips (currently disabled due to https://github.com/angular/components/issues/4892)',
+        description: 'JSON schema description translates to tool tips',
         value: null,
         schema: { type: 'string', description: 'You find me in the tooltip' }
       },
