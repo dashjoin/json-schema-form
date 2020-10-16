@@ -5,7 +5,7 @@ import {
 import { MatSelectChange } from '@angular/material/select';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { forkJoin, Observable, ReplaySubject } from 'rxjs';
 import { KeyValue } from '@angular/common';
 import { Schema } from './schema';
@@ -16,7 +16,9 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { JsonPointer } from './json-pointer';
 import { Choice, ChoiceHandler, DefaultChoiceHandler } from './choice';
 import { FormControl } from '@angular/forms';
-import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
+import { debounceTime, startWith, switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { Edit } from './edit';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -65,10 +67,22 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   @Output() errorChange: EventEmitter<string> = new EventEmitter();
 
+  @Output() schemaChange: EventEmitter<void> = new EventEmitter();
+
   /**
    * JSON schema to use
    */
   @Input() schema: Schema;
+
+  /**
+   * parent schema to edit required
+   */
+  @Input() parentSchema: Schema;
+
+  /**
+   * form editor
+   */
+  edit: Edit;
 
   /**
    * root JSON schema to use when looking up $ref (simply passed along the tree)
@@ -125,7 +139,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   constructor(
     private http: HttpClient,
     private componentFactoryResolver: ComponentFactoryResolver,
-    private service: JsonSchemaFormService) { }
+    public service: JsonSchemaFormService,
+    private dialog: MatDialog) { }
 
   /**
    * choices that might be loaded async, initialized with current value and its potentially delayed toString value
@@ -254,6 +269,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
           return this.ch.filter(this.value, this.schema, x, this.choices);
         })
       );
+
+    this.edit = new Edit(this.schemaChange, this.label, this.schema, this.parentSchema, this.dialog);
   }
 
   /**

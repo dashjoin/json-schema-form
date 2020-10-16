@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
   /**
    * need to access custom component registry
    */
-  constructor(private service: JsonSchemaFormService, private route: ActivatedRoute) { }
+  constructor(public service: JsonSchemaFormService, private route: ActivatedRoute) { }
 
   /**
    * example schema for meta schema case - also used in schema editor component
@@ -946,6 +946,10 @@ export class MainComponent implements OnInit {
     } catch (e) {
       this.errorV = e;
     }
+  }
+
+  schemaChange(): void {
+    this.schema = JSON.parse(JSON.stringify(this.schema));
   }
 }
 

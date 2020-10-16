@@ -23,9 +23,11 @@ import { WidgetDirective } from './widget.directive';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { EditElementDialogComponent } from './edit-element-dialog.component';
 
 @NgModule({
-  declarations: [JsonSchemaFormComponent, WidgetDirective],
+  declarations: [JsonSchemaFormComponent, EditElementDialogComponent, WidgetDirective],
   imports: [
     MatCardModule,
     FlexLayoutModule,
@@ -47,7 +49,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatExpansionModule,
     MatMenuModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
   ],
   exports: [JsonSchemaFormComponent],
   providers: [

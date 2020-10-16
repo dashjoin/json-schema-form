@@ -9,6 +9,8 @@ import { ChoiceHandler } from './choice';
 })
 export class JsonSchemaFormService {
 
+  public editMode = false;
+
   /**
    * built-in formats
    */

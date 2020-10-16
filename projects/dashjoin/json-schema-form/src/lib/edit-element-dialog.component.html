@@ -1,0 +1,7 @@
+<mat-dialog-content>
+    <lib-json-schema-form [(value)]="data" [schema]="schema" [label]="schema.title"></lib-json-schema-form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

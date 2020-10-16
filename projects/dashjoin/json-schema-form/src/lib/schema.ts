@@ -303,4 +303,9 @@ export interface Schema {
      * allows customizing the validation error message
      */
     errorMessage?: string;
+
+    /**
+     * if true, indicates not to show form editor elements
+     */
+    static?: boolean;
 }
