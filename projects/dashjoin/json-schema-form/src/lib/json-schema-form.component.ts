@@ -598,7 +598,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
     }
     if (this.required) {
-      if (this.value == null) {
+      if (this.value == null || isNaN(this.value)) {
         return this.e('required');
       }
     }
