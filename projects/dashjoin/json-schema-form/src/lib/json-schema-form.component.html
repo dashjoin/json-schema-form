@@ -13,7 +13,7 @@
 <div *ngIf="(schema.expanded === null || schema.expanded === undefined) || inExpansion"
     [matTooltip]="schema.description">
 
-    <div *ngIf="service.editMode && !schema.static">
+    <div *ngIf="service.editMode && !schema.static && !inArray">
         <mat-icon style="cursor: pointer" [matMenuTriggerFor]="menu">menu
         </mat-icon>
 
