@@ -33,9 +33,19 @@ export class Edit {
      * get the entries in "properties" that are not in "order"
      */
     addable(): string[] {
-        if (this.schema.order) {
-            const set = new Set(Object.keys(this.schema.properties));
-            for (const p of this.schema.order) {
+        let s: Schema;
+        if (this.schema.properties) {
+            s = this.schema;
+        } else if (this.schema.items?.properties) {
+            s = this.schema.items;
+        } else if (this.schema.additionalProperties?.properties) {
+            s = this.schema.additionalProperties;
+        } else {
+            return [];
+        }
+        if (s.order) {
+            const set = new Set(Object.keys(s.properties));
+            for (const p of s.order) {
                 if (Array.isArray(p)) {
                     for (const q of p) {
                         set.delete(q);
@@ -101,7 +111,13 @@ export class Edit {
      * add a hidden prop to the end of the list
      */
     add(prop: string) {
-        this.schema.order.push(prop);
+        if (this.schema.properties) {
+            this.schema.order.push(prop);
+        } else if (this.schema.items?.properties) {
+            this.schema.items.order.push(prop);
+        } else {
+            this.schema.additionalProperties.order.push(prop);
+        }
         this.schemaChange.emit();
     }
 

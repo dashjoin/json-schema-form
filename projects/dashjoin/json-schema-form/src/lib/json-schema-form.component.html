@@ -21,13 +21,11 @@
             <button mat-menu-item (click)="edit.edit()">
                 <mat-icon>edit</mat-icon>Edit
             </button>
-            <button [disabled]="!edit.canAdd()" mat-menu-item [matMenuTriggerFor]="madd"
-                *ngIf="schema.type === 'object'">
+            <button [disabled]="!edit.canAdd()" mat-menu-item [matMenuTriggerFor]="madd">
                 <mat-icon>add</mat-icon>Show
             </button>
-            <button [disabled]="!edit.canAddSub()" mat-menu-item [matMenuTriggerFor]="madd2"
-                *ngIf="schema.type !== 'object'">
-                <mat-icon>add</mat-icon>Show inline
+            <button [disabled]="!edit.canAddSub()" mat-menu-item [matMenuTriggerFor]="madd2">
+                <mat-icon>playlist_add</mat-icon>Show inline
             </button>
             <button [disabled]=" !edit.canHide()" mat-menu-item (click)="edit.hide()">
                 <mat-icon>remove</mat-icon>Hide
