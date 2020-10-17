@@ -4,8 +4,8 @@
         <mat-panel-title>{{label}}</mat-panel-title>
         <mat-panel-description>{{schema.description}}</mat-panel-description>
     </mat-expansion-panel-header>
-    <lib-json-schema-form #child [label]="label" [value]="value" (valueChange)="setAndEmit($event)" [switch]="switch"
-        [rootSchema]="rootSchema" [schema]="schema" [inExpansion]="true" [base]="base"
+    <lib-json-schema-form #child [label]="label" [name]="name" [value]="value" (valueChange)="setAndEmit($event)"
+        [switch]="switch" [rootSchema]="rootSchema" [schema]="schema" [inExpansion]="true" [base]="base"
         (schemaChange)="schemaChange.emit()">
     </lib-json-schema-form>
 </mat-expansion-panel>
@@ -55,7 +55,7 @@
         <div *ngFor="let op of orderedProperties" [fxLayout]="schema.layout !== 'vertical' ? 'column' : 'row wrap'">
             <div *ngFor=" let x of op | keyvalue:originalOrder" style="display: flex; margin: 2px">
                 <div *ngIf="x.value && (x.value.type || x.value.$ref)">
-                    <lib-json-schema-form #children [label]="x.value.title ? x.value.title : x.key"
+                    <lib-json-schema-form #children [name]="x.key" [label]="x.value.title ? x.value.title : x.key"
                         [value]="value ? value[x.key] : undefined" (valueChange)="onValueChange(x.key, $event)"
                         [switch]="value ? value[schema.switch] : undefined" [rootSchema]="rootSchema" [schema]="x.value"
                         [parentSchema]="schema" [required]="schema.required ? schema.required.includes(x.key) : false"

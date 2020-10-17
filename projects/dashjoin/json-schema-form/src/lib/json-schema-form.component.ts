@@ -48,7 +48,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   hover: number;
 
   /**
-   * the name of the input field
+   * the name of the input field (only set if inside type: object)
+   */
+  @Input() name: string;
+
+  /**
+   * the label of the input field
    */
   @Input() label: string;
 
@@ -270,7 +275,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         })
       );
 
-    this.edit = new Edit(this.schemaChange, this.label, this.schema, this.parentSchema, this.dialog);
+    this.edit = new Edit(this.schemaChange, this.name, this.schema, this.parentSchema, this.dialog);
   }
 
   /**

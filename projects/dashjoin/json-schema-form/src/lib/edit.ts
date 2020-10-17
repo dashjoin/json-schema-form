@@ -12,13 +12,13 @@ export class Edit {
      * get access to parent object's fields
      *
      * @param schemaChange  signal a change
-     * @param label         the current property label (key)
+     * @param name          the current property name (key)
      * @param schema        the current schema
      * @param parent        the parent's schema (required in order to change the order)
      * @param dialog        dialog service
      */
     constructor(
-        private schemaChange: EventEmitter<void>, private label: string, private schema: Schema, private parent: Schema,
+        private schemaChange: EventEmitter<void>, private name: string, private schema: Schema, private parent: Schema,
         private dialog: MatDialog) {
     }
 
@@ -54,13 +54,13 @@ export class Edit {
      * add a hidden prop to the end of the list
      */
     addSub(prop: string) {
-        const index = this.parent.order.indexOf(this.label);
+        const index = this.parent.order.indexOf(this.name);
         if (index >= 0) {
             this.parent.order[index] = [(this.parent.order[index] as string), prop];
         } else {
             for (const p of this.parent.order) {
                 if (Array.isArray(p)) {
-                    if (p.indexOf(this.label) >= 0) {
+                    if (p.indexOf(this.name) >= 0) {
                         p.push(prop);
                     }
                 }
@@ -136,13 +136,13 @@ export class Edit {
         }
         for (const p of this.parent.order) {
             if (Array.isArray(p)) {
-                if (p.indexOf(this.label) >= 0) {
-                    p.splice(p.indexOf(this.label), 1);
+                if (p.indexOf(this.name) >= 0) {
+                    p.splice(p.indexOf(this.name), 1);
                 }
             }
         }
-        if (this.parent.order.indexOf(this.label) >= 0) {
-            this.parent.order.splice(this.parent.order.indexOf(this.label), 1);
+        if (this.parent.order.indexOf(this.name) >= 0) {
+            this.parent.order.splice(this.parent.order.indexOf(this.name), 1);
         }
         this.schemaChange.emit();
     }
@@ -152,14 +152,14 @@ export class Edit {
             return false;
         }
         const props = this.parent.order ? this.parent.order : Object.keys(this.parent.properties);
-        const index = props.indexOf(this.label);
+        const index = props.indexOf(this.name);
         if (index >= 0) {
             return index > 0;
         } else {
             for (const p of props) {
                 if (Array.isArray(p)) {
-                    if (p.indexOf(this.label) >= 0) {
-                        return p.indexOf(this.label) > 0;
+                    if (p.indexOf(this.name) >= 0) {
+                        return p.indexOf(this.name) > 0;
                     }
                 }
             }
@@ -170,7 +170,7 @@ export class Edit {
         if (!this.parent.order) {
             this.parent.order = Object.keys(this.parent.properties);
         }
-        let index = this.parent.order.indexOf(this.label);
+        let index = this.parent.order.indexOf(this.name);
         if (index >= 0) {
             const tmp = this.parent.order[index - 1];
             this.parent.order[index - 1] = this.parent.order[index];
@@ -178,7 +178,7 @@ export class Edit {
         } else {
             for (const p of this.parent.order) {
                 if (Array.isArray(p)) {
-                    index = p.indexOf(this.label);
+                    index = p.indexOf(this.name);
                     if (index >= 0) {
                         const tmp = p[index - 1];
                         p[index - 1] = p[index];
@@ -195,14 +195,14 @@ export class Edit {
             return false;
         }
         const props = this.parent.order ? this.parent.order : Object.keys(this.parent.properties);
-        const index = props.indexOf(this.label);
+        const index = props.indexOf(this.name);
         if (index >= 0) {
             return index < props.length - 1;
         } else {
             for (const p of props) {
                 if (Array.isArray(p)) {
-                    if (p.indexOf(this.label) >= 0) {
-                        return p.indexOf(this.label) < p.length - 1;
+                    if (p.indexOf(this.name) >= 0) {
+                        return p.indexOf(this.name) < p.length - 1;
                     }
                 }
             }
@@ -213,7 +213,7 @@ export class Edit {
         if (!this.parent.order) {
             this.parent.order = Object.keys(this.parent.properties);
         }
-        let index = this.parent.order.indexOf(this.label);
+        let index = this.parent.order.indexOf(this.name);
         if (index >= 0) {
             const tmp = this.parent.order[index + 1];
             this.parent.order[index + 1] = this.parent.order[index];
@@ -221,7 +221,7 @@ export class Edit {
         } else {
             for (const p of this.parent.order) {
                 if (Array.isArray(p)) {
-                    index = p.indexOf(this.label);
+                    index = p.indexOf(this.name);
                     if (index >= 0) {
                         const tmp = p[index + 1];
                         p[index + 1] = p[index];
