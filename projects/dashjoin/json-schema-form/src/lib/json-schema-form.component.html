@@ -205,7 +205,7 @@
 
     <!-- enum -->
     <div *ngIf="getLayout() === 'enum'">
-        <mat-form-field>
+        <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
             <mat-select [value]="value" (selectionChange)="change($event)">
                 <mat-option *ngFor="let x of schema.enum" [value]="x">{{x}}</mat-option>
@@ -216,7 +216,7 @@
 
     <!-- array-select -->
     <div *ngIf="getLayout() === 'array-select'">
-        <mat-form-field [matTooltip]="schema.description">
+        <mat-form-field [matTooltip]="schema.description" [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
             <mat-select multiple [value]="value" (focus)="focus()" (selectionChange)="change($event)">
                 <mat-option *ngFor="let choice of choices | async" [value]="choice.value"
@@ -229,7 +229,7 @@
     </div>
 
     <!-- date element -->
-    <div *ngIf="getLayout() === 'date'">
+    <div *ngIf="getLayout() === 'date'" [ngStyle]="schema.style" [ngClass]="schema.class">
         <mat-form-field>
             <mat-label>{{label}}</mat-label>
             <input autocomplete="off" matInput [value]="parseDate(value, schema.dateFormat)"
@@ -241,7 +241,7 @@
     </div>
 
     <!-- checkbox element -->
-    <div *ngIf="getLayout() === 'checkbox'">
+    <div *ngIf="getLayout() === 'checkbox'" [ngStyle]="schema.style" [ngClass]="schema.class">
         <mat-checkbox [checked]="value" (change)="change($event)">{{label}}</mat-checkbox>
         <p class="error mat-typography">{{error()}}</p>
     </div>
@@ -295,7 +295,7 @@
     </div>
 
     <!-- upload -->
-    <div *ngIf="getLayout() === 'upload'">
+    <div *ngIf="getLayout() === 'upload'" [ngStyle]="schema.style" [ngClass]="schema.class">
         <input type="file" id="file" (change)="handleFileInput($event)">
         <p class="error mat-typography">{{error()}}</p>
     </div>
