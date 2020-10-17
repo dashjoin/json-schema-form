@@ -150,12 +150,17 @@ export class Edit {
         if (!this.parent.order) {
             this.parent.order = Object.keys(this.parent.properties);
         }
+        let index = 0;
         for (const p of this.parent.order) {
             if (Array.isArray(p)) {
                 if (p.indexOf(this.name) >= 0) {
                     p.splice(p.indexOf(this.name), 1);
+                    if (p.length === 1) {
+                        this.parent.order[index] = p[0];
+                    }
                 }
             }
+            index++;
         }
         if (this.parent.order.indexOf(this.name) >= 0) {
             this.parent.order.splice(this.parent.order.indexOf(this.name), 1);
