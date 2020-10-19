@@ -603,7 +603,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
     }
     if (this.required) {
-      if (this.value == null || isNaN(this.value)) {
+      if (this.value == null || Object.is(this.value, NaN)) {
         return this.e('required');
       }
     }
@@ -732,11 +732,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.value = parseFloat(event);
     } else if (this.schema.type === 'integer') {
       this.value = parseInt(event, 10);
-      if (eventTarget) {
-        if ('' + this.value !== event) {
-          eventTarget.value = this.value;
-        }
-      }
     } else if (this.schema.type === 'boolean') {
       if (typeof event === 'string') {
         if (event === 'true') {
