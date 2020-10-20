@@ -73,4 +73,15 @@ export class SchemaEditComponent {
       this.error2 = e;
     }
   }
+
+  update() {
+    if (this.value.properties) {
+      for (const [k, v] of Object.entries(this.value.properties)) {
+        if (k && !v) {
+          this.value.properties[k] = { type: 'string' };
+        }
+      }
+    }
+    this.value = JSON.parse(JSON.stringify(this.value));
+  }
 }

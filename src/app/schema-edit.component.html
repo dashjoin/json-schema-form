@@ -27,6 +27,7 @@
             Form Based on the Schema
         </mat-panel-title>
     </mat-expansion-panel-header>
+    <button mat-raised-button (click)="update()">Apply</button>
     <lib-json-schema-form [(value)]="instance" [schema]="value" (errorChange)="validation=$event">
     </lib-json-schema-form>
     {{validation}}
