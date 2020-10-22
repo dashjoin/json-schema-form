@@ -72,6 +72,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   @Output() errorChange: EventEmitter<string> = new EventEmitter();
 
+  /**
+   * indicate schema changes done via the layout editor
+   */
   @Output() schemaChange: EventEmitter<void> = new EventEmitter();
 
   /**
@@ -136,10 +139,18 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   @ViewChild(WidgetDirective, { static: true }) widgetHost: WidgetDirective;
 
+  /**
+   * order field transforms properties into this structure.
+   * allows omission, ordering and hierarchy
+   */
   orderedProperties: { [key: string]: Schema }[];
 
   /**
-   * http used for autocomplete REST calls
+   * component constructor
+   * @param http                        http client
+   * @param componentFactoryResolver    allows dynamic components
+   * @param service                     application service for registering components etc.
+   * @param dialog                      dialog service
    */
   constructor(
     private http: HttpClient,
@@ -167,6 +178,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   ch: ChoiceHandler;
 
+  /**
+   * apply order, called anytime properties are set
+   */
   setOrderedProperties() {
     if (this.schema.order) {
       this.orderedProperties = [];
@@ -868,6 +882,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * string to date
+   * @param date    date string / number (millisecs since 1970)
+   * @param format  date format
+   */
   parseDate(date: any, format: string): Date {
     if (!date && date !== 0) {
       return date;
@@ -883,6 +902,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     return new Date(pdate[pformat.indexOf('yyyy')], pdate[pformat.indexOf('MM')] - 1, pdate[pformat.indexOf('dd')]);
   }
 
+  /**
+   * date to string
+   * @param date    the date to serialize
+   * @param format  the date format (e.g. dd-MM-yyyy)
+   * @param type    target datatype (allows serializing to millisecs since 1970)
+   */
   serializeDate(date: Date, format: string, type: string): string {
     if (type === 'integer' || type === 'number') {
       return '' + date.valueOf();
@@ -898,6 +923,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     return pdate[0] + this.getDelimiter(format) + pdate[1] + this.getDelimiter(format) + pdate[2];
   }
 
+  /**
+   * find the first non letter character in a date format such as dd/MM/yyyy (returns /)
+   */
   getDelimiter(format: string): string {
     const delim = format.match(/\W/g);
     if (!delim[0]) {

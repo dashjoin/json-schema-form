@@ -168,6 +168,9 @@ export class Edit {
         this.schemaChange.emit();
     }
 
+    /**
+     * can I go up
+     */
     canUp(): boolean {
         if (!this.parent) {
             return false;
@@ -187,6 +190,9 @@ export class Edit {
         }
     }
 
+    /**
+     * go up
+     */
     up() {
         if (!this.parent.order) {
             this.parent.order = Object.keys(this.parent.properties);
@@ -211,6 +217,9 @@ export class Edit {
         this.schemaChange.emit();
     }
 
+    /**
+     * can I go down
+     */
     canDown(): boolean {
         if (!this.parent) {
             return false;
@@ -230,6 +239,9 @@ export class Edit {
         }
     }
 
+    /**
+     * go down
+     */
     down() {
         if (!this.parent.order) {
             this.parent.order = Object.keys(this.parent.properties);

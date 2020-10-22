@@ -74,6 +74,9 @@ export class SchemaEditComponent {
     }
   }
 
+  /**
+   * trigger update manually. Some changes (add property) are not propagated anymore
+   */
   update() {
     if (this.value.properties) {
       for (const [k, v] of Object.entries(this.value.properties)) {

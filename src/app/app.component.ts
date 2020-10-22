@@ -27,6 +27,8 @@ export class MainComponent implements OnInit {
 
   /**
    * need to access custom component registry
+   * @param service   service for registering custom widgets etc.
+   * @param route     allows selecting an example via URL
    */
   constructor(public service: JsonSchemaFormService, private route: ActivatedRoute) { }
 
@@ -948,6 +950,9 @@ export class MainComponent implements OnInit {
     }
   }
 
+  /**
+   * catch schema change event: make sure change detection picks up
+   */
   schemaChange(): void {
     this.schema = JSON.parse(JSON.stringify(this.schema));
   }

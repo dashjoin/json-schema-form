@@ -25,6 +25,9 @@ export class EditElementDialogComponent {
     }
   }
 
+  /**
+   * schema to edit input form fields
+   */
   schema = {
     title: 'Edit form',
     static: true,
