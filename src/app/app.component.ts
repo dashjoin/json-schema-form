@@ -59,6 +59,7 @@ export class MainComponent implements OnInit {
    * meta schema for meta schema case - also used in schema editor component
    */
   static metaschema: Schema = {
+    $schema: 'http://json-schema.org/draft-06/schema#',
     $ref: '#/definitions/prop',
     definitions: {
       prop: {

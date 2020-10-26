@@ -308,4 +308,9 @@ export interface Schema {
      * if true, indicates not to show form editor elements
      */
     static?: boolean;
+
+    /**
+     * allows specifying the json schema version
+     */
+    $schema?: string;
 }
