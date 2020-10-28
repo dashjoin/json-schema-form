@@ -30,6 +30,7 @@ export class EditElementDialogComponent {
    */
   schema = {
     title: 'Edit form',
+    class: ['mat-elevation-z0'],
     static: true,
     type: 'object',
     properties: {
