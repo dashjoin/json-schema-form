@@ -78,7 +78,7 @@
     </mat-card>
 
     <!-- additional properties -->
-    <mat-card *ngIf="getLayout() === 'additionalProperties'"
+    <span *ngIf="getLayout() === 'additionalProperties'"
         [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'" [ngStyle]="schema.style"
         [ngClass]="schema.class">
         <div *ngFor="let x of value | keyvalue:originalOrder; let i=index"
@@ -102,7 +102,7 @@
         <button *ngIf="!schema.readOnly" mat-icon-button (click)=" addField()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
-    </mat-card>
+    </span>
 
     <!-- additional properties tab layout -->
     <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'additionalPropertiesTab'" style="max-width: 96vw"

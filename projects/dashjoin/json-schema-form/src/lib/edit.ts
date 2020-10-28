@@ -125,12 +125,59 @@ export class Edit {
      * edit simple schema fields like title and description
      */
     edit() {
-        const dialogRef = this.dialog.open(EditElementDialogComponent, { width: '500px', data: this.schema });
+        // deep clone object so we have the possibility to cancel editing
+        const clone = JSON.parse(JSON.stringify(this.schema));
+
+        // handle (array) example
+        if (clone.items?.examples?.length > 0) {
+            clone.example = clone.items.examples[0];
+        }
+        if (clone.examples?.length > 0) {
+            clone.example = clone.examples[0];
+        }
+
+        // text is default
+        if (!clone.widget) {
+            clone.widget = 'text';
+        }
+
+        // horizontal is default
+        if (!clone.layout) {
+            clone.layout = 'horizontal';
+        }
+
+        const dialogRef = this.dialog.open(EditElementDialogComponent, { width: '500px', data: clone });
         dialogRef.afterClosed().subscribe(data => {
             if (data) {
                 this.schema.title = data.title;
                 this.schema.description = data.description;
                 this.schema.widget = data.widget;
+                this.schema.layout = data.layout;
+                this.schema.readOnly = data.readOnly;
+                this.schema.errorMessage = data.errorMessage;
+                this.schema.required = data.required;
+                if (data.example) {
+                    if (data.items) {
+                        this.schema.items.examples = [data.example];
+                    } else {
+                        this.schema.examples = [data.example];
+                    }
+                }
+                if (data.style) {
+                    delete data.style[''];
+                }
+                if (data.style && Object.keys(data.style).length > 0) {
+                    this.schema.style = data.style;
+                }
+                if (data.class) {
+                    data.class = data.class.filter(el => el != null);
+                }
+                if (data.class?.length > 0) {
+                    this.schema.class = data.class;
+                }
+                if (data.choices?.length > 0) {
+                    this.schema.choices = data.choices;
+                }
                 this.schemaChange.emit();
             }
         });
