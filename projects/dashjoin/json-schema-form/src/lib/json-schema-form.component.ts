@@ -927,11 +927,14 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * @param type    target datatype (allows serializing to millisecs since 1970)
    */
   serializeDate(date: Date, format: string, type: string): string {
+    if (date == null) {
+      return '';
+    }
     if (type === 'integer' || type === 'number') {
       return '' + date.valueOf();
     }
     if (!format) {
-      return date?.toISOString();
+      return date.toISOString();
     }
     const pformat = format.split(this.getDelimiter(format));
     const pdate = [null, null, null];
