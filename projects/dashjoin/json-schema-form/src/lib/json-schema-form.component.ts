@@ -146,6 +146,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   orderedProperties: { [key: string]: Schema }[];
 
   /**
+   * make sure to return the same date object instance (cannot delete date #83)
+   */
+  date: Date;
+
+  /**
    * component constructor
    * @param http                        http client
    * @param componentFactoryResolver    allows dynamic components
@@ -892,14 +897,27 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       return date;
     }
     if (typeof date === 'number') {
-      return new Date(date);
+      return this.sameDate(new Date(date));
     }
     if (!format) {
       return date;
     }
     const pdate = date.split(this.getDelimiter(format));
     const pformat = format.split(this.getDelimiter(format));
-    return new Date(pdate[pformat.indexOf('yyyy')], pdate[pformat.indexOf('MM')] - 1, pdate[pformat.indexOf('dd')]);
+    return this.sameDate(new Date(pdate[pformat.indexOf('yyyy')], pdate[pformat.indexOf('MM')] - 1, pdate[pformat.indexOf('dd')]));
+  }
+
+  /**
+   * make sure to return the same date object instance (cannot delete date #83)
+   */
+  sameDate(nd: Date): Date {
+    if (!this.date) {
+      this.date = nd;
+    }
+    if (this.date.getTime() !== nd.getTime()) {
+      this.date = nd;
+    }
+    return this.date;
   }
 
   /**
@@ -913,7 +931,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       return '' + date.valueOf();
     }
     if (!format) {
-      return date.toISOString();
+      return date?.toISOString();
     }
     const pformat = format.split(this.getDelimiter(format));
     const pdate = [null, null, null];
