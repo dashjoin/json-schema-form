@@ -148,8 +148,10 @@ export class Edit {
 
         // array: apply choices and widget to items
         if (clone.items) {
-            clone.items.widget = clone.widget;
-            clone.items.choices = clone.choices;
+            clone.widget = clone.items.widget;
+            clone.choices = clone.items.choices;
+            clone.errorMessage = clone.items.errorMessage;
+            clone.format = clone.items.format;
         }
 
         const dialogRef = this.dialog.open(EditElementDialogComponent, { width: '500px', data: clone });
@@ -186,6 +188,13 @@ export class Edit {
                         this.schema.items.choices = data.choices;
                     }
                     this.schema.items.widget = data.widget;
+                    this.schema.items.format = data.format;
+                    this.schema.items.errorMessage = data.errorMessage;
+                } else {
+                    this.schema.choices = data.choices;
+                    this.schema.widget = data.widget;
+                    this.schema.format = data.format;
+                    this.schema.errorMessage = data.errorMessage;
                 }
                 this.schemaChange.emit();
             }

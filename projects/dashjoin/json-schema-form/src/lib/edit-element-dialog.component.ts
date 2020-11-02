@@ -21,8 +21,13 @@ export class EditElementDialogComponent {
     this.schema = {
       title: 'Edit form',
       layout: 'vertical',
-      order: [['widget', 'layout'], ['title', 'description'],
-      ['example', 'readOnly'], ['required', 'errorMessage'], 'choices', 'class', 'style'],
+      order: [
+        ['widget', 'layout'],
+        ['title', 'description'],
+        ['example', 'readOnly'],
+        ['required', 'format', 'errorMessage'],
+        'choices', 'class', 'style'
+      ],
       class: ['mat-elevation-z0'],
       static: true,
       type: 'object',
@@ -43,6 +48,11 @@ export class EditElementDialogComponent {
       };
 
     } else {
+      this.schema.properties.errorMessage = { type: 'string', static: true, title: 'Validation error message' };
+      this.schema.properties.format = {
+        type: 'string', static: true, title: 'Format',
+        widget: 'select', choices: [null, 'email', 'ipv4', 'url', 'uri']
+      };
       this.schema.properties.example = { type: 'string', static: true, title: 'Example data' };
       this.schema.properties.title = { type: 'string', static: true, title: 'Title' };
       this.schema.properties.widget = {
