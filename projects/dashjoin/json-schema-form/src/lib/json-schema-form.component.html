@@ -14,7 +14,9 @@
     [matTooltip]="schema.description">
 
     <div *ngIf="service.editMode && !schema.static && !inArray">
-        <mat-icon style="cursor: pointer" [matMenuTriggerFor]="menu">menu
+        <mat-icon style="cursor: pointer" [matMenuTriggerFor]="menu"
+            [matTooltip]="name ? 'Form element '+name : (isRoot ? 'Form root' : '')">
+            menu
         </mat-icon>
 
         <mat-menu #menu="matMenu">
