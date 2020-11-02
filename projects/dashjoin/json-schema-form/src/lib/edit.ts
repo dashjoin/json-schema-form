@@ -146,6 +146,12 @@ export class Edit {
             clone.layout = 'horizontal';
         }
 
+        // array: apply choices and widget to items
+        if (clone.items) {
+            clone.items.widget = clone.widget;
+            clone.items.choices = clone.choices;
+        }
+
         const dialogRef = this.dialog.open(EditElementDialogComponent, { width: '500px', data: clone });
         dialogRef.afterClosed().subscribe(data => {
             if (data) {
@@ -175,8 +181,11 @@ export class Edit {
                 if (data.class?.length > 0) {
                     this.schema.class = data.class;
                 }
-                if (data.choices?.length > 0) {
-                    this.schema.choices = data.choices;
+                if (data.items) {
+                    if (data.choices?.length > 0) {
+                        this.schema.items.choices = data.choices;
+                    }
+                    this.schema.items.widget = data.widget;
                 }
                 this.schemaChange.emit();
             }
