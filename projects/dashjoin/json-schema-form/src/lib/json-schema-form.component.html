@@ -50,7 +50,7 @@
     </div>
 
     <!-- object row wrap layout -->
-    <mat-card *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'"
+    <span *ngIf="getLayout() === 'object'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'"
         [ngStyle]="schema.style" [ngClass]="schema.class">
         <div *ngFor="let op of orderedProperties" [fxLayout]="schema.layout !== 'vertical' ? 'column' : 'row wrap'">
             <div *ngFor=" let x of op | keyvalue:originalOrder" style="display: flex; margin: 2px">
@@ -77,7 +77,7 @@
                 </div>
             </mat-menu>
         </div>
-    </mat-card>
+    </span>
 
     <!-- additional properties -->
     <span *ngIf="getLayout() === 'additionalProperties'"
@@ -177,7 +177,7 @@
     </mat-tab-group>
 
     <!-- array table layout -->
-    <mat-card *ngIf="getLayout() === 'table'" [ngStyle]="schema.style" [ngClass]="schema.class">
+    <span *ngIf="getLayout() === 'table'" [ngStyle]="schema.style" [ngClass]="schema.class">
         <table summary="Properties table">
             <tr>
                 <th *ngFor="let x of schema.items.properties | keyvalue:originalOrder" scope="col">
@@ -201,7 +201,7 @@
         <button *ngIf="!schema.readOnly" mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
-    </mat-card>
+    </span>
 
     <!-- enum -->
     <div *ngIf="getLayout() === 'enum'">

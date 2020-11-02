@@ -28,7 +28,6 @@ export class EditElementDialogComponent {
         ['required', 'format', 'errorMessage'],
         'choices', 'class', 'style'
       ],
-      class: ['mat-elevation-z0'],
       static: true,
       type: 'object',
       properties: {
