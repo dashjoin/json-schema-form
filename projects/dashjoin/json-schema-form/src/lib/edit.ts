@@ -152,6 +152,8 @@ export class Edit {
             clone.choices = clone.items.choices;
             clone.errorMessage = clone.items.errorMessage;
             clone.format = clone.items.format;
+            clone.required = clone.items.required;
+            clone.itemlayout = clone.items.layout;
         }
 
         const dialogRef = this.dialog.open(EditElementDialogComponent, { width: '500px', data: clone });
@@ -163,7 +165,6 @@ export class Edit {
                 this.schema.layout = data.layout;
                 this.schema.readOnly = data.readOnly;
                 this.schema.errorMessage = data.errorMessage;
-                this.schema.required = data.required;
                 if (data.example) {
                     if (data.items) {
                         this.schema.items.examples = [data.example];
@@ -190,11 +191,14 @@ export class Edit {
                     this.schema.items.widget = data.widget;
                     this.schema.items.format = data.format;
                     this.schema.items.errorMessage = data.errorMessage;
+                    this.schema.items.required = data.required;
+                    this.schema.items.layout = data.itemlayout;
                 } else {
                     this.schema.choices = data.choices;
                     this.schema.widget = data.widget;
                     this.schema.format = data.format;
                     this.schema.errorMessage = data.errorMessage;
+                    this.schema.required = data.required;
                 }
                 this.schemaChange.emit();
             }
