@@ -229,11 +229,11 @@
     </div>
 
     <!-- date element -->
-    <div *ngIf="getLayout() === 'date'" [ngStyle]="schema.style" [ngClass]="schema.class">
-        <mat-form-field>
+    <div *ngIf="getLayout() === 'date'">
+        <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
             <input autocomplete="off" matInput [value]="parseDate(value, schema.dateFormat)"
-                (dateChange)="change($event)" [matDatepicker]="picker" [disabled]="schema.readOnly">
+                (dateChange)="change($event)" [matDatepicker]="picker" [disabled]="schema.readOnly" style="width: 100%">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -241,8 +241,9 @@
     </div>
 
     <!-- checkbox element -->
-    <div *ngIf="getLayout() === 'checkbox'" [ngStyle]="schema.style" [ngClass]="schema.class">
-        <mat-checkbox [checked]="value" (change)="change($event)">{{label}}</mat-checkbox>
+    <div *ngIf="getLayout() === 'checkbox'">
+        <mat-checkbox [checked]="value" (change)="change($event)" [ngStyle]="schema.style" [ngClass]="schema.class">
+            {{label}}</mat-checkbox>
         <p class="error mat-typography">{{error()}}</p>
     </div>
 
@@ -295,8 +296,9 @@
     </div>
 
     <!-- upload -->
-    <div *ngIf="getLayout() === 'upload'" [ngStyle]="schema.style" [ngClass]="schema.class">
-        <input type="file" id="file" (change)="handleFileInput($event)">
+    <div *ngIf="getLayout() === 'upload'">
+        <input type="file" id="file" (change)="handleFileInput($event)" [ngStyle]="schema.style"
+            [ngClass]="schema.class">
         <p class="error mat-typography">{{error()}}</p>
     </div>
 </div>
