@@ -64,7 +64,9 @@ export class EditElementDialogComponent {
         };
       } else {
         // array of simple types
-        this.schema.properties.readOnly = { type: 'boolean', static: true, title: 'Read only value' };
+        this.schema.properties.readOnly = {
+          type: 'boolean', static: true, title: 'Read only value', style: { 'padding-top': '15px' }
+        };
         this.schema.properties.errorMessage = { type: 'string', static: true, title: 'Validation error message' };
         this.schema.properties.format = {
           type: 'string', static: true, title: 'Format',
