@@ -53,8 +53,14 @@ export class EditElementDialogComponent {
     }
 
     // add layout for arrays and objects
-    if (data.properties || data.items) {
+    if (data.properties) {
       this.schema.properties.layout = { type: 'string', enum: ['vertical', 'horizontal'], static: true, title: 'Screen Layout' };
+    }
+    if (data.items) {
+      this.schema.properties.layout = {
+        type: 'string', enum: ['vertical', 'horizontal', 'select', 'tab', 'table'],
+        static: true, title: 'Screen Layout'
+      };
     }
   }
 
