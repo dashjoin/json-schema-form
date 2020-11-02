@@ -27,29 +27,34 @@ export class EditElementDialogComponent {
       static: true,
       type: 'object',
       properties: {
-        title: { type: 'string', static: true },
-        description: { type: 'string', static: true },
-        example: { type: 'string', static: true },
-        readOnly: { type: 'boolean', static: true },
-        class: { type: 'array', items: { type: 'string' }, static: true },
-        style: { type: 'object', additionalProperties: { type: 'string' }, static: true }
+        description: { type: 'string', static: true, title: 'Description / tooltip' },
+        readOnly: { type: 'boolean', static: true, title: 'Read only value' },
+        class: { type: 'array', items: { type: 'string' }, static: true, title: 'CSS classes' },
+        style: { type: 'object', additionalProperties: { type: 'string' }, static: true, title: 'CSS styles' }
       }
     };
 
     // only show required and error message for objects
     if (data.properties) {
-      this.schema.properties.errorMessage = { type: 'string', static: true };
+      this.schema.properties.errorMessage = { type: 'string', static: true, title: 'Validation error message' };
       this.schema.properties.required = {
-        choices: Object.keys(data.properties), type: 'array', layout: 'select', items: { type: 'string' }, static: true
+        choices: Object.keys(data.properties), type: 'array', layout: 'select', items: { type: 'string' }, static: true,
+        title: 'Required fields'
       };
+
     } else {
-      this.schema.properties.widget = { type: 'string', enum: ['text', 'select', 'date', 'textarea', 'password'], static: true };
-      this.schema.properties.choices = { type: 'array', items: { type: 'string' }, static: true };
+      this.schema.properties.example = { type: 'string', static: true, title: 'Example data' };
+      this.schema.properties.title = { type: 'string', static: true, title: 'Title' };
+      this.schema.properties.widget = {
+        type: 'string', enum: ['text', 'select', 'date', 'textarea', 'password'], static: true,
+        title: 'Form widget'
+      };
+      this.schema.properties.choices = { type: 'array', items: { type: 'string' }, static: true, title: 'Input choices' };
     }
 
     // add layout for arrays and objects
     if (data.properties || data.items) {
-      this.schema.properties.layout = { type: 'string', enum: ['vertical', 'horizontal'], static: true };
+      this.schema.properties.layout = { type: 'string', enum: ['vertical', 'horizontal'], static: true, title: 'Screen Layout' };
     }
   }
 
