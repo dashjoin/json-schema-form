@@ -155,8 +155,8 @@
     </span>
 
     <!-- array chips layout -->
-    <span *ngIf="getLayout() === 'chips'" [ngStyle]="schema.style" [ngClass]="schema.class">
-        <mat-form-field style="width: 100%">
+    <span *ngIf="getLayout() === 'chips'">
+        <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-chip-list #chipList aria-label="Fruit selection" cdkDropList cdkDropListOrientation="horizontal"
                 (cdkDropListDropped)="dropChip($event)">
                 <mat-chip *ngFor="let v of value" removable="true" (removed)="removeChip(v)" cdkDrag>

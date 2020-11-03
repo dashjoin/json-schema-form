@@ -975,6 +975,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
 
     // Add our fruit
     if ((value || '').trim()) {
+      if (!this.value) { this.value = []; }
       this.value.push(value.trim());
       this.emit(this.value);
     }
@@ -992,6 +993,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     const index = this.value.indexOf(v);
     if (index >= 0) {
       this.value.splice(index, 1);
+      if (this.value.length === 0) { this.value = null; }
       this.emit(this.value);
     }
   }

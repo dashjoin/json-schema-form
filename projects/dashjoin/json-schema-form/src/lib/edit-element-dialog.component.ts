@@ -33,7 +33,7 @@ export class EditElementDialogComponent {
       properties: {
         // description, class, style are always applicable
         description: { type: 'string', static: true, title: 'Description / tooltip' },
-        class: { type: 'array', items: { type: 'string' }, static: true, title: 'CSS classes' },
+        class: { type: 'array', items: { type: 'string' }, layout: 'chips', style: { width: '365px' }, static: true, title: 'CSS classes' },
         style: { type: 'object', additionalProperties: { type: 'string' }, static: true, title: 'CSS styles' }
       }
     };
@@ -77,7 +77,10 @@ export class EditElementDialogComponent {
           type: 'string', enum: ['text', 'select', 'date', 'textarea', 'password'], static: true,
           title: 'Form widget'
         };
-        this.schema.properties.choices = { type: 'array', items: { type: 'string' }, static: true, title: 'Input choices' };
+        this.schema.properties.choices = {
+          type: 'array', items: { type: 'string' }, style: { width: '365px' },
+          layout: 'chips', static: true, title: 'Input choices'
+        };
       }
     }
   }
