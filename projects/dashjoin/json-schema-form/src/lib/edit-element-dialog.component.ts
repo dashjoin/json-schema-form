@@ -49,7 +49,7 @@ export class EditElementDialogComponent {
     } else {
       if (data.items) {
         this.schema.properties.layout = {
-          type: 'string', enum: ['vertical', 'horizontal', 'select', 'tab', 'table'],
+          type: 'string', enum: ['vertical', 'horizontal', 'select', 'tab', 'table', 'chips'],
           static: true, title: 'Screen Layout'
         };
         this.schema.properties.itemlayout = { type: 'string', enum: ['vertical', 'horizontal'], static: true, title: 'Item screen layout' };

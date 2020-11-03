@@ -154,6 +154,21 @@
         </button>
     </span>
 
+    <!-- array chips layout -->
+    <span *ngIf="getLayout() === 'chips'" [ngStyle]="schema.style" [ngClass]="schema.class">
+        <mat-form-field style="width: 100%">
+            <mat-chip-list #chipList aria-label="Fruit selection" cdkDropList cdkDropListOrientation="horizontal"
+                (cdkDropListDropped)="dropChip($event)">
+                <mat-chip *ngFor="let v of value" removable="true" (removed)="removeChip(v)" cdkDrag>
+                    {{v}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input [placeholder]="schema.title" autocomplete="off" [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addChip($event)">
+            </mat-chip-list>
+        </mat-form-field>
+    </span>
+
     <!-- array tab layout -->
     <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'tab'" style="max-width: 96vw"
         [ngStyle]="schema.style" [ngClass]="schema.class">

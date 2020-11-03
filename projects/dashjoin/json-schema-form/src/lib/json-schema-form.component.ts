@@ -19,6 +19,9 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, startWith, switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { Edit } from './edit';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -30,6 +33,19 @@ import { Edit } from './edit';
   styleUrls: ['./json-schema-form.component.css']
 })
 export class JsonSchemaFormComponent implements OnInit, OnChanges {
+
+  /**
+   * component constructor
+   * @param http                        http client
+   * @param componentFactoryResolver    allows dynamic components
+   * @param service                     application service for registering components etc.
+   * @param dialog                      dialog service
+   */
+  constructor(
+    private http: HttpClient,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    public service: JsonSchemaFormService,
+    private dialog: MatDialog) { }
 
   /**
    * container children for event propagation
@@ -151,19 +167,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   date: Date;
 
   /**
-   * component constructor
-   * @param http                        http client
-   * @param componentFactoryResolver    allows dynamic components
-   * @param service                     application service for registering components etc.
-   * @param dialog                      dialog service
-   */
-  constructor(
-    private http: HttpClient,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    public service: JsonSchemaFormService,
-    private dialog: MatDialog) { }
-
-  /**
    * choices that might be loaded async, initialized with current value and its potentially delayed toString value
    */
   choices: ReplaySubject<Choice[]>;
@@ -182,6 +185,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * implementation specified in displayWith
    */
   ch: ChoiceHandler;
+
+  /**
+   * complete chip entry with enter or comma
+   */
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA, TAB];
 
   /**
    * apply order, called anytime properties are set
@@ -395,6 +403,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
       if (this.schema.layout === 'select') {
         return 'array-select';
+      }
+      if (this.schema.layout === 'chips') {
+        return 'chips';
       }
       return 'array';
     }
@@ -953,5 +964,43 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       throw new Error('No delimiter found in date format: ' + format);
     }
     return delim[0];
+  }
+
+  /**
+   * new chip entered
+   */
+  addChip(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.value.push(value.trim());
+      this.emit(this.value);
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  /**
+   * remove a chip
+   */
+  removeChip(v: string): void {
+    const index = this.value.indexOf(v);
+    if (index >= 0) {
+      this.value.splice(index, 1);
+      this.emit(this.value);
+    }
+  }
+
+  /**
+   * chips d&d handler
+   */
+  dropChip(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.value, event.previousIndex, event.currentIndex);
+    this.emit(this.value);
   }
 }

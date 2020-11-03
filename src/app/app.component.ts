@@ -745,6 +745,15 @@ export class MainComponent implements OnInit {
           items: { type: 'string' }
         }
       },
+      chips: {
+        description: 'Chips style editing of string arrays',
+        value: ['red', 'green', 'yellow'],
+        schema: {
+          title: 'You favorite colors',
+          type: 'array', layout: 'chips',
+          items: { type: 'string' }
+        }
+      },
       conditional: {
         description: 'Allows a switch field to determine which other fields are visible. For instance, cicles show radius but not height',
         value: { type: 'circle' },

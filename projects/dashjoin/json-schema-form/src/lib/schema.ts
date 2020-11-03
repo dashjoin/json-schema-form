@@ -264,7 +264,7 @@ export interface Schema {
      * table: controls are shown in a table with the property names being the column names (only applies to an array of objects)
      * select: array is shown as a multi-select (only applies to arrays of string)
      */
-    layout?: 'tab' | 'table' | 'vertical' | 'horizontal' | 'select';
+    layout?: 'tab' | 'table' | 'vertical' | 'horizontal' | 'select' | 'chips';
 
     /**
      * defines order, omission, and 2-level hierarchy (via nested lists) of the object properties.

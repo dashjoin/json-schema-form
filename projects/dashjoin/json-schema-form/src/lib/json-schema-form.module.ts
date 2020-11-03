@@ -25,6 +25,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditElementDialogComponent } from './edit-element-dialog.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [JsonSchemaFormComponent, EditElementDialogComponent, WidgetDirective],
@@ -51,6 +53,8 @@ import { EditElementDialogComponent } from './edit-element-dialog.component';
     MatMenuModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatChipsModule,
+    DragDropModule
   ],
   exports: [JsonSchemaFormComponent],
   providers: [
