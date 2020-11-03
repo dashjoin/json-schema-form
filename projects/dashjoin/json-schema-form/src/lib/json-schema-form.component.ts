@@ -379,6 +379,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * key method to instruct the display which HTML block to activate.
    */
   getLayout(): string {
+    if (this.schema.widget === 'custom') {
+      return 'custom';
+    }
     if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
       return 'none';
     }
@@ -417,9 +420,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
     if (this.schema.widget === 'upload') {
       return 'upload';
-    }
-    if (this.schema.widget === 'custom') {
-      return 'custom';
     }
     if (this.schema.widget === 'textarea') {
       return 'textarea';
