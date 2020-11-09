@@ -135,7 +135,12 @@ export class DefaultChoiceHandler implements ChoiceHandler {
             return of({ value, name: parts[parts.length - 1] });
         }
         if (schema.jsonName && schema.jsonValue) {
-            return of({ value: value[schema.jsonValue], name: value[schema.jsonName] });
+            if (value[schema.jsonValue] && value[schema.jsonName]) {
+                return of({ value: value[schema.jsonValue], name: value[schema.jsonName] });
+            } else {
+                // initially, value is a simple string
+                return of({ value, name: value });
+            }
         }
         if (schema.displayWithChoices) {
             return of({ value, name: schema.displayWithChoices[schema.choices.indexOf(value)] });
