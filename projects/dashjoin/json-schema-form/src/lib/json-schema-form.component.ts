@@ -574,6 +574,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * return error string
    */
   error(): string {
+    if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
+      return null;
+    }
     if (this.schema.maxItems) {
       if (this.value) {
         if (!(this.value.length <= this.schema.maxItems)) {
@@ -640,7 +643,15 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.required) {
       for (const dep of this.schema.required) {
         if (!this.value[dep] && this.value[dep] !== false) {
-          return this.e(dep + ' is required');
+          // ignore 'required' if dep is inactive due to switch / case
+          let inactive = false;
+          if (this.schema.switch) {
+            const switc = this.value[this.schema.switch];
+            if (switc && this.schema.properties[dep].case?.indexOf(switc) < 0) {
+              inactive = true;
+            }
+          }
+          if (!inactive) { return this.e(dep + ' is required'); }
         }
       }
     }
