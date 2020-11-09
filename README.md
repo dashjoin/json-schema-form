@@ -175,7 +175,7 @@ The registration can be done in ngOnInit() using this service: this.service.regi
 ```
 
 The autocomplete is configured with "localName" which is a built-in displayer.
-It treats options like URLs and displays the local name which is the text after the last /. This causes the dropdown to display "Peru" with the tooltip indicating the real value "https://en.wikipedia.org/wiki/Peru" which is written to the JSON value.
+It treats options like URLs and displays the local name which is the text after the last slash, hash, colon or dot. This causes the dropdown to display "Peru" with the tooltip indicating the real value "https://en.wikipedia.org/wiki/Peru" which is written to the JSON value.
 
 The custom implementation also enables you to exercise tight control over filtering, typeahead loading of options, and determining the display value.
 For an example of a typeahead implementation, see the class MyTypeAhead at the bottom of the [playground component](https://github.com/dashjoin/json-schema-form/blob/master/src/app/app.component.ts).

@@ -131,8 +131,13 @@ export class DefaultChoiceHandler implements ChoiceHandler {
      */
     choice(value: any, schema: Schema): Observable<Choice> {
         if (schema.displayWith === 'localName') {
-            const parts = value.split('/');
-            return of({ value, name: parts[parts.length - 1] });
+            for (const delimiter of ['/', '#', ':', '.']) {
+                const parts = value.split(delimiter);
+                if (parts.length > 1) {
+                    return of({ value, name: parts[parts.length - 1] });
+                }
+            }
+            return of({ value, name: value });
         }
         if (schema.jsonName && schema.jsonValue) {
             if (value[schema.jsonValue] && value[schema.jsonName]) {
