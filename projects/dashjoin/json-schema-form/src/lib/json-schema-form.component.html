@@ -87,7 +87,7 @@
             style="display: flex; margin: 2px; position: relative" (mouseenter)="hover=i" (mouseleave)="hover=null">
             <mat-form-field>
                 <mat-label>{{getLabel()}} key</mat-label>
-                <input [disabled]="schema.readOnly" autocomplete="off" matInput [value]="x.key"
+                <input [disabled]="readOnly" autocomplete="off" matInput [value]="x.key"
                     (change)="fieldNameChange(x.key, $event.target.value)">
             </mat-form-field>
             &nbsp;
@@ -96,12 +96,12 @@
                 [schema]="schema.additionalProperties" inArray="true" [base]="base"
                 (schemaChange)="schemaChange.emit()">
             </lib-json-schema-form>
-            <button *ngIf="!schema.readOnly" mat-icon-button (click)="removeField(x.key)" class="example-handle"
+            <button *ngIf="!readOnly" mat-icon-button (click)="removeField(x.key)" class="example-handle"
                 [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </div>
-        <button *ngIf="!schema.readOnly" mat-icon-button (click)=" addField()" matTooltip="{{getLabel()}}">
+        <button *ngIf="!readOnly" mat-icon-button (click)=" addField()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
     </span>
@@ -111,22 +111,22 @@
         [ngStyle]="schema.style" [ngClass]="schema.class">
         <mat-tab *ngFor="let x of value | keyvalue:originalOrder; let i=index" style="margin: 2px; position: relative">
             <ng-template mat-tab-label>
-                <mat-form-field *ngIf="!schema.readOnly">
+                <mat-form-field *ngIf="!readOnly">
                     <input autocomplete="off" matInput [value]="x.key"
                         (change)="fieldNameChange(x.key, $event.target.value)">
                 </mat-form-field>
-                <span *ngIf="schema.readOnly">{{x.key}}</span>
+                <span *ngIf="readOnly">{{x.key}}</span>
             </ng-template>
             <lib-json-schema-form #children [value]="value[x.key]" (valueChange)="onValueChange(x.key, $event)"
                 [rootSchema]="rootSchema" [schema]="schema.additionalProperties" inArray="true" [base]="base"
                 (schemaChange)="schemaChange.emit()">
             </lib-json-schema-form>
-            <button *ngIf="!schema.readOnly" mat-icon-button (click)="removeField(x.key)" class="example-handle"
+            <button *ngIf="!readOnly" mat-icon-button (click)="removeField(x.key)" class="example-handle"
                 matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </mat-tab>
-        <mat-tab *ngIf="!schema.readOnly">
+        <mat-tab *ngIf="!readOnly">
             <ng-template mat-tab-label>
                 <button mat-icon-button (click)="addField()" matTooltip="{{getLabel()}}">
                     <mat-icon>add_circle_outline</mat-icon>
@@ -144,12 +144,12 @@
                 (valueChange)="setIndexAndEmit(i, $event)" inArray="true" [rootSchema]="rootSchema"
                 [schema]="schema.items" [base]="base" (schemaChange)="schemaChange.emit()">
             </lib-json-schema-form>
-            <button *ngIf="!schema.readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
+            <button *ngIf="!readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
                 [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </div>
-        <button *ngIf="!schema.readOnly" mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
+        <button *ngIf="!readOnly" mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
     </span>
@@ -177,12 +177,12 @@
             <lib-json-schema-form #children [value]="value[i]" (valueChange)="setIndexAndEmit(i, $event)" inArray="true"
                 [rootSchema]="rootSchema" [schema]="schema.items" [base]="base" (schemaChange)="schemaChange.emit()">
             </lib-json-schema-form>
-            <button *ngIf="!schema.readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
+            <button *ngIf="!readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
                 matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </mat-tab>
-        <mat-tab *ngIf="!schema.readOnly">
+        <mat-tab *ngIf="!readOnly">
             <ng-template mat-tab-label>
                 <button mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
                     <mat-icon>add_circle_outline</mat-icon>
@@ -207,13 +207,13 @@
                     </lib-json-schema-form>
                 </td>
                 <td>
-                    <button *ngIf="!schema.readOnly" mat-icon-button (click)="remove(i)" matTooltip="{{getLabel()}}">
+                    <button *ngIf="!readOnly" mat-icon-button (click)="remove(i)" matTooltip="{{getLabel()}}">
                         <mat-icon>remove_circle_outline</mat-icon>
                     </button>
                 </td>
             </tr>
         </table>
-        <button *ngIf="!schema.readOnly" mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
+        <button *ngIf="!readOnly" mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
             <mat-icon>add_circle_outline</mat-icon>
         </button>
     </span>
@@ -248,7 +248,7 @@
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
             <input autocomplete="off" matInput [value]="parseDate(value, schema.dateFormat)"
-                (dateChange)="change($event)" [matDatepicker]="picker" [disabled]="schema.readOnly" style="width: 100%">
+                (dateChange)="change($event)" [matDatepicker]="picker" [disabled]="readOnly" style="width: 100%">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -290,9 +290,9 @@
     <div *ngIf="getLayout() === 'single'">
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <input *ngIf="!inArray" [disabled]="schema.readOnly" [placeholder]="example()" autocomplete="off" matInput
+            <input *ngIf="!inArray" [disabled]="readOnly" [placeholder]="example()" autocomplete="off" matInput
                 [type]="getInputType(schema)" [value]="value" (input)="change($event)">
-            <input *ngIf="inArray" [disabled]="schema.readOnly" [placeholder]="example()" autocomplete="off" matInput
+            <input *ngIf="inArray" [disabled]="readOnly" [placeholder]="example()" autocomplete="off" matInput
                 [type]="getInputType(schema)" [value]="value" (change)="change($event)">
         </mat-form-field>
         <p class="error mat-typography">{{error()}}</p>
@@ -302,9 +302,9 @@
     <div *ngIf="getLayout() === 'textarea'">
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <textarea *ngIf="!inArray" [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
+            <textarea *ngIf="!inArray" [disabled]="readOnly" [placeholder]="example()" matInput [value]="value"
                 (input)="change($event)" [ngStyle]="schema.style" [ngClass]="schema.class"></textarea>
-            <textarea *ngIf="inArray" [disabled]="schema.readOnly" [placeholder]="example()" matInput [value]="value"
+            <textarea *ngIf="inArray" [disabled]="readOnly" [placeholder]="example()" matInput [value]="value"
                 (change)="change($event)" [ngStyle]="schema.style" [ngClass]="schema.class"></textarea>
         </mat-form-field>
         <p class="error mat-typography">{{error()}}</p>

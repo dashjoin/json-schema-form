@@ -562,6 +562,16 @@ export class MainComponent implements OnInit {
           type: 'string', widget: 'password', errorMessage: 'Your password must have at least 6 characters', minLength: 6
         }
       },
+      createOnly: {
+        description: 'Like readOnly, but allows changing values if the original value is null / undefined',
+        value: { createOnly: null, exists: 'Existing data cannot be changed' },
+        schema: {
+          type: 'object', properties: {
+            createOnly: { type: 'string', createOnly: true },
+            exists: { type: 'string', createOnly: true, style: { width: '300px' } },
+          }
+        }
+      },
       simpleGet: {
         description: 'Getting autocomplete options from a REST service',
         value: null,

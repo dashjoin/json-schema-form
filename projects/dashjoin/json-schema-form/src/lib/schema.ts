@@ -155,6 +155,11 @@ export interface Schema {
     readOnly?: boolean;
 
     /**
+     * like readonly but allows setting a value initially
+     */
+    createOnly?: boolean;
+
+    /**
      * defines types that can be ref'ed
      */
     definitions?: { [key: string]: Schema };

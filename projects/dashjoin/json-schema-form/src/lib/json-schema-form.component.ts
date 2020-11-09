@@ -192,6 +192,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA, TAB];
 
   /**
+   * readOnly if schema.readOnly or schema.createOnly and value set
+   */
+  readOnly: boolean;
+
+  /**
    * apply order, called anytime properties are set
    */
   setOrderedProperties() {
@@ -220,6 +225,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * replace undefined with null and init autocomplete choices
    */
   ngOnInit(): void {
+    this.readOnly = this.schema.readOnly || (this.schema.createOnly && this.value);
+
     if (!this.rootSchema) {
       this.rootSchema = this.schema;
       this.isRoot = true;
