@@ -1,6 +1,6 @@
 {
   "name": "@dashjoin/json-schema-form",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "peerDependencies": {
     "@angular/common": "^9.0.5",
     "@angular/core": "^9.0.5",
+    "json-logic-js": "^2.0.0",
     "tslib": "^1.10.0"
   },
   "sideEffects": true
