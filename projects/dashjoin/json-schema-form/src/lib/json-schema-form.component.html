@@ -159,12 +159,13 @@
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-chip-list #chipList aria-label="Fruit selection" cdkDropList cdkDropListOrientation="horizontal"
                 (cdkDropListDropped)="dropChip($event)">
-                <mat-chip *ngFor="let v of value" removable="true" (removed)="removeChip(v)" cdkDrag>
+                <mat-chip *ngFor="let v of value" [removable]="!readOnly" (removed)="removeChip(v)" cdkDrag>
                     {{v}}
                     <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip>
                 <input [placeholder]="schema.title" autocomplete="off" [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addChip($event)">
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addChip($event)"
+                    [disabled]="readOnly">
             </mat-chip-list>
         </mat-form-field>
     </span>
@@ -222,7 +223,7 @@
     <div *ngIf="getLayout() === 'enum'">
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <mat-select [value]="value" (selectionChange)="change($event)">
+            <mat-select [value]="value" (selectionChange)="change($event)" [disabled]="readOnly">
                 <mat-option *ngFor="let x of schema.enum" [value]="x">{{x}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -233,7 +234,8 @@
     <div *ngIf="getLayout() === 'array-select'">
         <mat-form-field [matTooltip]="schema.description" [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <mat-select multiple [value]="value" (focus)="focus()" (selectionChange)="change($event)">
+            <mat-select multiple [value]="value" (focus)="focus()" (selectionChange)="change($event)"
+                [disabled]="readOnly">
                 <mat-option *ngFor="let choice of choices | async" [value]="choice.value"
                     [matTooltip]="choice.name !== choice.value ? choice.value : null">
                     {{choice.name}}
@@ -257,7 +259,7 @@
 
     <!-- checkbox element -->
     <div *ngIf="getLayout() === 'checkbox'" [ngStyle]="schema.style" [ngClass]="schema.class">
-        <mat-checkbox [checked]="value" (change)="change($event)">
+        <mat-checkbox [checked]="value" (change)="change($event)" [disabled]="readOnly">
             {{label}}</mat-checkbox>
         <p class="error mat-typography">{{error()}}</p>
     </div>
@@ -266,7 +268,7 @@
     <div *ngIf="getLayout() === 'autocomplete'">
         <mat-form-field *ngIf="schema.widget === 'select'" [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <mat-select [value]="value" (focus)="focus()" (selectionChange)="change($event)">
+            <mat-select [value]="value" (focus)="focus()" (selectionChange)="change($event)" [disabled]="readOnly">
                 <mat-option *ngFor="let choice of choices | async" [value]="choice.value"
                     [matTooltip]="choice.name !== choice.value ? choice.value : null">
                     {{choice.name}}
@@ -313,7 +315,7 @@
     <!-- upload -->
     <div *ngIf="getLayout() === 'upload'">
         <input type="file" id="file" (change)="handleFileInput($event)" [ngStyle]="schema.style"
-            [ngClass]="schema.class">
+            [ngClass]="schema.class" [disabled]="readOnly">
         <p class="error mat-typography">{{error()}}</p>
     </div>
 </div>
