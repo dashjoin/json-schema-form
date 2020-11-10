@@ -547,12 +547,17 @@ export class MainComponent implements OnInit {
         }
       },
       compute: {
-        description: 'Allows to computed fields based on string templates that can reference other fields',
+        description: 'Allows to compute fields based on JsonLogic expressions (http://jsonlogic.com/)',
         value: null,
         schema: {
           type: 'object',
-          properties: { first: { type: 'string' }, last: { type: 'string' } },
-          computed: { salutation: 'Dear ${first} ${last},' }
+          properties: { first: { type: 'string' }, last: { type: 'string' }, salutation: { type: 'string', readOnly: true } },
+          computed: {
+            salutation: {
+              cat: ['Dear ', { var: 'first' }, ' ', { var: 'last' }, ', '
+              ]
+            }
+          }
         }
       },
       errorMessage: {
