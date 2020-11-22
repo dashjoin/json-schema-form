@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { JsonSchemaFormComponent } from './json-schema-form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { JsonPointer } from './json-pointer';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('JsonSchemaFormComponent', () => {
   let component: JsonSchemaFormComponent;
@@ -11,7 +12,7 @@ describe('JsonSchemaFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [JsonSchemaFormComponent],
-      imports: [HttpClientModule]
+      imports: [HttpClientModule, MatDialogModule]
     })
       .compileComponents();
   }));
