@@ -22,7 +22,7 @@ import { Edit } from './edit';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
-import * as jsonLogic from 'json-logic-js/logic.js'
+import * as jsonLogic from 'json-logic-js/logic.js';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -264,7 +264,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
     }
 
-    if (this.schema.widget === 'custom') {
+    if (this.getLayout() === 'custom') {
       this.loadComponent();
     }
 
@@ -373,6 +373,15 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.ngOnInit();
       }
     }
+    if (changes.switch) {
+      if (this.getLayout() === 'custom') {
+        this.loadComponent();
+      } else {
+        if (this.widgetHost.viewContainerRef) {
+          this.widgetHost.viewContainerRef.clear();
+        }
+      }
+    }
   }
 
   /**
@@ -387,11 +396,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * key method to instruct the display which HTML block to activate.
    */
   getLayout(): string {
-    if (this.schema.widget === 'custom') {
-      return 'custom';
-    }
     if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
       return 'none';
+    }
+    if (this.schema.widget === 'custom') {
+      return 'custom';
     }
     if (this.hideUndefined && this.value === undefined) {
       return 'none';
