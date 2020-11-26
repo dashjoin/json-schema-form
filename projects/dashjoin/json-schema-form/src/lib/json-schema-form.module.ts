@@ -44,8 +44,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatAutocompleteModule,
     HttpClientModule,
     CommonModule,
-    BrowserAnimationsModule,
-    BrowserModule,
     MatInputModule,
     MatNativeDateModule,
     MatButtonModule,

@@ -39,18 +39,40 @@ npm i @dashjoin/json-schema-form
 In your app module add:
 
 ```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JsonSchemaFormModule } from '@dashjoin/json-schema-form';
 ...
 
 @NgModule({
   ...
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     JsonSchemaFormModule,
     ...
   ],
   ...
 }
 ```
+
+`
+Note: You need import CommonModule for nested lazy loading modules
+`
+```typescript
+import { CommonModule } from '@angular/common';
+import { JsonSchemaFormModule } from '@dashjoin/json-schema-form';
+
+@NgModule({
+  ...
+  imports: [ 
+    CommonModule, 
+    JsonSchemaFormModule, 
+    ...
+  ],
+  ...
+}
+````
 
 A small sample component:
 
