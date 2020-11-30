@@ -156,7 +156,7 @@ export class Edit {
             clone.itemlayout = clone.items.layout;
         }
 
-        const dialogRef = this.dialog.open(EditElementDialogComponent, { width: '500px', data: clone });
+        const dialogRef = this.dialog.open(EditElementDialogComponent, { minWidth: '50%', data: clone });
         dialogRef.afterClosed().subscribe(data => {
             if (data) {
                 this.schema.title = data.title;
