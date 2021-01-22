@@ -258,7 +258,8 @@
     </div>
 
     <!-- checkbox element -->
-    <div *ngIf="getLayout() === 'checkbox'" [ngStyle]="schema.style" [ngClass]="schema.class">
+    <div *ngIf="getLayout() === 'checkbox'" [ngStyle]="schema.style" [ngClass]="schema.class"
+        style="margin: 6px; margin-top: 12px;">
         <mat-checkbox [checked]="value" (change)="change($event)" [disabled]="readOnly">
             {{label}}</mat-checkbox>
         <p class="error mat-typography">{{error()}}</p>
