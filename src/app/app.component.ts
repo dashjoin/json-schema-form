@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Choice, ChoiceHandler } from 'projects/dashjoin/json-schema-form/src/lib/choice';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.component';
 
 /**
  * router component
@@ -346,6 +347,15 @@ export class MainComponent implements OnInit {
           type: 'string',
           widget: 'custom',
           widgetType: 'times2'
+        }
+      },
+      wysiwyg: {
+        description: 'JSON schema form can be extended by providing custom widgets. This example show an wysiwyg editor',
+        value: '<b>This is a test</b>',
+        schema: {
+          type: 'string',
+          widget: 'custom',
+          widgetType: 'wysiwyg'
         }
       },
       enum: {
@@ -923,6 +933,7 @@ export class MainComponent implements OnInit {
    */
   ngOnInit() {
     this.service.registerComponent('times2', CustomComponent);
+    this.service.registerComponent('wysiwyg', WysiwygEditorComponent);
     this.service.registerDisplayWith('states', new MyDisplayer(null));
     this.service.registerDisplayWith('typeAhead', new MyTypeAhead());
     this.route.params.subscribe(res => {

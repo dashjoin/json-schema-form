@@ -191,7 +191,7 @@ export interface Schema {
      * and native angular widgets such as https://material.angular.io/components/datepicker/overview
      */
     widget?: 'select' | 'upload' | 'date' | 'textarea' | 'password' | 'color' |
-    'datetime-local' | 'email' | 'month' | 'tel' | 'time' | 'url' | 'week' | 'custom';
+    'datetime-local' | 'email' | 'month' | 'tel' | 'time' | 'url' | 'week' | 'custom' | 'wysiwyg';
 
     /**
      * if widget=custom, this fields indicates which entry from the widget registry is to be used

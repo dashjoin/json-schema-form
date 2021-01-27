@@ -16,12 +16,15 @@ import { AppComponent, MainComponent } from './app.component';
 import { CustomComponent } from './custom.component';
 import { SchemaEditComponent } from './schema-edit.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxEditorModule } from 'ngx-editor';
+import { WysiwygEditorComponent } from './wysiwyg-editor/wysiwyg-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     CustomComponent,
+    WysiwygEditorComponent,
     SchemaEditComponent
   ],
   imports: [
@@ -35,7 +38,8 @@ import { AppRoutingModule } from './app-routing.module';
     MatTooltipModule,
     MatSlideToggleModule,
     FormsModule,
-    MatButtonModule
+    MatButtonModule,
+    NgxEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
