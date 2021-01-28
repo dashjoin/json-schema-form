@@ -992,6 +992,10 @@ export class MainComponent implements OnInit {
   schemaChange(): void {
     this.schema = JSON.parse(JSON.stringify(this.schema));
   }
+
+  deletionChangeHandler(ev: any) {
+    console.log(ev);
+  }
 }
 
 /**

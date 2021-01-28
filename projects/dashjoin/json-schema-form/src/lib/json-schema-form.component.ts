@@ -85,6 +85,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
   /**
+   * emit delete changes by the user in the component
+   */
+  @Output() deletionChange: EventEmitter<any> = new EventEmitter();
+
+  /**
    * emit whether this part of the form is valid
    */
   @Output() errorChange: EventEmitter<string> = new EventEmitter();
@@ -359,6 +364,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
   }
 
+  emitDeletion(data: any) {
+    this.deletionChange.emit(data);
+  }
+
   /**
    * if the schema changes from the outside,
    * reset the component state wrt. errors and the choices cache
@@ -527,7 +536,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * remove an element from an array
    */
   remove(i: number) {
-    this.value.splice(i, 1);
+    const el = this.value.splice(i, 1);
+    this.emitDeletion(el);
     this.emit(this.value);
   }
 

@@ -169,8 +169,13 @@
             {{error === null ? "Form is valid" : "Form is invalid: "+error}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <lib-json-schema-form [(value)]="value" [schema]="schema" [label]="schema.title" (errorChange)="error=$event"
-            (schemaChange)="schemaChange()">
+        <lib-json-schema-form 
+            [(value)]="value" 
+            [schema]="schema" [label]="schema.title" 
+            (errorChange)="error=$event"
+            (schemaChange)="schemaChange()" 
+            (deletionChange)="deletionChangeHandler($event)"
+        >
         </lib-json-schema-form>
     </mat-card-content>
 </mat-card>
