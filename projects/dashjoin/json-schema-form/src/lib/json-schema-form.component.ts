@@ -373,7 +373,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         this.ngOnInit();
       }
     }
-    if (changes.switch) {
+
+    if (changes.switch && !changes.switch.isFirstChange()) {
       if (this.getLayout() === 'custom') {
         this.loadComponent();
       } else {
