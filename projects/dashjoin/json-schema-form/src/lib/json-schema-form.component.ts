@@ -198,6 +198,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   readOnly: boolean;
 
   /**
+   * error from a custom component
+   */
+  customError: string;
+
+  /**
    * apply order, called anytime properties are set
    */
   setOrderedProperties() {
@@ -587,6 +592,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * return error string
    */
   error(): string {
+
+    if (this.schema.widget === 'custom') {
+      return this.customError;
+    }
     if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
       return null;
     }
@@ -857,6 +866,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     (componentRef.instance as WidgetComponent).valueChange.subscribe(data => {
       this.value = data;
       this.emit(this.value);
+    });
+
+    // subscribe to error changes and forward them
+    (componentRef.instance as WidgetComponent).errorChange.subscribe(error => {
+      this.customError = error;
+      this.errorChange.emit(error);
     });
   }
 

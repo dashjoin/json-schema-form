@@ -16,6 +16,7 @@ import { AppComponent, MainComponent } from './app.component';
 import { CustomComponent } from './custom.component';
 import { SchemaEditComponent } from './schema-edit.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AppRoutingModule } from './app-routing.module';
     MatTooltipModule,
     MatSlideToggleModule,
     FormsModule,
-    MatButtonModule
+    MatButtonModule,
+    NgxEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

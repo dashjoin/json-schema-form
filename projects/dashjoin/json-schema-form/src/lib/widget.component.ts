@@ -17,11 +17,6 @@ export interface WidgetComponent {
     value: any;
 
     /**
-     * emit changes done by the user in the component
-     */
-    valueChange: EventEmitter<any>;
-
-    /**
      * JSON schema to use
      */
     schema: Schema;
@@ -30,4 +25,14 @@ export interface WidgetComponent {
      * root JSON schema to use when looking up $ref (simply passed along the tree)
      */
     rootSchema: Schema;
+
+    /**
+     * emit changes done by the user in the component
+     */
+    valueChange: EventEmitter<any>;
+
+    /**
+     * emit validation errors
+     */
+    errorChange: EventEmitter<string>;
 }

@@ -340,12 +340,12 @@ export class MainComponent implements OnInit {
         }
       },
       custom: {
-        description: 'JSON schema form can be extended by providing custom widgets. This example multiplies the value by 2.',
-        value: 1,
+        description: 'JSON schema form can be extended by providing custom widgets. This example provides a rich text editor based on the ngx-editor component.',
+        value: '<b>test</b>',
         schema: {
           type: 'string',
           widget: 'custom',
-          widgetType: 'times2'
+          widgetType: 'rich-text-editor'
         }
       },
       enum: {
@@ -922,7 +922,7 @@ export class MainComponent implements OnInit {
    * register custom demo comp
    */
   ngOnInit() {
-    this.service.registerComponent('times2', CustomComponent);
+    this.service.registerComponent('rich-text-editor', CustomComponent);
     this.service.registerDisplayWith('states', new MyDisplayer(null));
     this.service.registerDisplayWith('typeAhead', new MyTypeAhead());
     this.route.params.subscribe(res => {
