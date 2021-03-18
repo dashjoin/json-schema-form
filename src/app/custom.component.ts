@@ -3,8 +3,7 @@ import { WidgetComponent, Schema } from '@dashjoin/json-schema-form';
 import { Editor, Toolbar } from 'ngx-editor';
 
 /**
- * example code for a custom component. It takes a number valueand displays
- * a button that multiplies the value by two.
+ * example code for a custom component. It wraps the rich text exitor component provided by ngx-editor.
  */
 @Component({
   template: `
