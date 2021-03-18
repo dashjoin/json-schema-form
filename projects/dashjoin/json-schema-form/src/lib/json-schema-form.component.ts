@@ -599,36 +599,28 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
       return null;
     }
-    if (this.schema.maxItems) {
-      if (this.value) {
+    if (this.value) {
+      if (this.schema.maxItems) {
         if (!(this.value.length <= this.schema.maxItems)) {
           return this.e('Only ' + this.schema.maxItems + ' array entries allowed');
         }
       }
-    }
-    if (this.schema.uniqueItems) {
-      if (this.value) {
+      if (this.schema.uniqueItems) {
         if (!(new Set(this.value).size === this.value.length)) {
           return this.e('Array entries must be unique');
         }
       }
-    }
-    if (this.schema.minItems) {
-      if (this.value) {
+      if (this.schema.minItems) {
         if (!(this.value.length >= this.schema.minItems)) {
           return this.e('At least ' + this.schema.minItems + ' array entries required');
         }
       }
-    }
-    if (this.schema.maxProperties) {
-      if (this.value) {
+      if (this.schema.maxProperties) {
         if (!(Object.keys(this.value).length <= this.schema.maxProperties)) {
           return this.e('Only ' + this.schema.maxProperties + ' fields allowed');
         }
       }
-    }
-    if (this.schema.propertyNames) {
-      if (this.value) {
+      if (this.schema.propertyNames) {
         for (const key of Object.keys(this.value)) {
           const re = new RegExp(this.schema.propertyNames);
           if (!re.test(key)) {
@@ -636,9 +628,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
           }
         }
       }
-    }
-    if (this.schema.dependencies) {
-      if (this.value) {
+      if (this.schema.dependencies) {
         for (const dep of Object.keys(this.schema.dependencies)) {
           if (this.value[dep]) {
             for (const l of this.schema.dependencies[dep]) {
@@ -649,11 +639,44 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
           }
         }
       }
-    }
-    if (this.schema.minProperties) {
-      if (this.value) {
+      if (this.schema.minProperties) {
         if (!(Object.keys(this.value).length >= this.schema.minProperties)) {
           return this.e('At least ' + this.schema.minProperties + ' fields required');
+        }
+      }
+      if (this.schema.maxLength) {
+        if (!(('' + this.value).length <= this.schema.maxLength)) {
+          return this.e('Input is longer than ' + this.schema.maxLength);
+        }
+      }
+      if (this.schema.minLength) {
+        if (!(('' + this.value).length >= this.schema.minLength)) {
+          return this.e('Input is shorter than ' + this.schema.minLength);
+        }
+      }
+      if (this.schema.multipleOf) {
+        if (!Number.isInteger(Number(this.value) / this.schema.multipleOf)) {
+          return this.e('Must be multiple of ' + this.schema.multipleOf);
+        }
+      }
+      if (this.schema.exclusiveMaximum) {
+        if (!(Number(this.value) < this.schema.exclusiveMaximum)) {
+          return this.e('Must be less than ' + this.schema.exclusiveMaximum);
+        }
+      }
+      if (this.schema.maximum) {
+        if (!(Number(this.value) <= this.schema.maximum)) {
+          return this.e('Must be less than or equal ' + this.schema.maximum);
+        }
+      }
+      if (this.schema.exclusiveMinimum) {
+        if (!(Number(this.value) > this.schema.exclusiveMinimum)) {
+          return this.e('Must greater than ' + this.schema.exclusiveMinimum);
+        }
+      }
+      if (this.schema.minimum) {
+        if (!(Number(this.value) >= this.schema.minimum)) {
+          return this.e('Must greater than or equal ' + this.schema.minimum);
         }
       }
     }
@@ -684,55 +707,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
       if (!re.test(this.value)) {
         return this.e('illegal string');
-      }
-    }
-    if (this.schema.maxLength) {
-      if (this.value) {
-        if (!(('' + this.value).length <= this.schema.maxLength)) {
-          return this.e('Input is longer than ' + this.schema.maxLength);
-        }
-      }
-    }
-    if (this.schema.minLength) {
-      if (this.value) {
-        if (!(('' + this.value).length >= this.schema.minLength)) {
-          return this.e('Input is shorter than ' + this.schema.minLength);
-        }
-      }
-    }
-    if (this.schema.multipleOf) {
-      if (this.value) {
-        if (!Number.isInteger(Number(this.value) / this.schema.multipleOf)) {
-          return this.e('Must be multiple of ' + this.schema.multipleOf);
-        }
-      }
-    }
-    if (this.schema.exclusiveMaximum) {
-      if (this.value) {
-        if (!(Number(this.value) < this.schema.exclusiveMaximum)) {
-          return this.e('Must be less than ' + this.schema.exclusiveMaximum);
-        }
-      }
-    }
-    if (this.schema.maximum) {
-      if (this.value) {
-        if (!(Number(this.value) <= this.schema.maximum)) {
-          return this.e('Must be less than or equal ' + this.schema.maximum);
-        }
-      }
-    }
-    if (this.schema.exclusiveMinimum) {
-      if (this.value) {
-        if (!(Number(this.value) > this.schema.exclusiveMinimum)) {
-          return this.e('Must greater than ' + this.schema.exclusiveMinimum);
-        }
-      }
-    }
-    if (this.schema.minimum) {
-      if (this.value) {
-        if (!(Number(this.value) >= this.schema.minimum)) {
-          return this.e('Must greater than or equal ' + this.schema.minimum);
-        }
       }
     }
     if (this.schema.format && this.service.formats[this.schema.format]) {
