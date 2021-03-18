@@ -854,7 +854,7 @@ export class MainComponent implements OnInit {
             name: 'joe',
             country: 'United States',
             email: ['joe@example.org', 'alt@example.org'],
-            password: '123456',
+            password: '' + Math.random(),
             birthday: '2000-03-22T23:00:00.000Z',
             consent: 'yes'
           },
