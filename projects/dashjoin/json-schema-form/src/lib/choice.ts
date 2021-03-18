@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { forkJoin, merge, Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { Schema } from './schema';
 import { map, publishReplay, refCount, switchMap } from 'rxjs/operators';
 import { JsonPointer } from './json-pointer';

@@ -28,12 +28,6 @@ describe('JsonSchemaFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('filter lowercase', () => {
-    // component.choices = ['Test1', 'test2', 'aaaa', null];
-    // component.filter({ target: { value: 'te' } });
-    // expect(component.filteredChoices).toEqual(['Test1', 'test2']);
-  });
-
   it('split', () => {
     expect(JsonPointer.split('/a')).toEqual(['a']);
     expect(JsonPointer.split('')).toEqual([]);
