@@ -59,7 +59,7 @@ export class MainComponent implements OnInit {
    * meta schema for meta schema case - also used in schema editor component
    */
   static metaschema: Schema = {
-    $schema: 'http://json-schema.org/draft-06/schema#',
+    $schema: 'https://json-schema.org/draft-06/schema#',
     $ref: '#/definitions/prop',
     definitions: {
       prop: {
@@ -392,7 +392,7 @@ export class MainComponent implements OnInit {
       },
       additionalProperties: {
         description: 'JSON schema additional properties allow arbitrary key / value objects to be edited',
-        value: { url: 'http://example.org', args: { limit: 10 } },
+        value: { url: 'https://example.org', args: { limit: 10 } },
         schema: {
           type: 'object',
           properties: {
@@ -436,10 +436,10 @@ export class MainComponent implements OnInit {
           Note that the map key is the schema $id`,
         value: null,
         schema: {
-          $ref: 'http://www.dashjoin.org/#/concept',
+          $ref: 'https://www.dashjoin.org/#/concept',
           referenced: {
-            'http://www.dashjoin.org/': {
-              $id: 'http://www.dashjoin.org/',
+            'https://www.dashjoin.org/': {
+              $id: 'https://www.dashjoin.org/',
               concept: {
                 type: 'object',
                 properties: {
@@ -448,8 +448,8 @@ export class MainComponent implements OnInit {
                 }
               }
             },
-            'http://www.dashjoin.org/string.json': {
-              $id: 'http://www.dashjoin.org/string.json',
+            'https://www.dashjoin.org/string.json': {
+              $id: 'https://www.dashjoin.org/string.json',
               type: 'string'
             }
           }
