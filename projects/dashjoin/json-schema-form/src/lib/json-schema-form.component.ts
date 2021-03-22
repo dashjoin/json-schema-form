@@ -687,7 +687,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
     if (this.schema.required) {
       for (const dep of this.schema.required) {
-        if (!this.value[dep] && this.value[dep] !== false) {
+        if (!this.value[dep] && this.value[dep] !== false && this.value[dep] !== 0) {
           // ignore 'required' if dep is inactive due to switch / case
           let inactive = false;
           if (this.schema.switch) {
