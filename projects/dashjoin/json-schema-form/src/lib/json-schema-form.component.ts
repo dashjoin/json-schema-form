@@ -80,6 +80,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   @Input() value: any;
 
   /**
+   * root form value (can be used in custom components)
+   */
+  @Input() rootValue: any;
+
+  /**
    * emit changes done by the user in the component
    */
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
@@ -235,6 +240,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
 
     if (!this.rootSchema) {
       this.rootSchema = this.schema;
+      this.rootValue = this.value;
       this.isRoot = true;
     }
 
@@ -835,6 +841,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     (componentRef.instance as WidgetComponent).value = this.value;
     (componentRef.instance as WidgetComponent).schema = this.schema;
     (componentRef.instance as WidgetComponent).rootSchema = this.rootSchema;
+    (componentRef.instance as WidgetComponent).rootValue = this.rootValue;
 
     // subscribe to value changes and forward them
     (componentRef.instance as WidgetComponent).valueChange.subscribe(data => {

@@ -33,6 +33,11 @@ export class CustomComponent implements WidgetComponent, OnInit, OnDestroy {
   /**
    * see WidgetComponent
    */
+  rootValue = '';
+
+  /**
+   * see WidgetComponent
+   */
   schema: Schema;
 
   /**

@@ -5,8 +5,8 @@
         <mat-panel-description>{{schema.description}}</mat-panel-description>
     </mat-expansion-panel-header>
     <lib-json-schema-form #child [label]="label" [name]="name" [value]="value" (valueChange)="setAndEmit($event)"
-        [switch]="switch" [rootSchema]="rootSchema" [schema]="schema" [inExpansion]="true" [base]="base"
-        (schemaChange)="schemaChange.emit()">
+        [switch]="switch" [rootValue]="rootValue" [rootSchema]="rootSchema" [schema]="schema" [inExpansion]="true"
+        [base]="base" (schemaChange)="schemaChange.emit()">
     </lib-json-schema-form>
 </mat-expansion-panel>
 
@@ -57,8 +57,9 @@
                 <div *ngIf="x.value && (x.value.type || x.value.$ref)">
                     <lib-json-schema-form #children [name]="x.key" [label]="x.value.title ? x.value.title : x.key"
                         [value]="value ? value[x.key] : undefined" (valueChange)="onValueChange(x.key, $event)"
-                        [switch]="value ? value[schema.switch] : undefined" [rootSchema]="rootSchema" [schema]="x.value"
-                        [parentSchema]="schema" [required]="schema.required ? schema.required.includes(x.key) : false"
+                        [switch]="value ? value[schema.switch] : undefined" [rootValue]="rootValue"
+                        [rootSchema]="rootSchema" [schema]="x.value" [parentSchema]="schema"
+                        [required]="schema.required ? schema.required.includes(x.key) : false"
                         [hideUndefined]="schema.hideUndefined" [base]="base" (schemaChange)="schemaChange.emit()">
                     </lib-json-schema-form>
                 </div>
@@ -92,7 +93,7 @@
             </mat-form-field>
             &nbsp;
             <lib-json-schema-form #children [label]="getLabel() + ' value'" [value]="value[x.key]"
-                (valueChange)="onValueChange(x.key, $event)" [rootSchema]="rootSchema"
+                (valueChange)="onValueChange(x.key, $event)" [rootValue]="rootValue" [rootSchema]="rootSchema"
                 [schema]="schema.additionalProperties" inArray="true" [base]="base"
                 (schemaChange)="schemaChange.emit()">
             </lib-json-schema-form>
@@ -118,8 +119,8 @@
                 <span *ngIf="readOnly">{{x.key}}</span>
             </ng-template>
             <lib-json-schema-form #children [value]="value[x.key]" (valueChange)="onValueChange(x.key, $event)"
-                [rootSchema]="rootSchema" [schema]="schema.additionalProperties" inArray="true" [base]="base"
-                (schemaChange)="schemaChange.emit()">
+                [rootValue]="rootValue" [rootSchema]="rootSchema" [schema]="schema.additionalProperties" inArray="true"
+                [base]="base" (schemaChange)="schemaChange.emit()">
             </lib-json-schema-form>
             <button *ngIf="!readOnly" mat-icon-button (click)="removeField(x.key)" class="example-handle"
                 matTooltip="{{getLabel()}}">
@@ -141,8 +142,8 @@
         <div *ngFor="let x of value; let i=index" style="display: flex; margin: 2px; position: relative"
             (mouseenter)="hover=i" (mouseleave)="hover=null">
             <lib-json-schema-form #children [label]="getLabel()" [value]="value[i]"
-                (valueChange)="setIndexAndEmit(i, $event)" inArray="true" [rootSchema]="rootSchema"
-                [schema]="schema.items" [base]="base" (schemaChange)="schemaChange.emit()">
+                (valueChange)="setIndexAndEmit(i, $event)" inArray="true" [rootValue]="rootValue"
+                [rootSchema]="rootSchema" [schema]="schema.items" [base]="base" (schemaChange)="schemaChange.emit()">
             </lib-json-schema-form>
             <button *ngIf="!readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
                 [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
@@ -176,7 +177,8 @@
         <mat-tab *ngFor="let x of value; let i=index" style="margin: 2px; position: relative"
             [label]="getLabel()+' '+i">
             <lib-json-schema-form #children [value]="value[i]" (valueChange)="setIndexAndEmit(i, $event)" inArray="true"
-                [rootSchema]="rootSchema" [schema]="schema.items" [base]="base" (schemaChange)="schemaChange.emit()">
+                [rootValue]="rootValue" [rootSchema]="rootSchema" [schema]="schema.items" [base]="base"
+                (schemaChange)="schemaChange.emit()">
             </lib-json-schema-form>
             <button *ngIf="!readOnly" mat-icon-button (click)="remove(i)" class="example-handle"
                 matTooltip="{{getLabel()}}">
@@ -203,8 +205,9 @@
             <tr *ngFor="let row of value; let i=index">
                 <td *ngFor="let x of schema.items.properties | keyvalue:originalOrder">
                     <lib-json-schema-form #children [value]="row[x.key]"
-                        (valueChange)="setIndexAndEmitTable(i, x.key, $event)" [rootSchema]="rootSchema"
-                        [schema]="schema.items.properties[x.key]" [base]="base" (schemaChange)="schemaChange.emit()">
+                        (valueChange)="setIndexAndEmitTable(i, x.key, $event)" [rootValue]="rootValue"
+                        [rootSchema]="rootSchema" [schema]="schema.items.properties[x.key]" [base]="base"
+                        (schemaChange)="schemaChange.emit()">
                     </lib-json-schema-form>
                 </td>
                 <td>

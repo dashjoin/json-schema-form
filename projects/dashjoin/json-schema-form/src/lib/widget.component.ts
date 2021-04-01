@@ -17,6 +17,11 @@ export interface WidgetComponent {
     value: any;
 
     /**
+     * root form value (can be used in custom components)
+     */
+    rootValue: any;
+
+    /**
      * JSON schema to use
      */
     schema: Schema;
