@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { JsonSchemaFormComponent } from './json-schema-form.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -9,7 +9,7 @@ describe('JsonSchemaFormComponent', () => {
   let component: JsonSchemaFormComponent;
   let fixture: ComponentFixture<JsonSchemaFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [JsonSchemaFormComponent],
       imports: [HttpClientModule, MatDialogModule]
