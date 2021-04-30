@@ -266,13 +266,13 @@ This can be achieved via the "compute" option. It can be placed within an object
   "type": "object",
   "properties": { "first": {"type": "string"}, "last": { "type": "string" }, "salutation": { "type": "string", "readOnly": true } },
   "computed": {
-    "salutation": { cat: ["Dear ", { var: "first" }, " ", { var: "last" }, ", " }
+    "salutation": '"Dear " & first & " " & last & ","'
   }
 }
 ```
 
 In this example, any change to the first or last fields trigger a change in salutation which is displayed as a read only form field.
-The expression defining the salutation value is expressed in JsonLogic (http://jsonlogic.com/).
+The expression defining the salutation value is expressed in JSONata (<https://jsonata.org/>).
 
 ## Validation and Submitting
 

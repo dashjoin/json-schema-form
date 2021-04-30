@@ -553,10 +553,7 @@ export class MainComponent implements OnInit {
           type: 'object',
           properties: { first: { type: 'string' }, last: { type: 'string' }, salutation: { type: 'string', readOnly: true } },
           computed: {
-            salutation: {
-              cat: ['Dear ', { var: 'first' }, ' ', { var: 'last' }, ', '
-              ]
-            }
+            salutation: '"Dear " & first & " " & last & ","'
           }
         }
       },

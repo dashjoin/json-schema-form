@@ -20,7 +20,7 @@
   "peerDependencies": {
     "@angular/common": "^9.0.5",
     "@angular/core": "^9.0.5",
-    "json-logic-js": "^2.0.0",
+    "jsonata": "^1.8.4",
     "tslib": "^1.10.0"
   },
   "sideEffects": true

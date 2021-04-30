@@ -22,7 +22,7 @@ import { Edit } from './edit';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
-import * as jsonLogic from 'json-logic-js/logic.js';
+import jsonata from 'jsonata';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -496,7 +496,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.computed) {
       for (const field of Object.keys(this.schema.computed)) {
         const expression = this.schema.computed[field];
-        this.value[field] = jsonLogic.apply(expression, this.value);
+        this.value[field] = jsonata(expression).evaluate(this.value);
       }
     }
 

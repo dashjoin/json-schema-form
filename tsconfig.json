@@ -20,7 +20,8 @@
         "dist/dashjoin/json-schema-form/dashjoin-json-schema-form",
         "dist/dashjoin/json-schema-form"
       ]
-    }
+    },
+    "esModuleInterop": true
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
