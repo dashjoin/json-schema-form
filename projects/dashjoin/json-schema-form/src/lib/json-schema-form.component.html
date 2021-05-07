@@ -297,7 +297,8 @@
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
             <input *ngIf="!inArray" [disabled]="readOnly" [placeholder]="example()" autocomplete="off" matInput
-                [type]="getInputType(schema)" [value]="value" (input)="change($event)">
+                [type]="getInputType(schema)" [value]="value" (input)="change($event)"
+                (focus)="getInputType(schema) == 'password' ? value = '':''">
             <input *ngIf="inArray" [disabled]="readOnly" [placeholder]="example()" autocomplete="off" matInput
                 [type]="getInputType(schema)" [value]="value" (change)="change($event)">
         </mat-form-field>
