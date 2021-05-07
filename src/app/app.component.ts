@@ -589,7 +589,7 @@ export class MainComponent implements OnInit {
         schema: {
           type: 'string',
           choicesUrl: '/assets/autocomplete-complex.json',
-          jsonPointer: '/result/*/name',
+          jsonata: 'result.name',
           choicesVerb: 'GET'
         }
       },
@@ -599,9 +599,7 @@ export class MainComponent implements OnInit {
         schema: {
           type: 'string',
           choicesUrl: '/assets/autocomplete-complex.json',
-          jsonPointer: '/result',
-          jsonName: 'name',
-          jsonValue: 'url',
+          jsonata: '$map(result, function($i){ {"name":$i.name, "value":$i.url} })',
           choicesVerb: 'GET'
         }
       },

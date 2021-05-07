@@ -244,21 +244,9 @@ export interface Schema {
 
     /**
      * used in case the select / autocomplete options are gathered from a REST service URL.
-     * used to transform the REST result into a string array
+     * used to transform the REST result into a string array or an array of objects with name and value fields
      */
-    jsonPointer?: string;
-
-    /**
-     * used in case the select / autocomplete options are gathered from a REST service URL.
-     * JSON is assumed to be an object array, identifies the field to be used as option name
-     */
-    jsonName?: string;
-
-    /**
-     * used in case the select / autocomplete options are gathered from a REST service URL.
-     * JSON is assumed to be an object array, identifies the field to be used as option value
-     */
-    jsonValue?: string;
+    jsonata?: string;
 
     /**
      * input control layout:

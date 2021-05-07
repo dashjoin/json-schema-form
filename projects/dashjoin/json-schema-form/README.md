@@ -18,7 +18,7 @@
 * Can load referenced schemas from URLs
 * Renders compact forms
 * Supports 2-way databinding
-* Autocomplete & typeahead based on REST services (complex responses can be processed via extended JSON Pointer)
+* Autocomplete & typeahead based on REST services (complex responses can be processed via extended JSONata)
 * CSS styling
 * Built-in validation
 * Flexible layout options (tab, table, vertical, horizontal, ...)
@@ -167,15 +167,8 @@ The following fields control how select and autocomplete options are obtained fr
 * choicesUrl: defines the REST service URL
 * choicesVerb: defines the HTTP verb to use for the REST service URL, default is POST
 * choicesUrlArgs: defines the REST service parameter. The convention is to have a single parameter. Multiple fields need to be wrapped into a single object
-* jsonName: JSON is assumed to be an object array, identifies the field to be used as option name
-* jsonValue: JSON is assumed to be an object array, identifies the field to be used as option value
-* jsonPointer: used to transform the REST result into a string array if it is not already in that form.
-  Note that we use a slightly extended version of [JSON Pointer](https://tools.ietf.org/html/rfc6901) that allows processing arrays of objects. Consider the following examples:
-
-| Response  | JSON Pointer  | Result (string[]) |
-|---|---|---|
-| {"result": ["A", "B"]}  |  /result |  ["A", "B"] |
-| [{"name":"A"}, {"name":"B"}] | /*/name  |  ["A", "B"] |
+* jsonata: used to transform the REST result into a string array or an array of objects with name and value fields if it is not already in that form.
+  The transformation is expressed using [JSONata](https://jsonata.org/)
 
 ### Autocomplete and Select Display Names and Values
 

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { forkJoin, Observable, of } from 'rxjs';
 import { Schema } from './schema';
 import { map, publishReplay, refCount, switchMap } from 'rxjs/operators';
-import { JsonPointer } from './json-pointer';
+import jsonata from 'jsonata';
 
 /**
  * class backing a select / autocomplete option
@@ -81,8 +81,8 @@ export class DefaultChoiceHandler implements ChoiceHandler {
                 // load choices from URL
                 this.cache = this.getChoices(schema.choicesUrl, schema.choicesUrlArgs, schema.choicesVerb).pipe(
                     switchMap(res => {
-                        if (schema.jsonPointer) {
-                            res = JsonPointer.jsonPointer(res, schema.jsonPointer);
+                        if (schema.jsonata) {
+                            res = jsonata(schema.jsonata).evaluate(res);
                             if (!Array.isArray(res)) {
                                 res = [res];
 
@@ -139,9 +139,9 @@ export class DefaultChoiceHandler implements ChoiceHandler {
             }
             return of({ value, name: value });
         }
-        if (schema.jsonName && schema.jsonValue) {
-            if (value[schema.jsonValue] && value[schema.jsonName]) {
-                return of({ value: value[schema.jsonValue], name: value[schema.jsonName] });
+        if (schema.jsonata) {
+            if (typeof value === 'object') {
+                return of(value);
             } else {
                 // initially, value is a simple string
                 return of({ value, name: value });
