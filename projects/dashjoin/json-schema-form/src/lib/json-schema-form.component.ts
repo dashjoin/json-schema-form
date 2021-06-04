@@ -850,7 +850,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.value = reader.result;
       this.emit(this.value);
     };
-    console.log("read as url");
+   
     reader.readAsDataURL(event.target.files.item(0));
   }
 
