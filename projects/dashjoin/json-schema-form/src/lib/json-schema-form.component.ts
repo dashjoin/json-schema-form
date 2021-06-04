@@ -1,40 +1,48 @@
 import {
-  Component, OnInit, Input, Output, EventEmitter, SimpleChanges,
-  OnChanges, ComponentFactoryResolver, ViewChild, ViewChildren, QueryList
-} from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatCheckboxChange } from '@angular/material/checkbox';
-import { HttpClient } from '@angular/common/http';
-import { forkJoin, Observable, ReplaySubject } from 'rxjs';
-import { KeyValue } from '@angular/common';
-import { Schema } from './schema';
-import { WidgetComponent } from './widget.component';
-import { WidgetDirective } from './widget.directive';
-import { JsonSchemaFormService } from './json-schema-form.service';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { JsonPointer } from './json-pointer';
-import { Choice, ChoiceHandler, DefaultChoiceHandler } from './choice';
-import { FormControl } from '@angular/forms';
-import { debounceTime, startWith, switchMap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { Edit } from './edit';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
-import jsonata from 'jsonata';
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  OnChanges,
+  ComponentFactoryResolver,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+} from "@angular/core";
+import { MatSelectChange } from "@angular/material/select";
+import { MatDatepickerInputEvent } from "@angular/material/datepicker";
+import { MatCheckboxChange } from "@angular/material/checkbox";
+import { HttpClient } from "@angular/common/http";
+import { forkJoin, Observable, ReplaySubject } from "rxjs";
+import { KeyValue } from "@angular/common";
+import { Schema } from "./schema";
+import { WidgetComponent } from "./widget.component";
+import { WidgetDirective } from "./widget.directive";
+import { JsonSchemaFormService } from "./json-schema-form.service";
+import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { JsonPointer } from "./json-pointer";
+import { Choice, ChoiceHandler, DefaultChoiceHandler } from "./choice";
+import { FormControl } from "@angular/forms";
+import { debounceTime, startWith, switchMap } from "rxjs/operators";
+import { MatDialog } from "@angular/material/dialog";
+import { Edit } from "./edit";
+import { MatChipInputEvent } from "@angular/material/chips";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { COMMA, ENTER, TAB } from "@angular/cdk/keycodes";
+import jsonata from "jsonata";
 
 /**
  * generates an input form base on JSON schema and JSON object.
  * The component is used recursively.
  */
 @Component({
-  selector: 'lib-json-schema-form',
-  templateUrl: './json-schema-form.component.html',
-  styleUrls: ['./json-schema-form.component.css']
+  selector: "lib-json-schema-form",
+  templateUrl: "./json-schema-form.component.html",
+  styleUrls: ["./json-schema-form.component.css"],
 })
 export class JsonSchemaFormComponent implements OnInit, OnChanges {
-
   /**
    * component constructor
    * @param http                        http client
@@ -46,17 +54,18 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     private http: HttpClient,
     private componentFactoryResolver: ComponentFactoryResolver,
     public service: JsonSchemaFormService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) {}
 
   /**
    * container children for event propagation
    */
-  @ViewChildren('children') children: QueryList<JsonSchemaFormComponent>;
+  @ViewChildren("children") children: QueryList<JsonSchemaFormComponent>;
 
   /**
    * container children for event propagation
    */
-  @ViewChild('child') child: JsonSchemaFormComponent;
+  @ViewChild("child") child: JsonSchemaFormComponent;
 
   /**
    * if an array is displayed, indicates which array index is being hovered over in order to
@@ -236,7 +245,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * replace undefined with null and init autocomplete choices
    */
   ngOnInit(): void {
-    this.readOnly = this.schema.readOnly || (this.schema.createOnly && this.value);
+    this.readOnly =
+      this.schema.readOnly || (this.schema.createOnly && this.value);
 
     if (!this.rootSchema) {
       this.rootSchema = this.schema;
@@ -246,7 +256,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
 
     if (!this.schema.type) {
       const p = this.schema.$ref;
-      const parts = p.split('#');
+      const parts = p.split("#");
       if (parts.length === 1) {
         // URL only
         this.url(parts[0], null);
@@ -264,7 +274,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.setOrderedProperties();
     }
 
-    if (typeof this.value === 'undefined') {
+    if (typeof this.value === "undefined") {
       if (this.schema.default) {
         this.value = this.schema.default;
         setTimeout(() => this.emit(this.value), 500);
@@ -275,7 +285,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
     }
 
-    if (this.getLayout() === 'custom') {
+    if (this.getLayout() === "custom") {
       this.loadComponent();
     }
 
@@ -306,29 +316,36 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         for (const i of this.value) {
           arr.push(this.ch.choice(i, this.schema));
         }
-        forkJoin(arr).subscribe(res => this.choices.next(res));
+        forkJoin(arr).subscribe((res) => this.choices.next(res));
       } else {
-        this.ch.choice(this.value, this.schema).subscribe(res => this.choices.next([res]));
+        this.ch
+          .choice(this.value, this.schema)
+          .subscribe((res) => this.choices.next([res]));
       }
     }
-    this.filteredOptions = this.control.valueChanges
-      .pipe(
-        startWith(this.value),
-        debounceTime(this.ch.debounceTime()),
-        switchMap(x => {
-          this.change({ target: { value: x } });
-          return this.ch.filter(this.value, this.schema, x, this.choices);
-        })
-      );
+    this.filteredOptions = this.control.valueChanges.pipe(
+      startWith(this.value),
+      debounceTime(this.ch.debounceTime()),
+      switchMap((x) => {
+        this.change({ target: { value: x } });
+        return this.ch.filter(this.value, this.schema, x, this.choices);
+      })
+    );
 
-    this.edit = new Edit(this.schemaChange, this.name, this.schema, this.parentSchema, this.dialog);
+    this.edit = new Edit(
+      this.schemaChange,
+      this.name,
+      this.schema,
+      this.parentSchema,
+      this.dialog
+    );
   }
 
   /**
    * choice element activated - load values
    */
   focus() {
-    this.ch.load(this.value, this.schema).subscribe(res => {
+    this.ch.load(this.value, this.schema).subscribe((res) => {
       this.choices.next(res);
     });
   }
@@ -348,13 +365,16 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.http.get(this.base).subscribe(res => {
-      this.schema = pointer ? JsonPointer.jsonPointer(res, pointer) : res;
-      this.setOrderedProperties();
-    }, error => console.log(error));
+    this.http.get(this.base).subscribe(
+      (res) => {
+        this.schema = pointer ? JsonPointer.jsonPointer(res, pointer) : res;
+        this.setOrderedProperties();
+      },
+      (error) => console.log(error)
+    );
 
     // set temporary pseudo schema
-    this.schema = { type: 'string' };
+    this.schema = { type: "string" };
     this.setOrderedProperties();
   }
 
@@ -386,7 +406,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
 
     if (changes.switch && !changes.switch.isFirstChange()) {
-      if (this.getLayout() === 'custom') {
+      if (this.getLayout() === "custom") {
         this.loadComponent();
       } else {
         if (this.widgetHost.viewContainerRef) {
@@ -400,72 +420,75 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * angular pipe sorting function for keyValue - keep the JSON order and do not
    * order alphabetically
    */
-  originalOrder = (a: KeyValue<string, Schema>, b: KeyValue<string, Schema>): number => {
+  originalOrder = (
+    a: KeyValue<string, Schema>,
+    b: KeyValue<string, Schema>
+  ): number => {
     return 0;
-  }
+  };
 
   /**
    * key method to instruct the display which HTML block to activate.
    */
   getLayout(): string {
     if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
-      return 'none';
+      return "none";
     }
-    if (this.schema.widget === 'custom') {
-      return 'custom';
+    if (this.schema.widget === "custom") {
+      return "custom";
     }
     if (this.hideUndefined && this.value === undefined) {
-      return 'none';
+      return "none";
     }
-    if (this.schema.type === 'object') {
+    if (this.schema.type === "object") {
       if (this.schema.additionalProperties) {
-        if (this.schema.layout === 'tab') {
-          return 'additionalPropertiesTab';
+        if (this.schema.layout === "tab") {
+          return "additionalPropertiesTab";
         }
-        return 'additionalProperties';
+        return "additionalProperties";
       }
-      return 'object';
+      return "object";
     }
-    if (this.schema.type === 'array') {
-      if (this.schema.layout === 'tab') {
-        return 'tab';
+    if (this.schema.type === "array") {
+      if (this.schema.layout === "tab") {
+        return "tab";
       }
-      if (this.schema.layout === 'table') {
-        return 'table';
+      if (this.schema.layout === "table") {
+        return "table";
       }
-      if (this.schema.layout === 'select') {
-        return 'array-select';
+      if (this.schema.layout === "select") {
+        return "array-select";
       }
-      if (this.schema.layout === 'chips') {
-        return 'chips';
+      if (this.schema.layout === "chips") {
+        return "chips";
       }
-      return 'array';
+      return "array";
     }
     if (this.schema.enum) {
-      return 'enum';
+      return "enum";
     }
-    if (this.schema.widget === 'date') {
-      return 'date';
+    if (this.schema.widget === "date") {
+      return "date";
     }
-    if (this.schema.widget === 'upload') {
-      return 'upload';
+    if (this.schema.widget === "upload") {
+      return "upload";
     }
-    if (this.schema.widget === 'textarea') {
-      return 'textarea';
+    if (this.schema.widget === "textarea") {
+      return "textarea";
     }
-    if (this.schema.type === 'boolean') {
-      return 'checkbox';
+    if (this.schema.type === "boolean") {
+      return "checkbox";
     }
     if (this.schema.choicesUrl) {
-      return 'autocomplete';
+      return "autocomplete";
     }
     if (this.schema.choices) {
-      return 'autocomplete';
+      return "autocomplete";
     }
     if (this.schema.displayWith) {
-      return 'autocomplete';
+      return "autocomplete";
     }
-    return 'single';
+    return "single";
   }
 
   /**
@@ -473,11 +496,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * the HTML input type is "number" which avoids normal string input
    */
   getInputType(schema: Schema): string {
-    if (schema.type === 'number') {
-      return 'number';
+    if (schema.type === "number") {
+      return "number";
     }
-    if (schema.type === 'integer') {
-      return 'number';
+    if (schema.type === "integer") {
+      return "number";
     }
     return schema.widget;
   }
@@ -511,9 +534,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (!(this.value instanceof Array)) {
       this.value = [];
     }
-    if (this.schema.items.type === 'array') {
+    if (this.schema.items.type === "array") {
       this.value.push([]);
-    } else if (this.schema.items.type === 'object') {
+    } else if (this.schema.items.type === "object") {
       this.value.push({});
     } else {
       this.value.push(null);
@@ -528,10 +551,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (!this.value) {
       this.value = {};
     }
-    if (this.value['']) {
+    if (this.value[""]) {
       return;
     }
-    this.value[''] = null;
+    this.value[""] = null;
     this.emit(this.value);
   }
 
@@ -598,8 +621,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * return error string
    */
   error(): string {
-
-    if (this.schema.widget === 'custom') {
+    if (this.schema.widget === "custom") {
       return this.customError;
     }
     if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
@@ -608,29 +630,35 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.value) {
       if (this.schema.maxItems) {
         if (!(this.value.length <= this.schema.maxItems)) {
-          return this.e('Only ' + this.schema.maxItems + ' array entries allowed');
+          return this.e(
+            "Only " + this.schema.maxItems + " array entries allowed"
+          );
         }
       }
       if (this.schema.uniqueItems) {
         if (!(new Set(this.value).size === this.value.length)) {
-          return this.e('Array entries must be unique');
+          return this.e("Array entries must be unique");
         }
       }
       if (this.schema.minItems) {
         if (!(this.value.length >= this.schema.minItems)) {
-          return this.e('At least ' + this.schema.minItems + ' array entries required');
+          return this.e(
+            "At least " + this.schema.minItems + " array entries required"
+          );
         }
       }
       if (this.schema.maxProperties) {
         if (!(Object.keys(this.value).length <= this.schema.maxProperties)) {
-          return this.e('Only ' + this.schema.maxProperties + ' fields allowed');
+          return this.e(
+            "Only " + this.schema.maxProperties + " fields allowed"
+          );
         }
       }
       if (this.schema.propertyNames) {
         for (const key of Object.keys(this.value)) {
           const re = new RegExp(this.schema.propertyNames);
           if (!re.test(key)) {
-            return this.e('illegal field name: ' + key);
+            return this.e("illegal field name: " + key);
           }
         }
       }
@@ -639,7 +667,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
           if (this.value[dep]) {
             for (const l of this.schema.dependencies[dep]) {
               if (!this.value[l]) {
-                return this.e(dep + ' depends on ' + l);
+                return this.e(dep + " depends on " + l);
               }
             }
           }
@@ -647,53 +675,59 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       }
       if (this.schema.minProperties) {
         if (!(Object.keys(this.value).length >= this.schema.minProperties)) {
-          return this.e('At least ' + this.schema.minProperties + ' fields required');
+          return this.e(
+            "At least " + this.schema.minProperties + " fields required"
+          );
         }
       }
       if (this.schema.maxLength) {
-        if (!(('' + this.value).length <= this.schema.maxLength)) {
-          return this.e('Input is longer than ' + this.schema.maxLength);
+        if (!(("" + this.value).length <= this.schema.maxLength)) {
+          return this.e("Input is longer than " + this.schema.maxLength);
         }
       }
       if (this.schema.minLength) {
-        if (!(('' + this.value).length >= this.schema.minLength)) {
-          return this.e('Input is shorter than ' + this.schema.minLength);
+        if (!(("" + this.value).length >= this.schema.minLength)) {
+          return this.e("Input is shorter than " + this.schema.minLength);
         }
       }
       if (this.schema.multipleOf) {
         if (!Number.isInteger(Number(this.value) / this.schema.multipleOf)) {
-          return this.e('Must be multiple of ' + this.schema.multipleOf);
+          return this.e("Must be multiple of " + this.schema.multipleOf);
         }
       }
       if (this.schema.exclusiveMaximum) {
         if (!(Number(this.value) < this.schema.exclusiveMaximum)) {
-          return this.e('Must be less than ' + this.schema.exclusiveMaximum);
+          return this.e("Must be less than " + this.schema.exclusiveMaximum);
         }
       }
       if (this.schema.maximum) {
         if (!(Number(this.value) <= this.schema.maximum)) {
-          return this.e('Must be less than or equal ' + this.schema.maximum);
+          return this.e("Must be less than or equal " + this.schema.maximum);
         }
       }
       if (this.schema.exclusiveMinimum) {
         if (!(Number(this.value) > this.schema.exclusiveMinimum)) {
-          return this.e('Must greater than ' + this.schema.exclusiveMinimum);
+          return this.e("Must greater than " + this.schema.exclusiveMinimum);
         }
       }
       if (this.schema.minimum) {
         if (!(Number(this.value) >= this.schema.minimum)) {
-          return this.e('Must greater than or equal ' + this.schema.minimum);
+          return this.e("Must greater than or equal " + this.schema.minimum);
         }
       }
     }
     if (this.required) {
       if (this.value == null || Object.is(this.value, NaN)) {
-        return this.e('required');
+        return this.e("required");
       }
     }
     if (this.schema.required) {
       for (const dep of this.schema.required) {
-        if (!this.value[dep] && this.value[dep] !== false && this.value[dep] !== 0) {
+        if (
+          !this.value[dep] &&
+          this.value[dep] !== false &&
+          this.value[dep] !== 0
+        ) {
           // ignore 'required' if dep is inactive due to switch / case
           let inactive = false;
           if (this.schema.switch) {
@@ -702,26 +736,28 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
               inactive = true;
             }
           }
-          if (!inactive) { return this.e(dep + ' is required'); }
+          if (!inactive) {
+            return this.e(dep + " is required");
+          }
         }
       }
     }
     if (this.schema.pattern) {
       const re = new RegExp(this.schema.pattern);
       if (!this.value) {
-        return this.e('illegal string');
+        return this.e("illegal string");
       }
       if (!re.test(this.value)) {
-        return this.e('illegal string');
+        return this.e("illegal string");
       }
     }
     if (this.schema.format && this.service.formats[this.schema.format]) {
       const re = new RegExp(this.service.formats[this.schema.format]);
       if (!this.value) {
-        return this.e('illegal string');
+        return this.e("illegal string");
       }
       if (!re.test(this.value)) {
-        return this.e('illegal string');
+        return this.e("illegal string");
       }
     }
     return null;
@@ -737,7 +773,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.label) {
       return this.label;
     }
-    return '';
+    return "";
   }
 
   /**
@@ -745,13 +781,16 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * normalize the different kind of events, handle the datatypes, set the value and emit the change
    */
   change(event: any) {
-
     let eventTarget: any;
 
     if (event instanceof MatSelectChange) {
       event = event.value;
     } else if (event instanceof MatDatepickerInputEvent) {
-      event = this.serializeDate(event.value, this.schema.dateFormat, this.schema.type);
+      event = this.serializeDate(
+        event.value,
+        this.schema.dateFormat,
+        this.schema.type
+      );
     } else if (event instanceof MatAutocompleteSelectedEvent) {
       event = event.option.value;
     } else if (event instanceof MatCheckboxChange) {
@@ -763,7 +802,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       event = event.target.value;
     }
 
-    if (event === '') {
+    if (event === "") {
       event = null;
     }
 
@@ -771,15 +810,15 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.value = null;
     }
 
-    if (this.schema.type === 'number') {
+    if (this.schema.type === "number") {
       this.value = parseFloat(event);
-    } else if (this.schema.type === 'integer') {
+    } else if (this.schema.type === "integer") {
       this.value = parseInt(event, 10);
-    } else if (this.schema.type === 'boolean') {
-      if (typeof event === 'string') {
-        if (event === 'true') {
+    } else if (this.schema.type === "boolean") {
+      if (typeof event === "string") {
+        if (event === "true") {
           this.value = true;
-        } else if (event === 'false') {
+        } else if (event === "false") {
           this.value = false;
         } else {
           this.value = null;
@@ -787,12 +826,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       } else {
         this.value = event;
       }
-    } else if (this.schema.type === 'string') {
+    } else if (this.schema.type === "string") {
       this.value = event;
-    } else if (this.schema.type === 'array') {
+    } else if (this.schema.type === "array") {
       this.value = event;
     } else {
-      throw new Error('unknown type: ' + this.schema.type);
+      throw new Error("unknown type: " + this.schema.type);
     }
 
     this.emit(this.value);
@@ -803,7 +842,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   handleFileInput(event: any) {
     if (1024 * 1024 <= event.target.files.item(0).size) {
-      console.log('The file size is limited to 1MB');
+      console.log("The file size is limited to 1MB");
       return;
     }
     const reader = new FileReader();
@@ -811,7 +850,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.value = reader.result;
       this.emit(this.value);
     };
-    reader.readAsText(event.target.files.item(0));
+    console.log("read as url");
+    reader.readAsDataURL(event.target.files.item(0));
   }
 
   /**
@@ -831,7 +871,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * load the dynamic custom widget
    */
   loadComponent() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.service.registry[this.schema.widgetType]);
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(
+        this.service.registry[this.schema.widgetType]
+      );
     const viewContainerRef = this.widgetHost.viewContainerRef;
     viewContainerRef.clear();
     const componentRef = viewContainerRef.createComponent(componentFactory);
@@ -844,16 +887,18 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     (componentRef.instance as WidgetComponent).rootValue = this.rootValue;
 
     // subscribe to value changes and forward them
-    (componentRef.instance as WidgetComponent).valueChange.subscribe(data => {
+    (componentRef.instance as WidgetComponent).valueChange.subscribe((data) => {
       this.value = data;
       this.emit(this.value);
     });
 
     // subscribe to error changes and forward them
-    (componentRef.instance as WidgetComponent).errorChange.subscribe(error => {
-      this.customError = error;
-      this.errorChange.emit(error);
-    });
+    (componentRef.instance as WidgetComponent).errorChange.subscribe(
+      (error) => {
+        this.customError = error;
+        this.errorChange.emit(error);
+      }
+    );
   }
 
   /**
@@ -927,7 +972,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (!date && date !== 0) {
       return date;
     }
-    if (typeof date === 'number') {
+    if (typeof date === "number") {
       return this.sameDate(new Date(date));
     }
     if (!format) {
@@ -935,7 +980,13 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
     const pdate = date.split(this.getDelimiter(format));
     const pformat = format.split(this.getDelimiter(format));
-    return this.sameDate(new Date(pdate[pformat.indexOf('yyyy')], pdate[pformat.indexOf('MM')] - 1, pdate[pformat.indexOf('dd')]));
+    return this.sameDate(
+      new Date(
+        pdate[pformat.indexOf("yyyy")],
+        pdate[pformat.indexOf("MM")] - 1,
+        pdate[pformat.indexOf("dd")]
+      )
+    );
   }
 
   /**
@@ -959,20 +1010,26 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   serializeDate(date: Date, format: string, type: string): string {
     if (date == null) {
-      return '';
+      return "";
     }
-    if (type === 'integer' || type === 'number') {
-      return '' + date.valueOf();
+    if (type === "integer" || type === "number") {
+      return "" + date.valueOf();
     }
     if (!format) {
       return date.toISOString();
     }
     const pformat = format.split(this.getDelimiter(format));
     const pdate = [null, null, null];
-    pdate[pformat.indexOf('yyyy')] = date.getFullYear();
-    pdate[pformat.indexOf('MM')] = date.getMonth() + 1;
-    pdate[pformat.indexOf('dd')] = date.getDate();
-    return pdate[0] + this.getDelimiter(format) + pdate[1] + this.getDelimiter(format) + pdate[2];
+    pdate[pformat.indexOf("yyyy")] = date.getFullYear();
+    pdate[pformat.indexOf("MM")] = date.getMonth() + 1;
+    pdate[pformat.indexOf("dd")] = date.getDate();
+    return (
+      pdate[0] +
+      this.getDelimiter(format) +
+      pdate[1] +
+      this.getDelimiter(format) +
+      pdate[2]
+    );
   }
 
   /**
@@ -981,7 +1038,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   getDelimiter(format: string): string {
     const delim = format.match(/\W/g);
     if (!delim[0]) {
-      throw new Error('No delimiter found in date format: ' + format);
+      throw new Error("No delimiter found in date format: " + format);
     }
     return delim[0];
   }
@@ -994,15 +1051,17 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     const value = event.value;
 
     // Add our fruit
-    if ((value || '').trim()) {
-      if (!this.value) { this.value = []; }
+    if ((value || "").trim()) {
+      if (!this.value) {
+        this.value = [];
+      }
       this.value.push(value.trim());
       this.emit(this.value);
     }
 
     // Reset the input value
     if (input) {
-      input.value = '';
+      input.value = "";
     }
   }
 
@@ -1013,7 +1072,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     const index = this.value.indexOf(v);
     if (index >= 0) {
       this.value.splice(index, 1);
-      if (this.value.length === 0) { this.value = null; }
+      if (this.value.length === 0) {
+        this.value = null;
+      }
       this.emit(this.value);
     }
   }
