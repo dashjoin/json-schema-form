@@ -1,0 +1,10 @@
+/*
+ * Public API Surface of json-schema-form
+ */
+export * from './lib/json-schema-form.service';
+export * from './lib/json-schema-form.component';
+export * from './lib/json-schema-form.module';
+export * from './lib/schema';
+export * from './lib/widget.component';
+export * from './lib/choice';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL3Byb2plY3RzL2Rhc2hqb2luL2pzb24tc2NoZW1hLWZvcm0vc3JjL3B1YmxpYy1hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0dBRUc7QUFDSCxjQUFjLGdDQUFnQyxDQUFDO0FBQy9DLGNBQWMsa0NBQWtDLENBQUM7QUFDakQsY0FBYywrQkFBK0IsQ0FBQztBQUM5QyxjQUFjLGNBQWMsQ0FBQztBQUM3QixjQUFjLHdCQUF3QixDQUFDO0FBQ3ZDLGNBQWMsY0FBYyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcclxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIGpzb24tc2NoZW1hLWZvcm1cclxuICovXHJcbmV4cG9ydCAqIGZyb20gJy4vbGliL2pzb24tc2NoZW1hLWZvcm0uc2VydmljZSc7XHJcbmV4cG9ydCAqIGZyb20gJy4vbGliL2pzb24tc2NoZW1hLWZvcm0uY29tcG9uZW50JztcclxuZXhwb3J0ICogZnJvbSAnLi9saWIvanNvbi1zY2hlbWEtZm9ybS5tb2R1bGUnO1xyXG5leHBvcnQgKiBmcm9tICcuL2xpYi9zY2hlbWEnO1xyXG5leHBvcnQgKiBmcm9tICcuL2xpYi93aWRnZXQuY29tcG9uZW50JztcclxuZXhwb3J0ICogZnJvbSAnLi9saWIvY2hvaWNlJztcclxuIl19
