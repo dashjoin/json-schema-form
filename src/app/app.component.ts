@@ -584,7 +584,7 @@ export class MainComponent implements OnInit {
         }
       },
       jsonPointer: {
-        description: 'Getting autocomplete options from a REST service and processing the result via JSON pointer',
+        description: 'Getting autocomplete options from a REST service and processing the result via JSONata',
         value: null,
         schema: {
           type: 'string',
@@ -593,8 +593,8 @@ export class MainComponent implements OnInit {
           choicesVerb: 'GET'
         }
       },
-      jsonName: {
-        description: 'Getting autocomplete options (name and value) from a REST service and processing the result via JSON pointer',
+      jsonata: {
+        description: 'Getting autocomplete options (name and value) from a REST service and processing the result via JSONata',
         value: null,
         schema: {
           type: 'string',
