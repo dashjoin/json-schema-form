@@ -319,7 +319,14 @@
 
     <!-- upload -->
     <div *ngIf="getLayout() === 'upload'">
-        <input type="file" id="file" (change)="handleFileInput($event)" [ngStyle]="schema.style"
+        <input type="file" id="file" (change)="handleFileInput(false, $event)" [ngStyle]="schema.style"
+            [ngClass]="schema.class" [disabled]="readOnly">
+        <p class="error mat-typography">{{error()}}</p>
+    </div>
+
+    <!-- upload64 -->
+    <div *ngIf="getLayout() === 'upload64'">
+        <input type="file" id="file" (change)="handleFileInput(true, $event)" [ngStyle]="schema.style"
             [ngClass]="schema.class" [disabled]="readOnly">
         <p class="error mat-typography">{{error()}}</p>
     </div>

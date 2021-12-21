@@ -190,7 +190,7 @@ export interface Schema {
      * (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)
      * and native angular widgets such as https://material.angular.io/components/datepicker/overview
      */
-    widget?: 'select' | 'upload' | 'date' | 'textarea' | 'password' | 'color' |
+    widget?: 'select' | 'upload' | 'upload64' | 'date' | 'textarea' | 'password' | 'color' |
     'datetime-local' | 'email' | 'month' | 'tel' | 'time' | 'url' | 'week' | 'custom';
 
     /**

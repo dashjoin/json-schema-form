@@ -420,6 +420,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.widget === 'upload') {
       return 'upload';
     }
+    if (this.schema.widget === 'upload64') {
+      return 'upload64';
+    }
     if (this.schema.type === 'object') {
       if (this.schema.additionalProperties) {
         if (this.schema.layout === 'tab') {
@@ -795,7 +798,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   /**
    * allows for the result of a file upload to be written into a text form element
    */
-  handleFileInput(event: any) {
+  handleFileInput(base64: boolean, event: any) {
     if (10 * 1024 * 1024 <= event.target.files.item(0).size) {
       console.log('The file size is limited to 10MB');
       return;
@@ -810,7 +813,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
 
       this.emit(this.value);
     };
-    reader.readAsText(event.target.files.item(0));
+    if (base64) {
+      reader.readAsDataURL(event.target.files.item(0));
+    } else {
+      reader.readAsText(event.target.files.item(0));
+    }
   }
 
   /**

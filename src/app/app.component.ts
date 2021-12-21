@@ -225,11 +225,19 @@ export class MainComponent implements OnInit {
         }
       },
       upload: {
-        description: 'The file contents is written to the JSON value',
+        description: 'The file contents is written into the string (it is parsed if type is object or array)',
         value: '',
         schema: {
           type: 'string',
           widget: 'upload'
+        }
+      },
+      upload64: {
+        description: 'The file contents is base64 encoded and written into the string',
+        value: '',
+        schema: {
+          type: 'string',
+          widget: 'upload64'
         }
       },
       date: {
