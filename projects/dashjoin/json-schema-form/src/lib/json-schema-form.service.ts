@@ -31,6 +31,11 @@ export class JsonSchemaFormService {
   registry = {};
 
   /**
+   * context data accessible from JSONata expressions
+   */
+  context = {};
+
+  /**
    * registry of displayWith objects
    */
   displayWithRegistry: { [key: string]: ChoiceHandler } = {};
@@ -51,5 +56,12 @@ export class JsonSchemaFormService {
    */
   registerDisplayWith(key: string, value: ChoiceHandler) {
     this.displayWithRegistry[key] = value;
+  }
+
+  /**
+   * set a context key
+   */
+  setContext(key: string, value: any) {
+    this.context[key] = value;
   }
 }

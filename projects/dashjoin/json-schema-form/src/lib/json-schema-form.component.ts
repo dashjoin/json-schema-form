@@ -503,7 +503,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.computed) {
       for (const field of Object.keys(this.schema.computed)) {
         const expression = this.schema.computed[field];
-        this.value[field] = jsonata(expression).evaluate(this.value);
+        const expr = jsonata(expression);
+        expr.registerFunction('context', (k) => this.service.context[k], '<s:j>');
+        this.value[field] = expr.evaluate(this.value);
       }
     }
 

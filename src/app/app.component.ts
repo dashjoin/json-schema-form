@@ -561,7 +561,7 @@ export class MainComponent implements OnInit {
           type: 'object',
           properties: { first: { type: 'string' }, last: { type: 'string' }, salutation: { type: 'string', readOnly: true } },
           computed: {
-            salutation: '"Dear " & first & " " & last & ","'
+            salutation: '"Dear " & first & " " & last & ", " & $context("var")'
           }
         }
       },
@@ -927,6 +927,7 @@ export class MainComponent implements OnInit {
     this.service.registerComponent('rich-text-editor', CustomComponent);
     this.service.registerDisplayWith('states', new MyDisplayer(null));
     this.service.registerDisplayWith('typeAhead', new MyTypeAhead());
+    this.service.setContext('var', 'context passed from caller');
     this.route.params.subscribe(res => {
       if (res.id) {
         this.select(res.id);
