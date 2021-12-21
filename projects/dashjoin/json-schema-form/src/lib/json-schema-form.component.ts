@@ -495,7 +495,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * Also init null objects with {}
    */
   onValueChange(key: string, value: any) {
-    if (!this.value) {
+    if (!this.value || typeof (this.value) !== 'object') {
       this.value = {};
     }
     this.value[key] = value;
