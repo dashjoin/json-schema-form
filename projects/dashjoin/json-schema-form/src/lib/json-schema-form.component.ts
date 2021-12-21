@@ -236,6 +236,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * replace undefined with null and init autocomplete choices
    */
   ngOnInit(): void {
+    if (!this.schema) {
+      this.schema = { type: 'string' };
+    }
+
     this.readOnly = this.schema.readOnly || (this.schema.createOnly && this.value);
 
     if (!this.rootSchema) {
@@ -514,9 +518,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (!(this.value instanceof Array)) {
       this.value = [];
     }
-    if (this.schema.items.type === 'array') {
+    if (this.schema.items?.type === 'array') {
       this.value.push([]);
-    } else if (this.schema.items.type === 'object') {
+    } else if (this.schema.items?.type === 'object') {
       this.value.push({});
     } else {
       this.value.push(null);
