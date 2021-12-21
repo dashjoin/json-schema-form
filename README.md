@@ -259,13 +259,14 @@ This can be achieved via the "compute" option. It can be placed within an object
   "type": "object",
   "properties": { "first": {"type": "string"}, "last": { "type": "string" }, "salutation": { "type": "string", "readOnly": true } },
   "computed": {
-    "salutation": '"Dear " & first & " " & last & ","'
+    "salutation": '"Dear " & first & " " & last & "," & $context("var")'
   }
 }
 ```
 
 In this example, any change to the first or last fields trigger a change in salutation which is displayed as a read only form field.
 The expression defining the salutation value is expressed in JSONata (<https://jsonata.org/>).
+The custom function $context allows the host application to reference data which was set via this.service.setContext(key, value).
 
 ## Validation and Submitting
 
