@@ -417,6 +417,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.hideUndefined && this.value === undefined) {
       return 'none';
     }
+    if (this.schema.widget === 'upload') {
+      return 'upload';
+    }
     if (this.schema.type === 'object') {
       if (this.schema.additionalProperties) {
         if (this.schema.layout === 'tab') {
@@ -446,9 +449,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
     if (this.schema.widget === 'date') {
       return 'date';
-    }
-    if (this.schema.widget === 'upload') {
-      return 'upload';
     }
     if (this.schema.widget === 'textarea') {
       return 'textarea';
@@ -796,13 +796,18 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * allows for the result of a file upload to be written into a text form element
    */
   handleFileInput(event: any) {
-    if (1024 * 1024 <= event.target.files.item(0).size) {
-      console.log('The file size is limited to 1MB');
+    if (10 * 1024 * 1024 <= event.target.files.item(0).size) {
+      console.log('The file size is limited to 10MB');
       return;
     }
     const reader = new FileReader();
     reader.onload = () => {
       this.value = reader.result;
+
+      if (this.schema.type === 'object' || this.schema.type === 'array') {
+        this.value = JSON.parse(this.value);
+      }
+
       this.emit(this.value);
     };
     reader.readAsText(event.target.files.item(0));
