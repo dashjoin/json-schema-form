@@ -168,6 +168,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   orderedProperties: { [key: string]: Schema }[];
 
   /**
+   * avoids change detection issues for arrays
+   */
+  arrayIndices: number[] = [];
+
+  /**
    * make sure to return the same date object instance (cannot delete date #83)
    */
   date: Date;
@@ -306,6 +311,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
     if (this.value || this.value === 0) {
       if (Array.isArray(this.value)) {
+        this.arrayIndices = Array.from(Array(this.value.length).keys());
         const arr: Observable<Choice>[] = [];
         for (const i of this.value) {
           arr.push(this.ch.choice(i, this.schema));
@@ -527,6 +533,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     } else {
       this.value.push(null);
     }
+    this.arrayIndices.push(this.value.length - 1);
     this.emit(this.value);
   }
 
@@ -549,6 +556,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   remove(i: number) {
     this.value.splice(i, 1);
+    this.arrayIndices.pop();
     this.emit(this.value);
   }
 

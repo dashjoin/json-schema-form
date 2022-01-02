@@ -139,7 +139,7 @@
     <!-- array row wrap layout -->
     <span *ngIf="getLayout() === 'array'" [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'"
         [ngStyle]="schema.style" [ngClass]="schema.class">
-        <div *ngFor="let x of value; let i=index" style="display: flex; margin: 2px; position: relative"
+        <div *ngFor="let i of arrayIndices" style="display: flex; margin: 2px; position: relative"
             (mouseenter)="hover=i" (mouseleave)="hover=null">
             <lib-json-schema-form #children [label]="getLabel()" [value]="value[i]"
                 (valueChange)="setIndexAndEmit(i, $event)" inArray="true" [rootValue]="rootValue"
@@ -174,8 +174,7 @@
     <!-- array tab layout -->
     <mat-tab-group animationDuration="0ms" *ngIf="getLayout() === 'tab'" style="max-width: 96vw"
         [ngStyle]="schema.style" [ngClass]="schema.class">
-        <mat-tab *ngFor="let x of value; let i=index" style="margin: 2px; position: relative"
-            [label]="getLabel()+' '+i">
+        <mat-tab *ngFor="let i of arrayIndices" style="margin: 2px; position: relative" [label]="getLabel()+' '+i">
             <lib-json-schema-form #children [value]="value[i]" (valueChange)="setIndexAndEmit(i, $event)" inArray="true"
                 [rootValue]="rootValue" [rootSchema]="rootSchema" [schema]="schema.items" [base]="base"
                 (schemaChange)="schemaChange.emit()">
