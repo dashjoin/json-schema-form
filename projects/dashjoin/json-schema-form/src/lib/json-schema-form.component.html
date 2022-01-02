@@ -84,21 +84,22 @@
     <span *ngIf="getLayout() === 'additionalProperties'"
         [fxLayout]="schema.layout === 'vertical' ? 'column' : 'row wrap'" [ngStyle]="schema.style"
         [ngClass]="schema.class">
-        <div *ngFor="let i of additionalPropNames" style="display: flex; margin: 2px; position: relative"
+        <div *ngFor="let i of arrayIndices" style="display: flex; margin: 2px; position: relative"
             (mouseenter)="hover=i" (mouseleave)="hover=null">
             <mat-form-field>
                 <mat-label>{{getLabel()}} key</mat-label>
-                <input [disabled]="readOnly" autocomplete="off" matInput [value]="i"
-                    (change)="fieldNameChange(i, $event.target.value)">
+                <input [disabled]="readOnly" autocomplete="off" matInput [value]="additionalPropNames[i]"
+                    (change)="fieldNameChange(additionalPropNames[i], $event.target.value)">
             </mat-form-field>
             &nbsp;
-            <lib-json-schema-form #children [label]="getLabel() + ' value'" [value]="value[i]"
-                (valueChange)="onValueChange(i, $event)" [rootValue]="rootValue" [rootSchema]="rootSchema"
-                [schema]="schema.additionalProperties" inArray="true" [base]="base"
+            <lib-json-schema-form #children [label]="getLabel() + ' value'" [value]="value[additionalPropNames[i]]"
+                (valueChange)="onValueChange(additionalPropNames[i], $event)" [rootValue]="rootValue"
+                [rootSchema]="rootSchema" [schema]="schema.additionalProperties" inArray="true" [base]="base"
                 (schemaChange)="schemaChange.emit()">
             </lib-json-schema-form>
-            <button *ngIf="!readOnly" mat-icon-button (click)="removeField(i)" class="example-handle"
-                [style.visibility]="i===hover ? 'visible' : 'hidden'" matTooltip="{{getLabel()}}">
+            <button *ngIf="!readOnly" mat-icon-button (click)="removeField(additionalPropNames[i])"
+                class="example-handle" [style.visibility]="i===hover ? 'visible' : 'hidden'"
+                matTooltip="{{getLabel()}}">
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </div>

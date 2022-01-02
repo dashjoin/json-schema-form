@@ -338,6 +338,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
 
     if (this.schema.additionalProperties && this.value) {
       this.additionalPropNames = Object.keys(this.value);
+      this.arrayIndices = Array.from(Array(this.additionalPropNames.length).keys());
     }
 
     this.edit = new Edit(this.schemaChange, this.name, this.schema, this.parentSchema, this.dialog);
@@ -563,6 +564,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
     this.value[''] = null;
     this.additionalPropNames.push('');
+    this.arrayIndices.push(this.additionalPropNames.length - 1);
     this.emit(this.value);
   }
 
@@ -581,6 +583,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   removeField(key: string) {
     delete this.value[key];
     this.additionalPropNames.splice(this.additionalPropNames.indexOf(key), 1);
+    this.arrayIndices.pop();
     this.emit(this.value);
   }
 
