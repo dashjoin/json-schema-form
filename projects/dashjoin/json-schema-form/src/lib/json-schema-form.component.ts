@@ -583,6 +583,14 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * event handler for changed field names with "additionalProperties"
    */
   fieldNameChange(key: string, newvalue: any) {
+    if (this.additionalPropNames.includes(newvalue)) {
+      const tmp = this.additionalPropNames;
+      this.additionalPropNames = [];
+      setTimeout(() => {
+        this.additionalPropNames = tmp;
+      }, 1);
+      return;
+    }
     this.value[newvalue] = this.value[key];
     delete this.value[key];
     this.additionalPropNames[this.additionalPropNames.indexOf(key)] = newvalue;
