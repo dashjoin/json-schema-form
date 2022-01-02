@@ -394,6 +394,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * reset the component state wrt. errors and the choices cache
    */
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes.value && !changes.value.isFirstChange() && this.getLayout() === 'autocomplete') {
+      // make sure autocomplete form control picks up external changes
+      this.control.setValue(changes.value.currentValue);
+    }
+
     if (changes.schema) {
       if (changes.schema.previousValue) {
         this.rootSchema = null;
