@@ -296,11 +296,9 @@
     <div *ngIf="getLayout() === 'single'">
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <input *ngIf="!inArray" [disabled]="readOnly" [placeholder]="example()" autocomplete="off" matInput
+            <input [disabled]="readOnly" [placeholder]="example()" autocomplete="off" matInput
                 [type]="getInputType(schema)" [value]="value" (input)="change($event)"
                 (focus)="getInputType(schema) == 'password' ? value = '':''">
-            <input *ngIf="inArray" [disabled]="readOnly" [placeholder]="example()" autocomplete="off" matInput
-                [type]="getInputType(schema)" [value]="value" (change)="change($event)">
         </mat-form-field>
         <p class="error mat-typography">{{error()}}</p>
     </div>
@@ -309,10 +307,8 @@
     <div *ngIf="getLayout() === 'textarea'">
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
             <mat-label>{{label}}</mat-label>
-            <textarea *ngIf="!inArray" [disabled]="readOnly" [placeholder]="example()" matInput [value]="value"
-                (input)="change($event)" [ngStyle]="schema.style" [ngClass]="schema.class"></textarea>
-            <textarea *ngIf="inArray" [disabled]="readOnly" [placeholder]="example()" matInput [value]="value"
-                (change)="change($event)" [ngStyle]="schema.style" [ngClass]="schema.class"></textarea>
+            <textarea [disabled]="readOnly" [placeholder]="example()" matInput [value]="value" (input)="change($event)"
+                [ngStyle]="schema.style" [ngClass]="schema.class"></textarea>
         </mat-form-field>
         <p class="error mat-typography">{{error()}}</p>
     </div>
