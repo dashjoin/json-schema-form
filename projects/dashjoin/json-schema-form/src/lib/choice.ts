@@ -122,7 +122,7 @@ export class DefaultChoiceHandler implements ChoiceHandler {
      * called from filter, intended to allow subclasses to easily change filter algorithm
      */
     include(i: Choice, current: string): boolean {
-        return i.name?.toLowerCase().includes(current.toLowerCase());
+        return ('' + i.name).toLowerCase().includes(('' + current).toLowerCase());
     }
 
     /**
