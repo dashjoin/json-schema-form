@@ -184,10 +184,10 @@
                 <mat-icon>remove_circle_outline</mat-icon>
             </button>
         </mat-tab>
-        <mat-tab *ngIf="!readOnly">
+        <mat-tab *ngIf="!readOnly" disabled>
             <ng-template mat-tab-label>
                 <button mat-icon-button (click)=" add()" matTooltip="{{getLabel()}}">
-                    <mat-icon>add_circle_outline</mat-icon>
+                    <mat-icon style="color: black;">add_circle_outline</mat-icon>
                 </button>
             </ng-template>
         </mat-tab>
