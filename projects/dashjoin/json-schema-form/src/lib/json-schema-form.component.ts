@@ -173,6 +173,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   arrayIndices: number[] = [];
 
   /**
+   * avoids change detection issues for arrays
+   */
+  additionalPropNames: string[] = [];
+
+  /**
    * make sure to return the same date object instance (cannot delete date #83)
    */
   date: Date;
@@ -330,6 +335,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
           return this.ch.filter(this.value, this.schema, x, this.choices);
         })
       );
+
+    if (this.schema.additionalProperties && this.value) {
+      this.additionalPropNames = Object.keys(this.value);
+    }
 
     this.edit = new Edit(this.schemaChange, this.name, this.schema, this.parentSchema, this.dialog);
   }
@@ -544,10 +553,11 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (!this.value) {
       this.value = {};
     }
-    if (this.value['']) {
+    if (Object.keys(this.value).includes('')) {
       return;
     }
     this.value[''] = null;
+    this.additionalPropNames.push('');
     this.emit(this.value);
   }
 
@@ -565,6 +575,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    */
   removeField(key: string) {
     delete this.value[key];
+    this.additionalPropNames.splice(this.additionalPropNames.indexOf(key), 1);
     this.emit(this.value);
   }
 
@@ -574,6 +585,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
   fieldNameChange(key: string, newvalue: any) {
     this.value[newvalue] = this.value[key];
     delete this.value[key];
+    this.additionalPropNames[this.additionalPropNames.indexOf(key)] = newvalue;
     this.emit(this.value);
   }
 
