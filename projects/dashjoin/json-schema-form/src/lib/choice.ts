@@ -134,7 +134,11 @@ export class DefaultChoiceHandler implements ChoiceHandler {
             for (const delimiter of ['/', '#', ':', '.']) {
                 const parts = value.split(delimiter);
                 if (parts.length > 1) {
-                    return of({ value, name: parts[parts.length - 1] });
+                    if (parts[parts.length - 1] === '') {
+                        return of({ value, name: parts[parts.length - 2] });
+                    } else {
+                        return of({ value, name: parts[parts.length - 1] });
+                    }
                 }
             }
             return of({ value, name: value });
