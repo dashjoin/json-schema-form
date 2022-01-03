@@ -77,7 +77,7 @@ export class DefaultChoiceHandler implements ChoiceHandler {
                     arr.push(this.choice(s, schema));
                 }
                 this.cache = forkJoin(arr);
-            } else {
+            } else if (schema.choicesUrl) {
                 // load choices from URL
                 this.cache = this.getChoices(schema.choicesUrl, schema.choicesUrlArgs, schema.choicesVerb).pipe(
                     switchMap(res => {

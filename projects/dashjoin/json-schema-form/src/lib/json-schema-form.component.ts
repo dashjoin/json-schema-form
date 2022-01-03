@@ -352,9 +352,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * choice element activated - load values
    */
   focus() {
-    this.ch.load(this.value, this.schema).subscribe(res => {
-      this.choices.next(res);
-    });
+    const o = this.ch.load(this.value, this.schema);
+    if (o) {
+      o.subscribe(res => {
+        this.choices.next(res);
+      });
+    }
   }
 
   /**
