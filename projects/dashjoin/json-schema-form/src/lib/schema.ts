@@ -228,6 +228,11 @@ export interface Schema {
     choicesUrlArgs?: any;
 
     /**
+     * determines when the request is being made (default is onFocus)
+     */
+    choicesLoad?: 'onFocus' | 'onLoad';
+
+    /**
      * used in case the select / autocomplete options are defined statically
      */
     choices?: (string | number)[];

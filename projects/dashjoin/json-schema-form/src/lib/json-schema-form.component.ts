@@ -336,6 +336,10 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
         })
       );
 
+    if (this.schema.choicesLoad === 'onLoad') {
+      this.focus();
+    }
+
     if (this.schema.additionalProperties && this.value) {
       this.additionalPropNames = Object.keys(this.value);
       this.arrayIndices = Array.from(Array(this.additionalPropNames.length).keys());

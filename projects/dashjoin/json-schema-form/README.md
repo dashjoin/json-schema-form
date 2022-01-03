@@ -169,6 +169,7 @@ The following fields control how select and autocomplete options are obtained fr
 * choicesUrlArgs: defines the REST service parameter. The convention is to have a single parameter. Multiple fields need to be wrapped into a single object
 * jsonata: used to transform the REST result into a string array or an array of objects with name and value fields if it is not already in that form.
   The transformation is expressed using [JSONata](https://jsonata.org/)
+* choicesLoad: determines whether the choices are loaded upon page load (onLoad) or upon focus (onFocus),  which is the default
 
 ### Autocomplete and Select Display Names and Values
 
