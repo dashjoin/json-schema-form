@@ -1051,7 +1051,7 @@ export class MyTypeAhead implements ChoiceHandler {
    */
   filter(value: any, schema: Schema, current: string, choices: Observable<Choice[]>): Observable<Choice[]> {
     // filter and convert to Choice[]
-    const filtered = this.countries.filter(c => current ? c?.toLowerCase().includes(current.toLowerCase()) : true);
+    const filtered = this.countries.filter(c => current ? ('' + c).toLowerCase().includes(('' + current).toLowerCase()) : true);
 
     // limit to 5 preview results
     while (filtered.length > 5) {
