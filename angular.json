@@ -98,19 +98,6 @@
             "scripts": []
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -149,18 +136,6 @@
             "main": "projects/dashjoin/json-schema-form/src/test.ts",
             "tsConfig": "projects/dashjoin/json-schema-form/tsconfig.spec.json",
             "karmaConfig": "projects/dashjoin/json-schema-form/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/dashjoin/json-schema-form/tsconfig.lib.json",
-              "projects/dashjoin/json-schema-form/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }
