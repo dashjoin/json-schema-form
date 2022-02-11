@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, SimpleChanges,
-  OnChanges, ComponentFactoryResolver, ViewChild, ViewChildren, QueryList
+  OnChanges, ComponentFactoryResolver, ViewChild, ViewChildren, QueryList, Inject
 } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -23,6 +23,8 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { COMMA, ENTER, TAB } from '@angular/cdk/keycodes';
 import jsonata from 'jsonata';
+import { EDIT_DIALOG_TOKEN } from './edit-dialog-token';
+import { ComponentType } from '@angular/cdk/portal';
 
 /**
  * generates an input form base on JSON schema and JSON object.
@@ -46,7 +48,8 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     private http: HttpClient,
     private componentFactoryResolver: ComponentFactoryResolver,
     public service: JsonSchemaFormService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    @Inject(EDIT_DIALOG_TOKEN) private component: ComponentType<any>) { }
 
   /**
    * container children for event propagation
@@ -345,7 +348,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       this.arrayIndices = Array.from(Array(this.additionalPropNames.length).keys());
     }
 
-    this.edit = new Edit(this.schemaChange, this.name, this.schema, this.parentSchema, this.dialog);
+    this.edit = new Edit(this.schemaChange, this.name, this.schema, this.parentSchema, this.dialog, this.component);
   }
 
   /**

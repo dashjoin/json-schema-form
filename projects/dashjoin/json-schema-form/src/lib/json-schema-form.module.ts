@@ -25,6 +25,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EditElementDialogComponent } from './edit-element-dialog.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { EDIT_DIALOG_TOKEN } from './edit-dialog-token';
 
 @NgModule({
   declarations: [JsonSchemaFormComponent, EditElementDialogComponent, WidgetDirective],
@@ -55,7 +56,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   exports: [JsonSchemaFormComponent],
   providers: [
     // turn off tooltip gestures on mobile: https://github.com/angular/components/issues/4892
-    { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: { touchGestures: 'off' } }
+    { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: { touchGestures: 'off' } },
+    { provide: EDIT_DIALOG_TOKEN, useValue: EditElementDialogComponent }
   ]
 
 })

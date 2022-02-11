@@ -1,6 +1,6 @@
+import { ComponentType } from '@angular/cdk/portal';
 import { EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EditElementDialogComponent } from './edit-element-dialog.component';
 import { Schema } from './schema';
 
 /**
@@ -19,7 +19,7 @@ export class Edit {
      */
     constructor(
         private schemaChange: EventEmitter<void>, private name: string, private schema: Schema, private parent: Schema,
-        private dialog: MatDialog) {
+        private dialog: MatDialog, private component: ComponentType<any>) {
     }
 
     /**
@@ -156,7 +156,7 @@ export class Edit {
             clone.itemlayout = clone.items.layout;
         }
 
-        const dialogRef = this.dialog.open(EditElementDialogComponent, { minWidth: '50%', data: clone });
+        const dialogRef = this.dialog.open(this.component, { minWidth: '50%', data: clone });
         dialogRef.afterClosed().subscribe(data => {
             if (data) {
                 this.schema.title = data.title;
