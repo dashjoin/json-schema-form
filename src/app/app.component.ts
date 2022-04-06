@@ -555,7 +555,7 @@ export class MainComponent implements OnInit {
         }
       },
       compute: {
-        description: 'Allows to compute fields based on JsonLogic expressions (http://jsonlogic.com/)',
+        description: 'Allows to compute fields based on JSONata expressions (https://jsonata.org/)',
         value: null,
         schema: {
           type: 'object',
