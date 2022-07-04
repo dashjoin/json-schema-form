@@ -4,6 +4,9 @@ import { JsonSchemaFormComponent } from './json-schema-form.component';
 import { HttpClientModule } from '@angular/common/http';
 import { JsonPointer } from './json-pointer';
 import { MatDialogModule } from '@angular/material/dialog';
+import { EDIT_DIALOG_TOKEN } from './edit-dialog-token';
+import { InjectionToken } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
 
 describe('JsonSchemaFormComponent', () => {
   let component: JsonSchemaFormComponent;
@@ -12,7 +15,8 @@ describe('JsonSchemaFormComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [JsonSchemaFormComponent],
-      imports: [HttpClientModule, MatDialogModule]
+      imports: [HttpClientModule, MatDialogModule],
+      providers: [{ provide: EDIT_DIALOG_TOKEN, useValue: new InjectionToken<ComponentType<any>>('EDIT_DIALOG_TOKEN') }]
     })
       .compileComponents();
   }));
