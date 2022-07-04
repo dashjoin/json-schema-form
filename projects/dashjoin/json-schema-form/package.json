@@ -1,6 +1,6 @@
 {
   "name": "@dashjoin/json-schema-form",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "jsonata": "^1.8.6"
   },
   "dependencies": {
-    "tslib": "^2.4.1"
+    "tslib": "^2.4.0"
   },
   "sideEffects": true
 }
