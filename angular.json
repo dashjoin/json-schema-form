@@ -137,12 +137,24 @@
             "tsConfig": "projects/dashjoin/json-schema-form/tsconfig.spec.json",
             "karmaConfig": "projects/dashjoin/json-schema-form/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/dashjoin/json-schema-form/**/*.ts",
+              "projects/dashjoin/json-schema-form/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "defaultProject": "json-schema-form",
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
