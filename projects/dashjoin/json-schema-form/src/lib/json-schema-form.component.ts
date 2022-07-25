@@ -660,7 +660,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     if (this.schema.case && this.schema.case.indexOf(this.switch) < 0) {
       return null;
     }
-    if (this.value) {
+    if (this.value || this.value === 0) {
       if (this.schema.maxItems) {
         if (!(this.value.length <= this.schema.maxItems)) {
           return this.e('Only ' + this.schema.maxItems + ' array entries allowed');
