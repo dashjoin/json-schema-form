@@ -489,7 +489,7 @@ export class MainComponent implements OnInit {
       },
       multipleOf: {
         description: 'JSON schema multipleOf requires the input to be a multiple of x',
-        value: '88',
+        value: 88,
         schema: {
           type: 'number',
           multipleOf: 11
@@ -498,7 +498,7 @@ export class MainComponent implements OnInit {
       maximum: {
         description: `JSON schema maximum requires the input to be less
           than x (exclusiveMaximum, minimum and exclusiveMinimum work accordingly)`,
-        value: '4',
+        value: 4,
         schema: {
           type: 'number',
           maximum: 10
