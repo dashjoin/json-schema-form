@@ -607,7 +607,7 @@ export class MainComponent implements OnInit {
         schema: {
           type: 'string',
           choicesUrl: '/assets/autocomplete-complex.json',
-          jsonata: '$map(result, function($i){ {"name":$i.name, "value":$i.url} })',
+          jsonata: 'result.{"name": name, "value": url}',
           choicesVerb: 'GET'
         }
       },
