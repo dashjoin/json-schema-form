@@ -661,7 +661,7 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       return null;
     }
     if (this.value || this.value === 0) {
-      if (this.schema.maxItems) {
+      if (this.schema.maxItems || this.schema.maxItems === 0) {
         if (!(this.value.length <= this.schema.maxItems)) {
           return this.e('Only ' + this.schema.maxItems + ' array entries allowed');
         }
@@ -671,12 +671,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
           return this.e('Array entries must be unique');
         }
       }
-      if (this.schema.minItems) {
+      if (this.schema.minItems || this.schema.minItems === 0) {
         if (!(this.value.length >= this.schema.minItems)) {
           return this.e('At least ' + this.schema.minItems + ' array entries required');
         }
       }
-      if (this.schema.maxProperties) {
+      if (this.schema.maxProperties || this.schema.maxProperties === 0) {
         if (!(Object.keys(this.value).length <= this.schema.maxProperties)) {
           return this.e('Only ' + this.schema.maxProperties + ' fields allowed');
         }
@@ -700,42 +700,42 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
           }
         }
       }
-      if (this.schema.minProperties) {
+      if (this.schema.minProperties || this.schema.minProperties === 0) {
         if (!(Object.keys(this.value).length >= this.schema.minProperties)) {
           return this.e('At least ' + this.schema.minProperties + ' fields required');
         }
       }
-      if (this.schema.maxLength) {
+      if (this.schema.maxLength || this.schema.maxLength === 0) {
         if (!(('' + this.value).length <= this.schema.maxLength)) {
           return this.e('Input is longer than ' + this.schema.maxLength);
         }
       }
-      if (this.schema.minLength) {
+      if (this.schema.minLength || this.schema.minLength === 0) {
         if (!(('' + this.value).length >= this.schema.minLength)) {
           return this.e('Input is shorter than ' + this.schema.minLength);
         }
       }
-      if (this.schema.multipleOf) {
+      if (this.schema.multipleOf || this.schema.multipleOf === 0) {
         if (!Number.isInteger(Number(this.value) / this.schema.multipleOf)) {
           return this.e('Must be multiple of ' + this.schema.multipleOf);
         }
       }
-      if (this.schema.exclusiveMaximum) {
+      if (this.schema.exclusiveMaximum || this.schema.exclusiveMaximum === 0) {
         if (!(Number(this.value) < this.schema.exclusiveMaximum)) {
           return this.e('Must be less than ' + this.schema.exclusiveMaximum);
         }
       }
-      if (this.schema.maximum) {
+      if (this.schema.maximum || this.schema.maximum === 0) {
         if (!(Number(this.value) <= this.schema.maximum)) {
           return this.e('Must be less than or equal ' + this.schema.maximum);
         }
       }
-      if (this.schema.exclusiveMinimum) {
+      if (this.schema.exclusiveMinimum || this.schema.exclusiveMinimum === 0) {
         if (!(Number(this.value) > this.schema.exclusiveMinimum)) {
           return this.e('Must greater than ' + this.schema.exclusiveMinimum);
         }
       }
-      if (this.schema.minimum) {
+      if (this.schema.minimum || this.schema.minimum === 0) {
         if (!(Number(this.value) >= this.schema.minimum)) {
           return this.e('Must greater than or equal ' + this.schema.minimum);
         }
