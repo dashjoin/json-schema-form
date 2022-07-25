@@ -821,9 +821,9 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     }
 
     if (this.schema.type === 'number') {
-      this.value = parseFloat(event);
+      this.value = isNaN(parseFloat(event)) ? event : parseFloat(event);
     } else if (this.schema.type === 'integer') {
-      this.value = parseInt(event, 10);
+      this.value = isNaN(parseInt(event)) ? event : parseInt(event, 10);
     } else if (this.schema.type === 'boolean') {
       if (typeof event === 'string') {
         if (event === 'true') {
