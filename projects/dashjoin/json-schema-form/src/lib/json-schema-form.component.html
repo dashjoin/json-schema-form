@@ -11,7 +11,7 @@
 </mat-expansion-panel>
 
 <div *ngIf="(schema.expanded === null || schema.expanded === undefined) || inExpansion"
-    [matTooltip]="schema.description">
+    [matTooltip]="schema.description" role="form">
 
     <div *ngIf="service.editMode && !schema.static && !inArray && getLayout() !== 'none'">
         <mat-icon style="cursor: pointer" [matMenuTriggerFor]="menu"
