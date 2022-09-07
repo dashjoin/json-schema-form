@@ -298,7 +298,7 @@
             <mat-label>{{label}}</mat-label>
             <input [disabled]="readOnly" [placeholder]="example()" autocomplete="off" matInput
                 [type]="getInputType(schema)" [value]="value" (input)="change($event)"
-                (focus)="getInputType(schema) === 'password' ? value = '':''">
+                [step]="getStepValue(schema)" (focus)="getInputType(schema) === 'password' ? value = '':''">
         </mat-form-field>
         <p class="error mat-typography">{{error()}}</p>
     </div>
