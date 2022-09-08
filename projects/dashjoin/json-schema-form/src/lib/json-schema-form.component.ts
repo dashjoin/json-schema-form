@@ -525,13 +525,12 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
    * otherwise it will use the configured value in the schema.
    * Allows fine control over validation and increment/decrement of the input
    * 
-   * 
    * @param schema JSON schema object describing the property
    * 
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-step
    */
   getStepValue(schema: Schema): string {
-    return schema.step ? schema.step : "any";
+    return schema.multipleOf ? '' + schema.multipleOf : "any";
   }
 
   /**
@@ -683,13 +682,6 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
       if (this.schema.uniqueItems) {
         if (!(new Set(this.value).size === this.value.length)) {
           return this.e('Array entries must be unique');
-        }
-      }
-      if (this.schema.step && this.schema.step != "any") {
-        const stepValue = Number.parseFloat(this.schema.step);
-        const value = Number.parseFloat(this.value);
-        if (value % stepValue != 0) {
-          return this.e(`Input is invalid for the step configured (step: ${this.schema.step})`)
         }
       }
       if (this.schema.minItems || this.schema.minItems === 0) {

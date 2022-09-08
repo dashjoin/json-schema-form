@@ -12,11 +12,6 @@ export interface Schema {
     type?: 'boolean' | 'string' | 'array' | 'number' | 'integer' | 'object';
 
     /**
-     * input step configuration.
-     */
-    step?: string;
-
-    /**
      * schema property reference
      */
     '$ref'?: string;
