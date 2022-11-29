@@ -872,8 +872,22 @@ export class JsonSchemaFormComponent implements OnInit, OnChanges {
     reader.onload = () => {
       this.value = reader.result;
 
-      if (this.schema.type === 'object' || this.schema.type === 'array') {
+      if (this.schema.type === 'array') {
         this.value = JSON.parse(this.value);
+      }
+      if (this.schema.type === 'object') {
+        try {
+          this.value = JSON.parse(this.value);
+        }
+        catch (ignore) {
+        }
+        this.value = {
+          name: event.target.files.item(0).name,
+          lastModified: event.target.files.item(0).lastModified,
+          size: event.target.files.item(0).size,
+          type: event.target.files.item(0).type,
+          value: this.value
+        };
       }
 
       this.emit(this.value);

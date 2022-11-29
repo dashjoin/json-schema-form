@@ -225,7 +225,7 @@ export class MainComponent implements OnInit {
         }
       },
       upload: {
-        description: 'The file contents is written into the string (it is parsed if type is object or array)',
+        description: 'The file contents is written into the string (if type is array it is parsed, if type is object it is parsed if possible - the result is an object with data and file metadata)',
         value: '',
         schema: {
           type: 'string',
