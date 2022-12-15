@@ -1,6 +1,6 @@
 {
   "name": "@dashjoin/json-schema-form",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -18,8 +18,8 @@
     "json pointer"
   ],
   "peerDependencies": {
-    "@angular/common": "~14",
-    "@angular/core": "~14",
+    "@angular/common": "~15",
+    "@angular/core": "~15",
     "jsonata": "^1.8.6"
   },
   "dependencies": {
