@@ -159,16 +159,16 @@
     <!-- array chips layout -->
     <span *ngIf="getLayout() === 'chips'">
         <mat-form-field [ngStyle]="schema.style" [ngClass]="schema.class">
-            <mat-chip-list #chipList aria-label="Fruit selection" cdkDropList cdkDropListOrientation="horizontal"
+            <mat-chip-grid #chipList aria-label="Fruit selection" cdkDropList cdkDropListOrientation="horizontal"
                 (cdkDropListDropped)="dropChip($event)">
-                <mat-chip *ngFor="let v of value" [removable]="!readOnly" (removed)="removeChip(v)" cdkDrag>
+                <mat-chip-row *ngFor="let v of value" [removable]="!readOnly" (removed)="removeChip(v)" cdkDrag>
                     {{v}}
                     <mat-icon matChipRemove>cancel</mat-icon>
-                </mat-chip>
+                </mat-chip-row>
                 <input [placeholder]="schema.title" autocomplete="off" [matChipInputFor]="chipList"
                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addChip($event)"
                     [disabled]="readOnly">
-            </mat-chip-list>
+            </mat-chip-grid>
         </mat-form-field>
     </span>
 
