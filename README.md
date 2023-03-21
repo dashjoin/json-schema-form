@@ -30,9 +30,6 @@
 To use the library in your project, follow these steps:
 
 ```shell
-npm i @angular/material
-npm i @angular/flex-layout
-npm i @angular/cdk
 npm i @dashjoin/json-schema-form
 ```
 
@@ -78,35 +75,40 @@ A small sample component:
 
 ```typescript
 import { Component } from '@angular/core';
-import { Schema } from '@dashjoin/json-schema-form/lib/schema';
+import { State } from '@dashjoin/json-schema-form';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   template: `
-    <lib-json-schema-form [(value)]="value" [schema]="schema" [label]="schema.title"></lib-json-schema-form>
-    <pre>{{print()}}<pre>
+    <lib-json-schema-form [state]="state"></lib-json-schema-form>
   `
 })
 export class AppComponent {
 
-  schema: Schema = {
-    type: 'array',
-    items: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' },
-        bday: { type: 'string', widget: 'date' }
+  state: State = {
+    schema: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          bday: { type: 'string', widget: 'date' }
+        }
       }
-    }
+    },
+    value: any = [{
+      name: 'Joe',
+      bday: '2018-09-09T22:00:00.000Z'
+    }];
+    name: 'myform',
+    control: new FormArray([])
   };
-  
-  value: any = [{
-    name: 'Joe',
-    bday: '2018-09-09T22:00:00.000Z'
-  }];
 
-  print(): string {
-    return JSON.stringify(this.value, null, 2);
+  foo() {
+    this.state.control.valueChanges.subscribe(res => {
+      console.log(res);
+    })
   }
 }
 ```
