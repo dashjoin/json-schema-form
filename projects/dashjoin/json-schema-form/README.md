@@ -31,6 +31,8 @@ To use the library in your project, follow these steps:
 
 ```shell
 npm i @dashjoin/json-schema-form
+npm i @angular/material
+npm i jsonata
 ```
 
 In your app module add:
