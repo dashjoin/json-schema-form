@@ -102,10 +102,13 @@ export class AppComponent {
       bday: '2018-09-09T22:00:00.000Z'
     }];
     name: 'myform',
+
+    // pick FormArray, FormGroup or FormControl for arrays, objects, or single values respectively
     control: new FormArray([])
   };
 
   foo() {
+    // subscribe to form value change / validation or state events
     this.state.control.valueChanges.subscribe(res => {
       console.log(res);
     })
@@ -147,7 +150,7 @@ This option specifies a specific input widget to be used. The default is a simpl
 
 It is possible to create custom widgets using the following steps:
 
-* Create a component that implements [WidgetComponent](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/widget.component.ts). All relevant data such as the applicable subschema and the current value are passed to the component. Make sure to emit value changes. An example can be found [here](https://github.com/dashjoin/json-schema-form/tree/master/src/app/custom.component.ts)
+* Create a component that extends [BaseComponent](https://github.com/dashjoin/json-schema-form/blob/master/projects/dashjoin/json-schema-form/src/lib/base/base.component.ts). All relevant data such as the applicable subschema and the current value are passed to the component. Make sure to emit value changes via state.control. An example can be found [here](https://github.com/dashjoin/json-schema-form/blob/master/src/app/custom/custom.component.ts)
 * Include the component in your @NgModule declarations
 * In the parent component, add this service to your constructor: private service: JsonSchemaFormService
 * Register your widget in ngOnInit() using this service: this.service.registerComponent('rich-text-editor', CustomComponent);
