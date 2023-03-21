@@ -25,7 +25,7 @@ export interface Schema {
      * fixed property value range.
      * if set, the editor uses a select element
      */
-    enum?: string[];
+    enum?: (string | null)[];
 
     /**
      * indicates that the property is required (i.e. must be non null)

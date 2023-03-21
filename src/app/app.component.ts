@@ -1,19 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Schema, JsonSchemaFormService, DefaultChoiceHandler } from '@dashjoin/json-schema-form';
-import { CustomComponent } from './custom.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Choice, ChoiceHandler } from 'projects/dashjoin/json-schema-form/src/lib/choice';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { JsonSchemaFormComponent, JsonSchemaFormService, Schema, State } from '@dashjoin/json-schema-form';
+import { CustomComponent } from './custom/custom.component';
+import { FormDirective } from './form.directive';
 
-/**
- * router component
- */
 @Component({
   selector: 'app-root',
   template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
+  title = 'json-schema-form';
 }
 
 /**
@@ -31,6 +28,8 @@ export class MainComponent implements OnInit {
    * @param route     allows selecting an example via URL
    */
   constructor(public service: JsonSchemaFormService, private route: ActivatedRoute) { }
+
+  @ViewChild(FormDirective, { static: true }) formHost!: FormDirective;
 
   /**
    * example schema for meta schema case - also used in schema editor component
@@ -156,23 +155,12 @@ export class MainComponent implements OnInit {
     }
   };
 
-  /**
-   * schema bound to component
-   * <lib-json-schema-form [(value)]="value" [schema]="schema" (errorChange)="error=$event"></lib-json-schema-form>
-   */
-  schema: Schema = { type: 'string' };
+  state!: State;
 
   /**
-   * value bound to component
-   * <lib-json-schema-form [(value)]="value" [schema]="schema" (errorChange)="error=$event"></lib-json-schema-form>
+   * show validation result
    */
-  value: any = 'test';
-
-  /**
-   * value bound to component
-   * <lib-json-schema-form [(value)]="value" [schema]="schema" (errorChange)="error=$event"></lib-json-schema-form>
-   */
-  error: string;
+  error: string | undefined;
 
   /**
    * desc of the example
@@ -925,24 +913,63 @@ export class MainComponent implements OnInit {
    */
   ngOnInit() {
     this.service.registerComponent('rich-text-editor', CustomComponent);
-    this.service.registerDisplayWith('states', new MyDisplayer(null));
-    this.service.registerDisplayWith('typeAhead', new MyTypeAhead());
-    this.service.setContext('var', 'context passed from caller');
+    this.select('string')
+
     this.route.params.subscribe(res => {
-      if (res.id) {
-        this.select(res.id);
+      if ((res as any).id) {
+        this.select((res as any).id);
       }
-    });
+    })
   }
 
   /**
    * select one of the examples
    */
   select(key: string) {
-    this.value = this.examples[key].value;
-    this.schema = this.examples[key].schema;
     this.description = this.examples[key].description;
-    this.error = null;
+    this.error = '';
+    this.set(this.examples[key].schema, this.examples[key].value)
+  }
+
+  /**
+   * select one of the examples
+   */
+  set(schema: any, value: any) {
+    this.formHost.viewContainerRef.clear()
+    const add = this.formHost.viewContainerRef.createComponent(JsonSchemaFormComponent)
+    let control
+    if (schema.type === 'array' && schema.layout !== 'select' && schema.layout !== 'chips')
+      control = new FormArray([])
+    else if (schema.type === 'object')
+      control = new FormGroup({})
+    else
+      control = new FormControl()
+
+    this.state = {
+      schema,
+      value,
+      name: 'test',
+      control
+    }
+    add.instance.state = this.state
+
+    this.state.control.valueChanges.subscribe(res => {
+      setTimeout(() => {
+        // this triggers a re-render, protect against ExpressionChangedAfterItHasBeenCheckedError
+        this.state.value = res
+      })
+      console.log(res);
+    })
+    this.state.control.statusChanges.subscribe(res => {
+      setTimeout(() => {
+        // this triggers a re-render, protect against ExpressionChangedAfterItHasBeenCheckedError
+        if (res === 'VALID' || res === 'DISABLED')
+          this.error = undefined
+        else
+          this.error = res
+      })
+      console.log(res);
+    })
   }
 
   /**
@@ -958,7 +985,7 @@ export class MainComponent implements OnInit {
    */
   changeS(event: any): void {
     try {
-      this.schema = JSON.parse(event.target.value);
+      this.set(JSON.parse(event.target.value), this.state.value)
       this.errorS = null;
     } catch (e) {
       this.errorS = e;
@@ -971,111 +998,10 @@ export class MainComponent implements OnInit {
    */
   changeV(event: any): void {
     try {
-      this.value = JSON.parse(event.target.value);
+      this.set(this.state.schema, JSON.parse(event.target.value));
       this.errorV = null;
     } catch (e) {
       this.errorV = e;
     }
-  }
-
-  /**
-   * catch schema change event: make sure change detection picks up
-   */
-  schemaChange(): void {
-    this.schema = JSON.parse(JSON.stringify(this.schema));
-  }
-}
-
-/**
- * sample displayer implemetation
- */
-export class MyDisplayer extends DefaultChoiceHandler {
-
-  /**
-   * hard coded state IDs
-   */
-  choice(value: any, schema: Schema): Observable<Choice> {
-    if (value === 'CA') {
-      return of({ value, name: 'California' });
-    }
-    if (value === 'OR') {
-      return of({ value, name: 'Oregon' });
-    }
-    if (value === 'WA') {
-      return of({ value, name: 'Washington' });
-    }
-    return of({ value, name: value });
-  }
-}
-
-/**
- * sample typeahead implementation
- */
-export class MyTypeAhead implements ChoiceHandler {
-
-  /**
-   * sample data
-   */
-  countries = [
-    'China',
-    'India',
-    'United States',
-    'Indonesia',
-    'Brazil',
-    'Pakistan',
-    'Nigeria',
-    'Bangladesh',
-    'Russia',
-    'Mexico',
-    'Japan',
-    'Philippines',
-    'Egypt',
-    'Ethiopia',
-    'Vietnam',
-    'DR Congo',
-    'Iran',
-    'Turkey',
-    'Germany',
-    'France'
-  ];
-
-  /**
-   * initially, we do not load any choices
-   */
-  load(value: any, schema: Schema): Observable<Choice[]> {
-    return of();
-  }
-
-  /**
-   * called whenever the user types something
-   */
-  filter(value: any, schema: Schema, current: string, choices: Observable<Choice[]>): Observable<Choice[]> {
-    // filter and convert to Choice[]
-    const filtered = this.countries.filter(c => current ? ('' + c).toLowerCase().includes(('' + current).toLowerCase()) : true);
-
-    // limit to 5 preview results
-    while (filtered.length > 5) {
-      filtered.pop();
-    }
-
-    const mapped: Choice[] = filtered.map(c => ({ name: c, value: c }));
-
-    // return with a delay of 0.5 second to simulate an HTTP call
-    console.log('requesting data for ' + current);
-    return of(mapped).pipe(delay(500));
-  }
-
-  /**
-   * initial value
-   */
-  choice(value: any, schema: Schema): Observable<Choice> {
-    return of({ name: value, value });
-  }
-
-  /**
-   * wait 0.2 second before making a new HTTP request
-   */
-  debounceTime() {
-    return 200;
   }
 }

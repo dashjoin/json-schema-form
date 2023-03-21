@@ -1,0 +1,9 @@
+<!-- upload -->
+<div *ngIf="state.schema.widget === 'upload'">
+    <input type="file" id="file" (change)="handleFileInput(false, $event)">
+</div>
+
+<!-- upload64 -->
+<div *ngIf="state.schema.widget === 'upload64'">
+    <input type="file" id="file" (change)="handleFileInput(true, $event)">
+</div>

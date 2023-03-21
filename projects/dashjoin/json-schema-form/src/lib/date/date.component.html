@@ -1,0 +1,6 @@
+<mat-form-field>
+    <mat-label>{{state.name}}</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="control">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

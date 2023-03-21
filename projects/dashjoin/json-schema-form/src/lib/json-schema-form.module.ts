@@ -1,64 +1,82 @@
 import { NgModule } from '@angular/core';
+import { BaseComponent } from './base/base.component';
+import { BooleanComponent } from './boolean/boolean.component';
+import { InputComponent } from './input/input.component';
 import { JsonSchemaFormComponent } from './json-schema-form.component';
-
-import { MatCardModule } from '@angular/material/card';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { CompDirective } from './wrapper/comp.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule, MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatButtonModule } from '@angular/material/button';
-import { WidgetDirective } from './widget.directive';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatMenuModule } from '@angular/material/menu';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
-import { EditElementDialogComponent } from './edit-element-dialog.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { EDIT_DIALOG_TOKEN } from './edit-dialog-token';
+
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { ObjectComponent } from './object/object.component';
+import { ArrayComponent } from './array/array.component';
+import { WrapperComponent } from './wrapper/wrapper.component';
+import { SelectComponent } from './select/select.component';
+import { HttpClientModule } from '@angular/common/http';
+import { UploadComponent } from './upload/upload.component';
+import { DateComponent } from './date/date.component';
+import { TextareaComponent } from './textarea/textarea.component';
+import { AdditionalPropertiesComponent } from './additional-properties/additional-properties.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { TabComponent } from './tab/tab.component';
+import { TableComponent } from './table/table.component';
+import { ChipsComponent } from './chips/chips.component';
+
 
 @NgModule({
-  declarations: [JsonSchemaFormComponent, EditElementDialogComponent, WidgetDirective],
+  declarations: [
+    JsonSchemaFormComponent,
+    BooleanComponent,
+    InputComponent,
+    ObjectComponent,
+    BaseComponent,
+    SelectComponent,
+    ArrayComponent,
+    UploadComponent,
+    DateComponent,
+    TextareaComponent,
+    AdditionalPropertiesComponent,
+    AutocompleteComponent,
+    TabComponent,
+    TableComponent,
+    ChipsComponent,
+
+    CompDirective,
+    WrapperComponent
+  ],
   imports: [
-    MatCardModule,
-    FlexLayoutModule,
+    CommonModule,
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatInputModule,
     MatIconModule,
-    MatTooltipModule,
-    MatTableModule,
-    MatTabsModule,
-    MatFormFieldModule,
+    MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatCheckboxModule,
-    MatAutocompleteModule,
-    HttpClientModule,
-    CommonModule,
-    MatInputModule,
     MatNativeDateModule,
-    MatButtonModule,
-    MatExpansionModule,
-    MatMenuModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatChipsModule,
-    DragDropModule
+    MatTooltipModule,
+    MatAutocompleteModule,
+    MatTabsModule,
+    MatChipsModule
   ],
-  exports: [JsonSchemaFormComponent],
-  providers: [
-    // turn off tooltip gestures on mobile: https://github.com/angular/components/issues/4892
-    { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: { touchGestures: 'off' } },
-    { provide: EDIT_DIALOG_TOKEN, useValue: EditElementDialogComponent }
+  exports: [
+    JsonSchemaFormComponent,
+    BaseComponent
   ]
-
 })
 export class JsonSchemaFormModule { }

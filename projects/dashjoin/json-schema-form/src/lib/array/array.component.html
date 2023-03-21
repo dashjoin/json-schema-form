@@ -1,0 +1,19 @@
+<ng-container *ngIf="state.schema.layout === 'vertical'">
+    <div *ngFor="let s of states; let i = index" (mouseenter)="hover=i" (mouseleave)="hover=null">
+        <app-wrapper [state]="s"></app-wrapper>
+        <button mat-icon-button (click)="remove(i)" [style.visibility]="i===hover ? 'visible' : 'hidden'">
+            <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+    </div>
+</ng-container>
+<ng-container *ngIf="state.schema.layout !== 'vertical'">
+    <span *ngFor="let s of states; let i = index" (mouseenter)="hover=i" (mouseleave)="hover=null">
+        <app-wrapper [state]="s"></app-wrapper>
+        <button mat-icon-button (click)="remove(i)" [style.visibility]="i===hover ? 'visible' : 'hidden'">
+            <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+    </span>
+</ng-container>
+<button mat-icon-button (click)=" add()">
+    <mat-icon>add_circle_outline</mat-icon>
+</button>

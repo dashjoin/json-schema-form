@@ -1,0 +1,21 @@
+<table>
+    <tr>
+        <th *ngFor="let x of state.schema.items?.properties | keyvalue:originalOrder">{{x.value.title ? x.value.title :
+            x.key}}
+        </th>
+        <th id="remove_row"></th>
+    </tr>
+    <tr *ngFor="let s of states; let i = index">
+        <td *ngFor="let x of state.schema.items?.properties | keyvalue:originalOrder; let column = index">
+            <app-wrapper [state]="rows[i].states[column]"></app-wrapper>
+        </td>
+        <td>
+            <button mat-icon-button (click)="remove(i)">
+                <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+        </td>
+    </tr>
+</table>
+<button mat-icon-button (click)=" add()">
+    <mat-icon>add_circle_outline</mat-icon>
+</button>

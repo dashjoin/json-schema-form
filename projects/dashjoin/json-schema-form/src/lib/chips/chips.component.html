@@ -1,0 +1,14 @@
+<mat-form-field>
+    <mat-label>{{state.name}}</mat-label>
+    <mat-chip-grid #chipGrid>
+        <mat-chip-row *ngFor="let fruit of state.value" (removed)="remove(fruit)" [editable]="true"
+            (edited)="edit(fruit, $event)" [aria-description]="'press enter to edit ' + fruit">
+            {{fruit}}
+            <button matChipRemove [attr.aria-label]="'remove ' + fruit">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip-row>
+        <input [matChipInputFor]="chipGrid" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)" />
+    </mat-chip-grid>
+</mat-form-field>

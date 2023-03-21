@@ -1,0 +1,6 @@
+<mat-form-field>
+    <mat-label>{{state.name}}</mat-label>
+    <mat-select [formControl]="formControl()" [multiple]="state.schema.type === 'array'">
+        <mat-option *ngFor="let choice of choices" [value]="choice.value">{{choice.name}}</mat-option>
+    </mat-select>
+</mat-form-field>

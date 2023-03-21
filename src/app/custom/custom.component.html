@@ -1,0 +1,11 @@
+<div class="ngx-editor_container">
+    <h6>{{ state.name }}</h6>
+    <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
+    <ngx-editor [editor]="editor"></ngx-editor>
+    <!--
+        this needs to be added to connect the events with the form control
+        seems to be broken at the moment (might be due to angular 15)
+        [ngModel]="value"
+        (ngModelChange)="onChange($event)"
+    -->
+</div>

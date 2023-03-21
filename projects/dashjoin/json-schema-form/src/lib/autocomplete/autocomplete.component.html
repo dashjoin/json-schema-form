@@ -1,0 +1,9 @@
+<mat-form-field>
+    <mat-label>{{state.name}}</mat-label>
+    <input type="text" matInput [formControl]="formControl()" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.value">
+            {{option.name}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

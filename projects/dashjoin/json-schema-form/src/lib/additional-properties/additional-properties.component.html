@@ -1,0 +1,17 @@
+<span *ngFor="let s of states; let i = index">
+    <span (mouseenter)="hover=i" (mouseleave)="hover=null">
+        <mat-form-field>
+            <mat-label>{{state.name}}</mat-label>
+            <input matInput [value]="s.name" (change)="change($event, i)">
+        </mat-form-field>
+        &nbsp;
+        <app-wrapper [state]="s"></app-wrapper>
+        <button mat-icon-button (click)="remove(i)" [style.visibility]="i===hover ? 'visible' : 'hidden'">
+            <mat-icon>remove_circle_outline</mat-icon>
+        </button>
+        &nbsp;
+    </span>
+</span>
+<button mat-icon-button (click)=" add()">
+    <mat-icon>add_circle_outline</mat-icon>
+</button>
