@@ -18,7 +18,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { ObjectComponent } from './object/object.component';
 import { ArrayComponent } from './array/array.component';
@@ -58,7 +57,6 @@ import { ChipsComponent } from './chips/chips.component';
   ],
   imports: [
     CommonModule,
-    BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
