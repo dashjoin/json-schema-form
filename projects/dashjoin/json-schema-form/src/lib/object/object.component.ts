@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { BaseComponent } from '../base/base.component';
 import { State } from '../state';
 
@@ -47,5 +46,18 @@ export class ObjectComponent extends BaseComponent implements OnInit {
       return (prop.case && prop.case.includes(switc))
     }
     return true
+  }
+
+  getState(o: string | string[]): State | undefined {
+    for (const state of this.states)
+      if (state.name === o)
+        return state
+    return undefined
+  }
+
+  getArray(o: string | string[]): string[] | undefined {
+    if (Array.isArray(o))
+      return o
+    return undefined
   }
 }
