@@ -1,12 +1,7 @@
-<ng-container *ngIf="state.schema.layout === 'vertical'">
+<div
+    [ngStyle]="{display:'flex', 'flex-wrap': 'wrap', 'flex-direction': this.state.schema.layout === 'vertical' ? 'column':'row'}">
     <div *ngFor="let s of states; let i = index">
         <app-wrapper *ngIf="show(i)" [state]="s"></app-wrapper>
         &nbsp;
     </div>
-</ng-container>
-<ng-container *ngIf="state.schema.layout !== 'vertical'">
-    <span *ngFor="let s of states; let i = index">
-        <app-wrapper *ngIf="show(i)" [state]="s"></app-wrapper>
-        &nbsp;
-    </span>
-</ng-container>
+</div>
