@@ -18,6 +18,8 @@
     "json pointer"
   ],
   "peerDependencies": {
+    "jsonata": "^2.0.4",
+    "@angular/material": "^16.2.12",
     "@angular/common": "^16.2.12",
     "@angular/core": "^16.2.12"
   },
