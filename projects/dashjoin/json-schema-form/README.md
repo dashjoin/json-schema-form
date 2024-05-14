@@ -55,28 +55,10 @@ import { JsonSchemaFormModule } from '@dashjoin/json-schema-form';
 }
 ```
 
-`
-Note: You need import CommonModule for nested lazy loading modules
-`
-```typescript
-import { CommonModule } from '@angular/common';
-import { JsonSchemaFormModule } from '@dashjoin/json-schema-form';
-
-@NgModule({
-  ...
-  imports: [ 
-    CommonModule, 
-    JsonSchemaFormModule, 
-    ...
-  ],
-  ...
-}
-````
-
 A small sample component:
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { State } from '@dashjoin/json-schema-form';
 import { FormArray } from '@angular/forms';
 
@@ -86,7 +68,7 @@ import { FormArray } from '@angular/forms';
     <lib-json-schema-form [state]="state"></lib-json-schema-form>
   `
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   state: State = {
     schema: {
@@ -99,17 +81,17 @@ export class AppComponent {
         }
       }
     },
-    value: any = [{
+    value: [{
       name: 'Joe',
       bday: '2018-09-09T22:00:00.000Z'
-    }];
+    }],
     name: 'myform',
 
     // pick FormArray, FormGroup or FormControl for arrays, objects, or single values respectively
     control: new FormArray([])
   };
 
-  foo() {
+  ngOnInit(): void {
     // subscribe to form value change / validation or state events
     this.state.control.valueChanges.subscribe(res => {
       console.log(res);
