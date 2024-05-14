@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "jsonata"
+            ],
             "outputPath": "dist/json-schema-form",
             "index": "src/index.html",
             "main": "src/main.ts",
