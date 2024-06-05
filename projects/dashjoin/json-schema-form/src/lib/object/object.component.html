@@ -1,17 +1,17 @@
 <div *ngIf="!state.schema.order"
     [ngStyle]="{display:'flex', 'flex-wrap': 'wrap', 'flex-direction': this.state.schema.layout === 'vertical' ? 'column':'row'}">
-    <div *ngFor="let s of states; let i = index">
+    <div *ngFor="let s of states; let i = index" [class.full-width]="this.state.schema.layout === 'vertical'">
         <app-wrapper *ngIf="show(i)" [state]="s"></app-wrapper>
         &nbsp;
     </div>
 </div>
 <div *ngIf="state.schema.order"
     [ngStyle]="{display:'flex', 'flex-wrap': 'wrap', 'flex-direction': this.state.schema.layout === 'vertical' ? 'column':'row'}">
-    <div *ngFor="let o of this.state.schema.order">
+    <div *ngFor="let o of this.state.schema.order" [class.full-width]="this.state.schema.layout === 'vertical'">
         <app-wrapper *ngIf="getState(o)" [state]="getState(o)!"></app-wrapper>
         <div
             [ngStyle]="{display:'flex', 'flex-wrap': 'wrap', 'flex-direction': this.state.schema.layout === 'vertical' ? 'row':'column'}">
-            <div *ngFor="let oo of getArray(o)">
+            <div *ngFor="let oo of getArray(o)" [class.full-width]="this.state.schema.layout === 'vertical'">
                 <app-wrapper [state]="getState(oo)!"></app-wrapper>
                 &nbsp;
             </div>
