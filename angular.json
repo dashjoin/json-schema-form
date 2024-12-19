@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "json-schema-form:build:production"
+              "buildTarget": "json-schema-form:build:production"
             },
             "development": {
-              "browserTarget": "json-schema-form:build:development"
+              "buildTarget": "json-schema-form:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "json-schema-form:build"
+            "buildTarget": "json-schema-form:build"
           }
         },
         "test": {
